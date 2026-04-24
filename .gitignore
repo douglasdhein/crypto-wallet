@@ -23,15 +23,20 @@
 # misc
 .DS_Store
 *.pem
+AGENTS.md
+plan.md
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+dev-server.log
+dev-server.err
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel

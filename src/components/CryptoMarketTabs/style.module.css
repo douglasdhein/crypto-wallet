@@ -1,0 +1,185 @@
+.wrapper {
+  overflow: hidden;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  background: #ffffff;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid #e4e4e7;
+  padding: 1rem 1.25rem;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tabButton {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.tabButtonActive {
+  color: #ffffff;
+  background: #09090b;
+}
+
+.tabButtonInactive {
+  color: #71717a;
+  background: transparent;
+}
+
+.tabButtonInactive:hover {
+  color: #09090b;
+  background: #f4f4f5;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #71717a;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.statusIndicator {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 999px;
+  background: #f59e0b;
+}
+
+.tableScroller {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.table th,
+.table td {
+  padding: 1rem 1.25rem;
+}
+
+.tableHead {
+  border-bottom: 1px solid #e4e4e7;
+  color: #71717a;
+  background: #fafafa;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.tableHead th {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.rankHeader {
+  width: 4rem;
+}
+
+.tableRow {
+  border-bottom: 1px solid #f4f4f5;
+}
+
+.tableRow:last-child {
+  border-bottom: 0;
+}
+
+.rankCell {
+  color: #71717a;
+}
+
+.coinCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.coinIconSkeleton,
+.coinNameSkeleton,
+.coinSymbolSkeleton,
+.priceSkeleton,
+.changeSkeleton,
+.marketCapSkeleton,
+.chartSkeleton {
+  border-radius: 999px;
+  background: #e4e4e7;
+}
+
+.coinIconSkeleton {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.coinNameSkeleton {
+  width: 7rem;
+  height: 0.75rem;
+}
+
+.coinSymbolSkeleton {
+  width: 3rem;
+  height: 0.5rem;
+  margin-top: 0.5rem;
+  background: #f4f4f5;
+}
+
+.priceSkeleton {
+  width: 6rem;
+  height: 0.75rem;
+}
+
+.changeSkeleton {
+  width: 4rem;
+  height: 0.75rem;
+}
+
+.marketCapSkeleton {
+  width: 7rem;
+  height: 0.75rem;
+}
+
+.chartSkeleton {
+  width: 8rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+}
+
+.positiveSkeleton {
+  background: #dcfce7;
+}
+
+.negativeSkeleton {
+  background: #fee2e2;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,30 @@
+.page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  color: #09090b;
+  background: #fafafa;
+}
+
+.container {
+  width: 100%;
+  max-width: 80rem;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page {
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+  }
+}
