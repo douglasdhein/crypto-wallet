@@ -12,12 +12,14 @@ A iniciativa reforça o estudo de tecnologias atuais, boas práticas de desenvol
 
 O projeto está sendo desenvolvido com:
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- Node.js
-- MongoDB
-- CoinMarketCap API
+- **Next.js:** framework React utilizado para construir a aplicação web com foco em performance, organização de rotas e uma experiência moderna de desenvolvimento.
+- **TypeScript:** adiciona tipagem estática ao JavaScript, ajudando a tornar o código mais seguro, previsível e fácil de manter.
+- **Tailwind CSS:** utilizado para estilizar a interface de forma rápida, responsiva e consistente, mantendo um visual moderno e limpo.
+- **Node.js:** ambiente de execução JavaScript utilizado no back-end e na estrutura da aplicação.
+- **MongoDB:** banco de dados NoSQL utilizado para armazenar informações da aplicação de forma flexível e escalável.
+- **CoinMarketCap API:** API utilizada para obter dados atualizados sobre criptomoedas, como preços, variação, market cap e ativos em tendência.
+- **Auth.js / NextAuth:** utilizado para gerenciar a autenticação dos usuários, facilitando recursos como login, logout, controle de sessão e proteção de rotas dentro da aplicação.
+- **bcryptjs:** utilizado para gerar hashes seguros de senhas, evitando que credenciais sejam armazenadas em texto puro no banco de dados e aumentando a segurança da aplicação.
 
 ## Como rodar localmente
 

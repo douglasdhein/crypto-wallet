@@ -58,6 +58,7 @@
   font-weight: 600;
   line-height: 1.25rem;
   text-decoration: none;
+  cursor: pointer;
   transition:
     background-color 160ms ease,
     border-color 160ms ease;
@@ -66,6 +67,82 @@
 .loginButton:hover {
   border-color: #3f3f46;
   background: #27272a;
+}
+
+.loginButton:disabled,
+.loginButton[aria-disabled="true"] {
+  border-color: #71717a;
+  background: #71717a;
+  cursor: not-allowed;
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userButton,
+.logoutButton {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d4d4d8;
+  color: #09090b;
+  background: #ffffff;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.userButton {
+  width: 2.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.userButton:hover,
+.logoutButton:hover {
+  border-color: #a1a1aa;
+  background: #f4f4f5;
+}
+
+.userIcon {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  display: block;
+  border: 2px solid #18181b;
+  border-radius: 999px;
+}
+
+.userIcon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.7rem;
+  width: 1.5rem;
+  height: 0.75rem;
+  border: 2px solid #18181b;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  transform: translateX(-50%);
+}
+
+.logoutButton {
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.logoutButton:disabled {
+  color: #71717a;
+  background: #f4f4f5;
+  cursor: not-allowed;
 }
 
 @media (min-width: 640px) {

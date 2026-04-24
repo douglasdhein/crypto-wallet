@@ -1,0 +1,240 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  color: #09090b;
+  background: #f4f4f5;
+}
+
+.panel {
+  width: 100%;
+  max-width: 34rem;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: #ffffff;
+}
+
+.backLink,
+.loginLink {
+  color: #047857;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  text-decoration: none;
+}
+
+.backLink:hover,
+.loginLink:hover {
+  color: #065f46;
+}
+
+.heading {
+  margin-top: 2rem;
+}
+
+.brand {
+  color: #047857;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.title {
+  margin-top: 0.5rem;
+  color: #09090b;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 2.25rem;
+}
+
+.description {
+  margin-top: 0.75rem;
+  color: #52525b;
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+.stateBox,
+.profileBox {
+  margin-top: 2rem;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.stateBox {
+  display: grid;
+  gap: 1rem;
+  color: #52525b;
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+.profileBox {
+  display: grid;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #09090b;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.profileInfo {
+  display: grid;
+  gap: 1rem;
+}
+
+.label {
+  color: #71717a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.value {
+  margin-top: 0.25rem;
+  color: #09090b;
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+.actionsBox {
+  display: grid;
+  gap: 1rem;
+  border-top: 1px solid #e4e4e7;
+  padding-top: 1rem;
+}
+
+.passwordForm,
+.field {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.field {
+  color: #27272a;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.input {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  color: #09090b;
+  background: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.input:focus {
+  border-color: #047857;
+  box-shadow: 0 0 0 3px rgb(4 120 87 / 12%);
+}
+
+.input:disabled {
+  color: #71717a;
+  background: #f4f4f5;
+  cursor: not-allowed;
+}
+
+.primaryButton,
+.secondaryButton,
+.dangerButton {
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.primaryButton {
+  color: #ffffff;
+  background: #09090b;
+}
+
+.primaryButton:hover {
+  background: #27272a;
+}
+
+.dangerButton {
+  color: #ffffff;
+  background: #b91c1c;
+}
+
+.secondaryButton {
+  border-color: #d4d4d8;
+  color: #27272a;
+  background: #ffffff;
+}
+
+.dangerButton:hover {
+  background: #991b1b;
+}
+
+.secondaryButton:hover {
+  background: #f4f4f5;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled,
+.dangerButton:disabled {
+  color: #ffffff;
+  background: #71717a;
+  cursor: not-allowed;
+}
+
+.inlineActions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .inlineActions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.feedback {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.success {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+.error {
+  color: #991b1b;
+  background: #fee2e2;
+}

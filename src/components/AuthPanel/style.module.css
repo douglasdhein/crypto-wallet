@@ -90,6 +90,42 @@
   box-shadow: 0 0 0 3px rgb(4 120 87 / 12%);
 }
 
+.input:disabled {
+  color: #71717a;
+  background: #f4f4f5;
+  cursor: not-allowed;
+}
+
+.fieldError {
+  color: #b91c1c;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.125rem;
+}
+
+.feedback {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.success {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+.error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.info {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
 .submitButton {
   min-height: 2.75rem;
   border: 0;
@@ -106,6 +142,11 @@
 
 .submitButton:hover {
   background: #27272a;
+}
+
+.submitButton:disabled {
+  background: #71717a;
+  cursor: not-allowed;
 }
 
 .footerText {
