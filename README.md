@@ -17,7 +17,7 @@ O projeto está sendo desenvolvido com:
 - **Tailwind CSS:** utilizado para estilizar a interface de forma rápida, responsiva e consistente, mantendo um visual moderno e limpo.
 - **Node.js:** ambiente de execução JavaScript utilizado no back-end e na estrutura da aplicação.
 - **MongoDB:** banco de dados NoSQL utilizado para armazenar informações da aplicação de forma flexível e escalável.
-- **CoinMarketCap API:** API utilizada para obter dados atualizados sobre criptomoedas, como preços, variação, market cap e ativos em tendência.
+- **CoinGecko API:** API utilizada para obter dados atualizados sobre criptomoedas, como preços, variação, market cap, pesquisa de ativos e criptomoedas em tendência.
 - **Auth.js / NextAuth:** utilizado para gerenciar a autenticação dos usuários, facilitando recursos como login, logout, controle de sessão e proteção de rotas dentro da aplicação.
 - **bcryptjs:** utilizado para gerar hashes seguros de senhas, evitando que credenciais sejam armazenadas em texto puro no banco de dados e aumentando a segurança da aplicação.
 

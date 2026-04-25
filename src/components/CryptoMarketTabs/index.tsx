@@ -13,7 +13,7 @@ type MarketTable = {
 };
 
 type CryptoMarketItem = {
-  id: number;
+  id: string;
   rank: number;
   name: string;
   symbol: string;
@@ -22,6 +22,7 @@ type CryptoMarketItem = {
   percentChange24h: number;
   percentChange7d: number;
   marketCapUsd: number;
+  sparklinePrices: number[];
   lastUpdated: string | null;
 };
 
@@ -105,7 +106,7 @@ function getTone(value: number): RowTone {
   return value >= 0 ? 'positive' : 'negative';
 }
 
-function getTrendPath(value: number) {
+function getFallbackTrendPath(value: number) {
   const direction = value >= 0 ? 1 : -1;
   const intensity = Math.min(Math.abs(value), 20);
   const startY = direction > 0 ? 28 : 12;
@@ -113,6 +114,29 @@ function getTrendPath(value: number) {
   const endY = direction > 0 ? 12 : 28;
 
   return `M4 ${startY} C24 ${middleY} 52 ${middleY} 76 ${endY}`;
+}
+
+function getSparklinePath(prices: number[], fallbackValue: number) {
+  const validPrices = prices.filter((price) => Number.isFinite(price));
+
+  if (validPrices.length < 2) {
+    return getFallbackTrendPath(fallbackValue);
+  }
+
+  const minPrice = Math.min(...validPrices);
+  const maxPrice = Math.max(...validPrices);
+  const priceRange = maxPrice - minPrice || 1;
+  const stepX = 72 / (validPrices.length - 1);
+
+  return validPrices
+    .map((price, index) => {
+      const x = 4 + index * stepX;
+      const y = 34 - ((price - minPrice) / priceRange) * 28;
+      const command = index === 0 ? 'M' : 'L';
+
+      return `${command}${x.toFixed(2)} ${y.toFixed(2)}`;
+    })
+    .join(' ');
 }
 
 function renderSkeletonRows(activeTableKey: MarketTableKey) {
@@ -345,7 +369,7 @@ export function CryptoMarketTabs() {
 
                   return (
                     <tr className={styles.tableRow} key={crypto.id}>
-                      <td className={styles.rankCell}>{crypto.rank}</td>
+                      <td className={styles.rankCell}>{crypto.rank || '-'}</td>
                       <td>
                         <div className={styles.coinCell}>
                           {crypto.logoUrl ? (
@@ -397,7 +421,12 @@ export function CryptoMarketTabs() {
                             }`}
                             viewBox="0 0 80 40"
                           >
-                            <path d={getTrendPath(crypto.percentChange7d)} />
+                            <path
+                              d={getSparklinePath(
+                                crypto.sparklinePrices,
+                                crypto.percentChange7d,
+                              )}
+                            />
                           </svg>
                           <span
                             className={

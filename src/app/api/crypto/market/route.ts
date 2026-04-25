@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  CoinMarketCapError,
+  CoinGeckoError,
   getCryptoMarket,
   searchCryptoMarket,
   type CryptoMarketItem,
   type CryptoMarketType,
-} from '@/lib/coinMarketCap/client';
+} from '@/lib/coinGecko/client';
 
 type MarketCacheEntry = {
   expiresAt: number;
@@ -21,7 +21,7 @@ type GlobalWithMarketCache = typeof globalThis & {
 };
 
 const CACHE_DURATION_MS = 1000 * 60 * 2;
-const SEARCH_CACHE_VERSION = 'v2';
+const SEARCH_CACHE_VERSION = 'coingecko-v1';
 const globalWithMarketCache = globalThis as GlobalWithMarketCache;
 const marketCache = globalWithMarketCache.cryptoMarketCache ?? {};
 const searchCache = globalWithMarketCache.cryptoSearchCache ?? {};
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
-    if (error instanceof CoinMarketCapError) {
+    if (error instanceof CoinGeckoError) {
       return NextResponse.json(
         {
           message: error.message,
