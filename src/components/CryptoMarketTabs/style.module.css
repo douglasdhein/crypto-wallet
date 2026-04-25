@@ -1,15 +1,17 @@
 .wrapper {
   overflow: hidden;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  background: #ffffff;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
 }
 
 .header {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-muted);
   padding: 1rem 1.25rem;
 }
 
@@ -17,13 +19,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  background: var(--panel-background);
 }
 
 .tabButton {
   border: 0;
-  border-radius: 999px;
-  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  padding: 0.4375rem 0.875rem;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -34,18 +40,19 @@
 }
 
 .tabButtonActive {
-  color: #ffffff;
-  background: #09090b;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  box-shadow: var(--shadow-button);
 }
 
 .tabButtonInactive {
-  color: #71717a;
+  color: var(--text-muted);
   background: transparent;
 }
 
 .tabButtonInactive:hover {
-  color: #09090b;
-  background: #f4f4f5;
+  color: var(--text-primary);
+  background: var(--panel-muted-strong);
 }
 
 .searchForm {
@@ -54,11 +61,11 @@
 
 .searchInput {
   width: 100%;
-  border: 1px solid #d4d4d8;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 0.625rem 0.875rem;
-  color: #18181b;
-  background: #ffffff;
+  color: var(--text-primary);
+  background: var(--panel-background);
   font-size: 0.875rem;
   line-height: 1.25rem;
   outline: none;
@@ -68,45 +75,25 @@
 }
 
 .searchInput::placeholder {
-  color: #a1a1aa;
+  color: var(--text-placeholder);
 }
 
 .searchInput:focus {
-  border-color: #09090b;
-  box-shadow: 0 0 0 3px rgb(24 24 27 / 8%);
-}
-
-.tableScroller {
-  overflow-x: auto;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .table {
-  width: 100%;
-  min-width: 860px;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.table th,
-.table td {
-  padding: 1rem 1.25rem;
+  min-width: 900px;
 }
 
 .tableHead {
-  border-bottom: 1px solid #e4e4e7;
-  color: #71717a;
-  background: #fafafa;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--panel-muted);
 }
 
-.tableHead th {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-weight: 500;
+.headerRow {
+  border-bottom-color: var(--border);
 }
 
 .rankHeader {
@@ -114,20 +101,20 @@
 }
 
 .tableRow {
-  border-bottom: 1px solid #f4f4f5;
-}
-
-.tableRow:last-child {
-  border-bottom: 0;
+  background: var(--panel-background);
 }
 
 .rankCell {
-  color: #71717a;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
 
 .valueCell {
-  color: #18181b;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .coinCell {
@@ -148,20 +135,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  background: #09090b;
+  color: var(--primary-foreground);
+  background: var(--primary);
   font-size: 0.875rem;
   font-weight: 700;
 }
 
 .coinName {
-  color: #18181b;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
 .coinSymbol {
   margin-top: 0.125rem;
-  color: #71717a;
+  color: var(--text-muted);
   font-size: 0.8125rem;
   font-weight: 600;
 }
@@ -174,7 +161,7 @@
 .marketCapSkeleton,
 .chartSkeleton {
   border-radius: 999px;
-  background: #e4e4e7;
+  background: var(--border);
 }
 
 .coinIconSkeleton {
@@ -191,7 +178,7 @@
   width: 3rem;
   height: 0.5rem;
   margin-top: 0.5rem;
-  background: #f4f4f5;
+  background: var(--panel-muted-strong);
 }
 
 .priceSkeleton {
@@ -216,23 +203,27 @@
 }
 
 .positiveSkeleton {
-  background: #dcfce7;
+  background: var(--success-background);
 }
 
 .negativeSkeleton {
-  background: #fee2e2;
+  background: var(--error-background);
 }
 
 .percentBadge {
+  display: inline-flex;
+  min-width: 4.5rem;
+  justify-content: flex-start;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .positiveText {
-  color: #047857;
+  color: var(--positive);
 }
 
 .negativeText {
-  color: #dc2626;
+  color: var(--negative);
 }
 
 .trendCell {
@@ -255,20 +246,20 @@
 }
 
 .positiveStroke {
-  color: #10b981;
+  color: var(--positive-chart);
 }
 
 .negativeStroke {
-  color: #ef4444;
+  color: var(--negative-chart);
 }
 
 .feedbackBox {
   margin: 1rem 1.25rem;
-  border: 1px solid #fde68a;
+  border: 1px solid var(--warning-border);
   border-radius: 0.5rem;
   padding: 0.875rem 1rem;
-  color: #92400e;
-  background: #fffbeb;
+  color: var(--warning-text);
+  background: var(--warning-background);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;

@@ -2,6 +2,14 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/Table';
 import styles from './style.module.css';
 
 type MarketTableKey = 'top' | 'trending';
@@ -141,9 +149,12 @@ function getSparklinePath(prices: number[], fallbackValue: number) {
 
 function renderSkeletonRows(activeTableKey: MarketTableKey) {
   return [1, 2, 3, 4, 5].map((rank) => (
-    <tr className={styles.tableRow} key={`${activeTableKey}-loading-${rank}`}>
-      <td className={styles.rankCell}>{rank}</td>
-      <td>
+    <TableRow
+      className={styles.tableRow}
+      key={`${activeTableKey}-loading-${rank}`}
+    >
+      <TableCell className={styles.rankCell}>{rank}</TableCell>
+      <TableCell>
         <div className={styles.coinCell}>
           <div className={styles.coinIconSkeleton} />
           <div>
@@ -151,20 +162,20 @@ function renderSkeletonRows(activeTableKey: MarketTableKey) {
             <div className={styles.coinSymbolSkeleton} />
           </div>
         </div>
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <div className={styles.priceSkeleton} />
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <div className={styles.changeSkeleton} />
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <div className={styles.marketCapSkeleton} />
-      </td>
-      <td>
+      </TableCell>
+      <TableCell>
         <div className={styles.chartSkeleton} />
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   ));
 }
 
@@ -348,103 +359,101 @@ export function CryptoMarketTabs() {
         <div className={styles.feedbackBox}>{activeMarket.error}</div>
       ) : null}
 
-      <div className={styles.tableScroller}>
-        <table className={styles.table}>
-          <thead className={styles.tableHead}>
-            <tr>
-              <th className={styles.rankHeader}>#</th>
-              <th>Nome</th>
-              <th>Preco</th>
-              <th>24h</th>
-              <th>Market cap</th>
-              <th>Ultimos 7 dias</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activeMarket.isLoading
-              ? renderSkeletonRows(activeTable.key)
-              : activeMarket.data.map((crypto) => {
-                  const change24hTone = getTone(crypto.percentChange24h);
-                  const change7dTone = getTone(crypto.percentChange7d);
+      <Table className={styles.table}>
+        <TableHeader className={styles.tableHead}>
+          <TableRow className={styles.headerRow}>
+            <TableHead className={styles.rankHeader}>#</TableHead>
+            <TableHead>Nome</TableHead>
+            <TableHead>Preco</TableHead>
+            <TableHead>24h</TableHead>
+            <TableHead>Market cap</TableHead>
+            <TableHead>Ultimos 7 dias</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {activeMarket.isLoading
+            ? renderSkeletonRows(activeTable.key)
+            : activeMarket.data.map((crypto) => {
+                const change24hTone = getTone(crypto.percentChange24h);
+                const change7dTone = getTone(crypto.percentChange7d);
 
-                  return (
-                    <tr className={styles.tableRow} key={crypto.id}>
-                      <td className={styles.rankCell}>{crypto.rank || '-'}</td>
-                      <td>
-                        <div className={styles.coinCell}>
-                          {crypto.logoUrl ? (
-                            <Image
-                              alt=""
-                              className={styles.coinLogo}
-                              height={36}
-                              src={crypto.logoUrl}
-                              width={36}
-                            />
-                          ) : (
-                            <div className={styles.coinFallback}>
-                              {crypto.symbol.charAt(0)}
-                            </div>
-                          )}
-                          <div>
-                            <p className={styles.coinName}>{crypto.name}</p>
-                            <p className={styles.coinSymbol}>
-                              {crypto.symbol}
-                            </p>
+                return (
+                  <TableRow className={styles.tableRow} key={crypto.id}>
+                    <TableCell className={styles.rankCell}>
+                      {crypto.rank || '-'}
+                    </TableCell>
+                    <TableCell>
+                      <div className={styles.coinCell}>
+                        {crypto.logoUrl ? (
+                          <Image
+                            alt=""
+                            className={styles.coinLogo}
+                            height={36}
+                            src={crypto.logoUrl}
+                            width={36}
+                          />
+                        ) : (
+                          <div className={styles.coinFallback}>
+                            {crypto.symbol.charAt(0)}
                           </div>
+                        )}
+                        <div>
+                          <p className={styles.coinName}>{crypto.name}</p>
+                          <p className={styles.coinSymbol}>{crypto.symbol}</p>
                         </div>
-                      </td>
-                      <td className={styles.valueCell}>
-                        {formatPrice(crypto.priceUsd)}
-                      </td>
-                      <td>
+                      </div>
+                    </TableCell>
+                    <TableCell className={styles.valueCell}>
+                      {formatPrice(crypto.priceUsd)}
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`${styles.percentBadge} ${
+                          change24hTone === 'positive'
+                            ? styles.positiveText
+                            : styles.negativeText
+                        }`}
+                      >
+                        {formatPercent(crypto.percentChange24h)}
+                      </span>
+                    </TableCell>
+                    <TableCell className={styles.valueCell}>
+                      {formatCompactCurrency(crypto.marketCapUsd)}
+                    </TableCell>
+                    <TableCell>
+                      <div className={styles.trendCell}>
+                        <svg
+                          aria-hidden="true"
+                          className={`${styles.sparkline} ${
+                            change7dTone === 'positive'
+                              ? styles.positiveStroke
+                              : styles.negativeStroke
+                          }`}
+                          viewBox="0 0 80 40"
+                        >
+                          <path
+                            d={getSparklinePath(
+                              crypto.sparklinePrices,
+                              crypto.percentChange7d,
+                            )}
+                          />
+                        </svg>
                         <span
-                          className={`${styles.percentBadge} ${
-                            change24hTone === 'positive'
+                          className={
+                            change7dTone === 'positive'
                               ? styles.positiveText
                               : styles.negativeText
-                          }`}
+                          }
                         >
-                          {formatPercent(crypto.percentChange24h)}
+                          {formatPercent(crypto.percentChange7d)}
                         </span>
-                      </td>
-                      <td className={styles.valueCell}>
-                        {formatCompactCurrency(crypto.marketCapUsd)}
-                      </td>
-                      <td>
-                        <div className={styles.trendCell}>
-                          <svg
-                            aria-hidden="true"
-                            className={`${styles.sparkline} ${
-                              change7dTone === 'positive'
-                                ? styles.positiveStroke
-                                : styles.negativeStroke
-                            }`}
-                            viewBox="0 0 80 40"
-                          >
-                            <path
-                              d={getSparklinePath(
-                                crypto.sparklinePrices,
-                                crypto.percentChange7d,
-                              )}
-                            />
-                          </svg>
-                          <span
-                            className={
-                              change7dTone === 'positive'
-                                ? styles.positiveText
-                                : styles.negativeText
-                            }
-                          >
-                            {formatPercent(crypto.percentChange7d)}
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-          </tbody>
-        </table>
-      </div>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+        </TableBody>
+      </Table>
 
       {!activeMarket.isLoading &&
       !activeMarket.error &&

@@ -1,8 +1,8 @@
 .page {
   min-height: 100vh;
   padding: 1.5rem;
-  color: #09090b;
-  background: #fafafa;
+  color: var(--text-primary);
+  background: var(--page-background);
 }
 
 .container {
