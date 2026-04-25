@@ -1,18 +1,94 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --page-background: #fafafa;
+  --panel-background: #ffffff;
+  --panel-muted: #fbfbfd;
+  --panel-muted-strong: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --border-soft: #f4f4f5;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-placeholder: #a1a1aa;
+  --brand: #047857;
+  --brand-hover: #065f46;
+  --primary: #18181b;
+  --primary-hover: #27272a;
+  --primary-foreground: #ffffff;
+  --danger: #b91c1c;
+  --danger-hover: #991b1b;
+  --danger-foreground: #ffffff;
+  --positive: #047857;
+  --positive-chart: #10b981;
+  --negative: #dc2626;
+  --negative-chart: #ef4444;
+  --success-text: #065f46;
+  --success-background: #d1fae5;
+  --error-text: #991b1b;
+  --error-background: #fee2e2;
+  --info-text: #1e40af;
+  --info-background: #dbeafe;
+  --warning-border: #fde68a;
+  --warning-text: #92400e;
+  --warning-background: #fffbeb;
+  --focus-ring: rgb(24 24 27 / 8%);
+  --brand-focus-ring: rgb(4 120 87 / 12%);
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 4%),
+    0 8px 24px rgb(15 23 42 / 5%);
+  --shadow-panel: 0 1px 2px rgb(15 23 42 / 4%),
+    0 18px 48px rgb(15 23 42 / 8%);
+  --shadow-button: 0 1px 2px rgb(24 24 27 / 18%);
+}
+
+:root[data-theme="dark"] {
+  --background: #09090b;
+  --foreground: #ededed;
+  --page-background: #09090b;
+  --panel-background: #111113;
+  --panel-muted: #18181b;
+  --panel-muted-strong: #27272a;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --border-soft: #27272a;
+  --text-primary: #fafafa;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-placeholder: #71717a;
+  --brand: #34d399;
+  --brand-hover: #6ee7b7;
+  --primary: #fafafa;
+  --primary-hover: #e4e4e7;
+  --primary-foreground: #09090b;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-foreground: #ffffff;
+  --positive: #34d399;
+  --positive-chart: #34d399;
+  --negative: #f87171;
+  --negative-chart: #f87171;
+  --success-text: #86efac;
+  --success-background: #052e1b;
+  --error-text: #fca5a5;
+  --error-background: #450a0a;
+  --info-text: #93c5fd;
+  --info-background: #172554;
+  --warning-border: #78350f;
+  --warning-text: #fcd34d;
+  --warning-background: #1c1917;
+  --focus-ring: rgb(250 250 250 / 12%);
+  --brand-focus-ring: rgb(52 211 153 / 16%);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 24%),
+    0 8px 24px rgb(0 0 0 / 18%);
+  --shadow-panel: 0 1px 2px rgb(0 0 0 / 28%),
+    0 18px 48px rgb(0 0 0 / 24%);
+  --shadow-button: 0 1px 2px rgb(0 0 0 / 24%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: var(--font-geist-sans), "Geist", sans-serif;
   --font-mono: "Courier New", monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }

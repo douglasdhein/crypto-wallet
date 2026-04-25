@@ -1,7 +1,11 @@
 "use client";
 
+import { ChartNoAxesCombined, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button, buttonVariants } from "@/components/Button";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import type { Theme } from "@/lib/theme";
 import styles from "./style.module.css";
 
 type SessionUser = {
@@ -15,7 +19,11 @@ type SessionResponse = {
   user: SessionUser | null;
 };
 
-export function AppHeader() {
+type AppHeaderProps = {
+  initialTheme?: Theme;
+};
+
+export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoadingSession, setIsLoadingSession] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -60,38 +68,61 @@ export function AppHeader() {
       </div>
 
       <div className={styles.actions}>
-        <div className={styles.status}>
-          <span className={styles.statusIndicator} />
-          {user ? "Sessao ativa" : "Base inicial"}
-        </div>
+        <ThemeToggle initialTheme={initialTheme} />
+
+        <Link
+          aria-label="Abrir portfolio"
+          className={buttonVariants({
+            className: styles.portfolioButton,
+            size: "icon",
+          })}
+          href="/portfolio"
+          title="Abrir portfolio"
+        >
+          <ChartNoAxesCombined
+            aria-hidden="true"
+            className={styles.actionIcon}
+          />
+        </Link>
 
         {user ? (
           <div className={styles.userActions}>
             <Link
               aria-label="Abrir configuracoes do usuario"
-              className={styles.userButton}
+              className={buttonVariants({
+                className: styles.userButton,
+                size: "icon",
+              })}
               href="/settings"
               title="Configuracoes do usuario"
             >
-              <span className={styles.userIcon} aria-hidden="true" />
+              <Settings aria-hidden="true" className={styles.actionIcon} />
             </Link>
 
-            <button
+            <Button
               className={styles.logoutButton}
               disabled={isLoggingOut}
+              aria-label={isLoggingOut ? "Saindo da conta" : "Sair da conta"}
               onClick={handleLogout}
+              size="icon"
+              title={isLoggingOut ? "Saindo da conta" : "Sair da conta"}
               type="button"
             >
-              {isLoggingOut ? "Saindo..." : "Sair"}
-            </button>
+              <LogOut aria-hidden="true" className={styles.actionIcon} />
+            </Button>
           </div>
         ) : (
           <Link
-            className={styles.loginButton}
-            href="/login"
             aria-disabled={isLoadingSession}
+            aria-label="Acessar login"
+            className={buttonVariants({
+              className: styles.loginButton,
+              size: "icon",
+            })}
+            href="/login"
+            title="Acessar login"
           >
-            Login
+            <User aria-hidden="true" className={styles.loginIcon} />
           </Link>
         )}
       </div>

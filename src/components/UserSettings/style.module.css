@@ -4,22 +4,22 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  color: #09090b;
-  background: #f4f4f5;
+  color: var(--text-primary);
+  background: var(--page-background);
 }
 
 .panel {
   width: 100%;
   max-width: 34rem;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background: #ffffff;
+  background: var(--panel-background);
 }
 
 .backLink,
 .loginLink {
-  color: #047857;
+  color: var(--brand);
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.25rem;
@@ -28,7 +28,7 @@
 
 .backLink:hover,
 .loginLink:hover {
-  color: #065f46;
+  color: var(--brand-hover);
 }
 
 .heading {
@@ -36,7 +36,7 @@
 }
 
 .brand {
-  color: #047857;
+  color: var(--brand);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -44,7 +44,7 @@
 
 .title {
   margin-top: 0.5rem;
-  color: #09090b;
+  color: var(--text-primary);
   font-size: 1.875rem;
   font-weight: 600;
   line-height: 2.25rem;
@@ -52,7 +52,7 @@
 
 .description {
   margin-top: 0.75rem;
-  color: #52525b;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.5rem;
 }
@@ -60,16 +60,16 @@
 .stateBox,
 .profileBox {
   margin-top: 2rem;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1rem;
-  background: #fafafa;
+  background: var(--panel-muted);
 }
 
 .stateBox {
   display: grid;
   gap: 1rem;
-  color: #52525b;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.5rem;
 }
@@ -87,8 +87,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  color: #ffffff;
-  background: #09090b;
+  color: var(--primary-foreground);
+  background: var(--primary);
   font-size: 1.25rem;
   font-weight: 700;
 }
@@ -99,7 +99,7 @@
 }
 
 .label {
-  color: #71717a;
+  color: var(--text-muted);
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1rem;
@@ -108,7 +108,7 @@
 
 .value {
   margin-top: 0.25rem;
-  color: #09090b;
+  color: var(--text-primary);
   font-size: 0.95rem;
   line-height: 1.5rem;
 }
@@ -116,7 +116,7 @@
 .actionsBox {
   display: grid;
   gap: 1rem;
-  border-top: 1px solid #e4e4e7;
+  border-top: 1px solid var(--border);
   padding-top: 1rem;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .field {
-  color: #27272a;
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
@@ -136,11 +136,11 @@
 .input {
   width: 100%;
   min-height: 2.75rem;
-  border: 1px solid #d4d4d8;
+  border: 1px solid var(--border-strong);
   border-radius: 0.5rem;
   padding: 0.625rem 0.75rem;
-  color: #09090b;
-  background: #ffffff;
+  color: var(--text-primary);
+  background: var(--panel-background);
   font-size: 0.95rem;
   outline: none;
   transition:
@@ -149,13 +149,13 @@
 }
 
 .input:focus {
-  border-color: #047857;
-  box-shadow: 0 0 0 3px rgb(4 120 87 / 12%);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-focus-ring);
 }
 
 .input:disabled {
-  color: #71717a;
-  background: #f4f4f5;
+  color: var(--text-muted);
+  background: var(--panel-muted-strong);
   cursor: not-allowed;
 }
 
@@ -175,38 +175,38 @@
 }
 
 .primaryButton {
-  color: #ffffff;
-  background: #09090b;
+  color: var(--primary-foreground);
+  background: var(--primary);
 }
 
 .primaryButton:hover {
-  background: #27272a;
+  background: var(--primary-hover);
 }
 
 .dangerButton {
-  color: #ffffff;
-  background: #b91c1c;
+  color: var(--danger-foreground);
+  background: var(--danger);
 }
 
 .secondaryButton {
-  border-color: #d4d4d8;
-  color: #27272a;
-  background: #ffffff;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--panel-background);
 }
 
 .dangerButton:hover {
-  background: #991b1b;
+  background: var(--danger-hover);
 }
 
 .secondaryButton:hover {
-  background: #f4f4f5;
+  background: var(--panel-muted-strong);
 }
 
 .primaryButton:disabled,
 .secondaryButton:disabled,
 .dangerButton:disabled {
-  color: #ffffff;
-  background: #71717a;
+  color: var(--primary-foreground);
+  background: var(--text-muted);
   cursor: not-allowed;
 }
 
@@ -230,11 +230,11 @@
 }
 
 .success {
-  color: #065f46;
-  background: #d1fae5;
+  color: var(--success-text);
+  background: var(--success-background);
 }
 
 .error {
-  color: #991b1b;
-  background: #fee2e2;
+  color: var(--error-text);
+  background: var(--error-background);
 }
