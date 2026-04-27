@@ -6,6 +6,7 @@ import { UserModel } from "@/models/User";
 type RegisterRequestBody = {
   name?: unknown;
   email?: unknown;
+  username?: unknown;
   password?: unknown;
 };
 
@@ -15,6 +16,7 @@ type RegisterValidationResult =
       data: {
         name: string;
         email: string;
+        username: string;
         password: string;
       };
     }
@@ -24,7 +26,10 @@ type RegisterValidationResult =
     };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERNAME_REGEX = /^[a-z0-9_]+$/;
 const MIN_PASSWORD_LENGTH = 8;
+const MIN_USERNAME_LENGTH = 3;
+const MAX_USERNAME_LENGTH = 30;
 
 export const runtime = "nodejs";
 
@@ -33,6 +38,10 @@ function validateRegisterBody(
 ): RegisterValidationResult {
   const name = typeof body.name === "string" ? body.name.trim() : "";
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  const username =
+    typeof body.username === "string"
+      ? body.username.trim().toLowerCase()
+      : "";
   const password = typeof body.password === "string" ? body.password : "";
   const errors: Record<string, string> = {};
 
@@ -42,6 +51,15 @@ function validateRegisterBody(
 
   if (!EMAIL_REGEX.test(email)) {
     errors.email = "Informe um email valido.";
+  }
+
+  if (
+    username.length < MIN_USERNAME_LENGTH ||
+    username.length > MAX_USERNAME_LENGTH ||
+    !USERNAME_REGEX.test(username)
+  ) {
+    errors.username =
+      "Informe um username de 3 a 30 caracteres usando letras, numeros ou underline.";
   }
 
   if (password.length < MIN_PASSWORD_LENGTH) {
@@ -60,6 +78,7 @@ function validateRegisterBody(
     data: {
       name,
       email,
+      username,
       password,
     },
   };
@@ -120,14 +139,25 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
 
-    const existingUser = await UserModel.exists({
-      email: validation.data.email,
+    const existingUser = await UserModel.findOne({
+      $or: [
+        {
+          email: validation.data.email,
+        },
+        {
+          username: validation.data.username,
+        },
+      ],
     });
 
     if (existingUser) {
+      const isEmailInUse = existingUser.email === validation.data.email;
+
       return NextResponse.json(
         {
-          message: "Ja existe um usuario cadastrado com este email.",
+          message: isEmailInUse
+            ? "Ja existe um usuario cadastrado com este email."
+            : "Ja existe um usuario cadastrado com este username.",
         },
         {
           status: 409,
@@ -140,6 +170,7 @@ export async function POST(request: Request) {
     const user = await UserModel.create({
       name: validation.data.name,
       email: validation.data.email,
+      username: validation.data.username,
       passwordHash,
     });
 
@@ -150,6 +181,7 @@ export async function POST(request: Request) {
           id: user._id.toString(),
           name: user.name,
           email: user.email,
+          username: user.username,
         },
       },
       {
@@ -160,7 +192,7 @@ export async function POST(request: Request) {
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
         {
-          message: "Ja existe um usuario cadastrado com este email.",
+          message: "Ja existe um usuario cadastrado com este email ou username.",
         },
         {
           status: 409,

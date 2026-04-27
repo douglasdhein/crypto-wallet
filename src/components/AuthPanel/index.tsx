@@ -8,7 +8,9 @@ import styles from "./style.module.css";
 
 type AuthPanelMode = "login" | "register";
 type MessageType = "success" | "error" | "info";
-type FieldErrors = Partial<Record<"name" | "email" | "password", string>>;
+type FieldErrors = Partial<
+  Record<"name" | "username" | "email" | "identifier" | "password", string>
+>;
 
 type AuthPanelProps = {
   mode: AuthPanelMode;
@@ -24,6 +26,7 @@ type AuthApiResponse = RegisterApiResponse & {
     id: string;
     name: string;
     email: string;
+    username: string;
   };
 };
 
@@ -72,11 +75,17 @@ export function AuthPanel({ mode }: AuthPanelProps) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
-    const payload = {
-      name: getFormValue(formData, "name"),
-      email: getFormValue(formData, "email"),
-      password: getFormValue(formData, "password"),
-    };
+    const payload = isRegister
+      ? {
+          name: getFormValue(formData, "name"),
+          username: getFormValue(formData, "username"),
+          email: getFormValue(formData, "email"),
+          password: getFormValue(formData, "password"),
+        }
+      : {
+          identifier: getFormValue(formData, "identifier"),
+          password: getFormValue(formData, "password"),
+        };
 
     try {
       setIsSubmitting(true);
@@ -153,19 +162,44 @@ export function AuthPanel({ mode }: AuthPanelProps) {
             </label>
           ) : null}
 
+          {isRegister ? (
+            <label className={styles.field}>
+              <span>Username</span>
+              <input
+                autoComplete="username"
+                className={styles.input}
+                disabled={isSubmitting}
+                maxLength={30}
+                minLength={3}
+                name="username"
+                pattern="[a-zA-Z0-9_]+"
+                placeholder="seu_username"
+                required
+                type="text"
+              />
+              {fieldErrors.username ? (
+                <span className={styles.fieldError}>
+                  {fieldErrors.username}
+                </span>
+              ) : null}
+            </label>
+          ) : null}
+
           <label className={styles.field}>
-            <span>Email</span>
+            <span>{isRegister ? "Email" : "Email ou username"}</span>
             <input
-              autoComplete="email"
+              autoComplete={isRegister ? "email" : "username"}
               className={styles.input}
               disabled={isSubmitting}
-              name="email"
-              placeholder="voce@email.com"
+              name={isRegister ? "email" : "identifier"}
+              placeholder={isRegister ? "voce@email.com" : "voce@email.com ou username"}
               required
-              type="email"
+              type={isRegister ? "email" : "text"}
             />
-            {fieldErrors.email ? (
-              <span className={styles.fieldError}>{fieldErrors.email}</span>
+            {fieldErrors.email || fieldErrors.identifier ? (
+              <span className={styles.fieldError}>
+                {fieldErrors.email ?? fieldErrors.identifier}
+              </span>
             ) : null}
           </label>
 

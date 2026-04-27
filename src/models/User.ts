@@ -1,4 +1,5 @@
 import {
+  deleteModel,
   Schema,
   model,
   models,
@@ -18,10 +19,18 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
       lowercase: true,
       trim: true,
       maxlength: 120,
+    },
+    username: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+      minlength: 3,
+      maxlength: 30,
+      match: /^[a-z0-9_]+$/,
     },
     passwordHash: {
       type: String,
@@ -36,8 +45,13 @@ const userSchema = new Schema(
 );
 
 userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ username: 1 }, { unique: true, sparse: true });
 
 export type User = InferSchemaType<typeof userSchema>;
+
+if (models.User && !models.User.schema.path("username")) {
+  deleteModel("User");
+}
 
 export const UserModel =
   (models.User as Model<User> | undefined) ?? model<User>("User", userSchema);

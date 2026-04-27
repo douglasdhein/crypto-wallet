@@ -10,6 +10,7 @@ type SessionUser = {
   id: string;
   name: string;
   email: string;
+  username?: string | null;
 };
 
 type SessionResponse = {
@@ -19,16 +20,25 @@ type SessionResponse = {
 
 type ApiResponse = {
   message?: string;
+  user?: SessionUser;
 };
+
+type ActiveModal = "password" | "delete" | null;
 
 export function UserSettings() {
   const router = useRouter();
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [username, setUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordAlertMessage, setPasswordAlertMessage] = useState<
+    string | null
+  >(null);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isPasswordFormVisible, setIsPasswordFormVisible] = useState(false);
+  const [activeModal, setActiveModal] = useState<ActiveModal>(null);
+  const [isUpdatingUsername, setIsUpdatingUsername] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
@@ -51,10 +61,53 @@ export function UserSettings() {
     loadSession();
   }, []);
 
+  async function handleUpdateUsername(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFeedbackMessage(null);
+    setErrorMessage(null);
+
+    try {
+      setIsUpdatingUsername(true);
+
+      const response = await fetch("/api/user/username", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+        }),
+      });
+      const result = (await response.json()) as ApiResponse;
+
+      if (!response.ok) {
+        setErrorMessage(result.message ?? "Nao foi possivel salvar o username.");
+        return;
+      }
+
+      if (result.user) {
+        setUser(result.user);
+      }
+
+      setUsername("");
+      setFeedbackMessage(result.message ?? "Username salvo com sucesso.");
+    } catch {
+      setErrorMessage("Nao foi possivel conectar ao servidor.");
+    } finally {
+      setIsUpdatingUsername(false);
+    }
+  }
+
   async function handleUpdatePassword(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFeedbackMessage(null);
     setErrorMessage(null);
+    setPasswordAlertMessage(null);
+
+    if (newPassword !== confirmPassword) {
+      setPasswordAlertMessage("As senhas digitadas precisam ser iguais.");
+      return;
+    }
 
     try {
       setIsUpdatingPassword(true);
@@ -76,7 +129,8 @@ export function UserSettings() {
       }
 
       setNewPassword("");
-      setIsPasswordFormVisible(false);
+      setConfirmPassword("");
+      setActiveModal(null);
       setFeedbackMessage(result.message ?? "Senha alterada com sucesso.");
     } catch {
       setErrorMessage("Nao foi possivel conectar ao servidor.");
@@ -88,10 +142,9 @@ export function UserSettings() {
   async function handleDeleteAccount() {
     setFeedbackMessage(null);
     setErrorMessage(null);
+    setIsDeletingAccount(true);
 
     try {
-      setIsDeletingAccount(true);
-
       const response = await fetch("/api/user/account", {
         method: "DELETE",
       });
@@ -99,14 +152,18 @@ export function UserSettings() {
 
       if (!response.ok) {
         setErrorMessage(result.message ?? "Nao foi possivel deletar a conta.");
+        setActiveModal(null);
+        setIsDeletingAccount(false);
         return;
       }
 
+      setActiveModal(null);
+      setIsDeletingAccount(false);
       router.push("/");
       router.refresh();
     } catch {
       setErrorMessage("Nao foi possivel conectar ao servidor.");
-    } finally {
+      setActiveModal(null);
       setIsDeletingAccount(false);
     }
   }
@@ -141,76 +198,88 @@ export function UserSettings() {
               </div>
 
               <div>
+                <span className={styles.label}>Username</span>
+                <p className={styles.value}>
+                  {user.username ?? "Nao informado"}
+                </p>
+              </div>
+
+              <div>
                 <span className={styles.label}>Email</span>
                 <p className={styles.value}>{user.email}</p>
               </div>
             </div>
 
             <div className={styles.actionsBox}>
-              {isPasswordFormVisible ? (
+              <button
+                className={styles.primaryButton}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                onClick={() => {
+                  setFeedbackMessage(null);
+                  setErrorMessage(null);
+                  setPasswordAlertMessage(null);
+                  setActiveModal("password");
+                }}
+                type="button"
+              >
+                Alterar senha
+              </button>
+
+              {!user.username ? (
                 <form
-                  className={styles.passwordForm}
-                  onSubmit={handleUpdatePassword}
+                  className={styles.usernameForm}
+                  onSubmit={handleUpdateUsername}
                 >
                   <label className={styles.field}>
-                    <span>Nova senha</span>
+                    <span>Definir username</span>
                     <input
-                      autoComplete="new-password"
+                      autoComplete="username"
                       className={styles.input}
-                      disabled={isUpdatingPassword || isDeletingAccount}
-                      minLength={8}
-                      onChange={(event) => setNewPassword(event.target.value)}
-                      placeholder="Digite a nova senha"
+                      disabled={
+                        isUpdatingUsername ||
+                        isUpdatingPassword ||
+                        isDeletingAccount
+                      }
+                      maxLength={30}
+                      minLength={3}
+                      onChange={(event) => setUsername(event.target.value)}
+                      pattern="[a-zA-Z0-9_]+"
+                      placeholder="seu_username"
                       required
-                      type="password"
-                      value={newPassword}
+                      type="text"
+                      value={username}
                     />
                   </label>
 
-                  <div className={styles.inlineActions}>
-                    <button
-                      className={styles.primaryButton}
-                      disabled={isUpdatingPassword || isDeletingAccount}
-                      type="submit"
-                    >
-                      {isUpdatingPassword ? "Alterando..." : "Salvar senha"}
-                    </button>
-
-                    <button
-                      className={styles.secondaryButton}
-                      disabled={isUpdatingPassword || isDeletingAccount}
-                      onClick={() => {
-                        setNewPassword("");
-                        setIsPasswordFormVisible(false);
-                      }}
-                      type="button"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
+                  <button
+                    className={styles.primaryButton}
+                    disabled={
+                      isUpdatingUsername ||
+                      isUpdatingPassword ||
+                      isDeletingAccount
+                    }
+                    type="submit"
+                  >
+                    {isUpdatingUsername ? "Salvando..." : "Salvar username"}
+                  </button>
                 </form>
-              ) : (
-                <button
-                  className={styles.primaryButton}
-                  disabled={isUpdatingPassword || isDeletingAccount}
-                  onClick={() => {
-                    setFeedbackMessage(null);
-                    setErrorMessage(null);
-                    setIsPasswordFormVisible(true);
-                  }}
-                  type="button"
-                >
-                  Alterar senha
-                </button>
-              )}
+              ) : null}
 
               <button
                 className={styles.dangerButton}
-                disabled={isUpdatingPassword || isDeletingAccount}
-                onClick={handleDeleteAccount}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                onClick={() => {
+                  setFeedbackMessage(null);
+                  setErrorMessage(null);
+                  setActiveModal("delete");
+                }}
                 type="button"
               >
-                {isDeletingAccount ? "Deletando..." : "Deletar conta"}
+                Deletar conta
               </button>
 
               {feedbackMessage ? (
@@ -235,6 +304,125 @@ export function UserSettings() {
           </div>
         )}
       </section>
+
+      {activeModal === "password" ? (
+        <div className={styles.modalOverlay}>
+        <form
+          aria-labelledby="password-alert-title"
+          aria-modal="true"
+          className={styles.passwordAlert}
+          onSubmit={handleUpdatePassword}
+          role="dialog"
+        >
+          <p className={styles.passwordAlertTitle} id="password-alert-title">
+            Alterar senha
+          </p>
+
+          <label className={styles.field}>
+            <span>Nova senha</span>
+            <input
+              autoComplete="new-password"
+              className={styles.input}
+              disabled={
+                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+              }
+              minLength={8}
+              onChange={(event) => setNewPassword(event.target.value)}
+              placeholder="Digite a nova senha"
+              required
+              type="password"
+              value={newPassword}
+            />
+          </label>
+
+          <label className={styles.field}>
+            <span>Confirmar senha</span>
+            <input
+              autoComplete="new-password"
+              className={styles.input}
+              disabled={
+                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+              }
+              minLength={8}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              placeholder="Digite a senha novamente"
+              required
+              type="password"
+              value={confirmPassword}
+            />
+          </label>
+
+          {passwordAlertMessage ? (
+            <p className={`${styles.feedback} ${styles.error}`}>
+              {passwordAlertMessage}
+            </p>
+          ) : null}
+
+          <div className={styles.passwordAlertActions}>
+            <button
+              className={styles.primaryButton}
+              disabled={
+                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+              }
+              type="submit"
+            >
+              {isUpdatingPassword ? "Alterando..." : "Confirmar"}
+            </button>
+
+            <button
+              className={styles.secondaryButton}
+              disabled={isUpdatingPassword}
+              onClick={() => {
+                setNewPassword("");
+                setConfirmPassword("");
+                setPasswordAlertMessage(null);
+                setActiveModal(null);
+              }}
+              type="button"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+        </div>
+      ) : null}
+
+      {activeModal === "delete" ? (
+        <div className={styles.modalOverlay}>
+        <div
+          aria-labelledby="delete-account-title"
+          aria-modal="true"
+          className={styles.deleteAlert}
+          role="alertdialog"
+        >
+          <p className={styles.deleteAlertText} id="delete-account-title">
+            Voc&ecirc; tem certeza de que deseja excluir sua conta?
+          </p>
+
+          <div className={styles.deleteAlertActions}>
+            <button
+              className={styles.dangerButton}
+              disabled={
+                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+              }
+              onClick={handleDeleteAccount}
+              type="button"
+            >
+              {isDeletingAccount ? "Deletando..." : "Sim"}
+            </button>
+
+            <button
+              className={styles.secondaryButton}
+              disabled={isDeletingAccount}
+              onClick={() => setActiveModal(null)}
+              type="button"
+            >
+              N&atilde;o
+            </button>
+          </div>
+        </div>
+      </div>
+      ) : null}
     </main>
   );
 }

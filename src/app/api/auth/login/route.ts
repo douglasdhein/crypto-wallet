@@ -9,6 +9,7 @@ import { connectMongoDB } from "@/lib/db/mongodb";
 import { UserModel } from "@/models/User";
 
 type LoginRequestBody = {
+  identifier?: unknown;
   email?: unknown;
   password?: unknown;
 };
@@ -17,7 +18,8 @@ type LoginValidationResult =
   | {
       isValid: true;
       data: {
-        email: string;
+        identifier: string;
+        isEmailLogin: boolean;
         password: string;
       };
     }
@@ -27,16 +29,23 @@ type LoginValidationResult =
     };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERNAME_REGEX = /^[a-z0-9_]+$/;
 
 export const runtime = "nodejs";
 
 function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
-  const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  const rawIdentifier =
+    typeof body.identifier === "string" ? body.identifier : body.email;
+  const identifier =
+    typeof rawIdentifier === "string" ? rawIdentifier.trim().toLowerCase() : "";
+  const isEmailLogin = EMAIL_REGEX.test(identifier);
   const password = typeof body.password === "string" ? body.password : "";
   const errors: Record<string, string> = {};
 
-  if (!EMAIL_REGEX.test(email)) {
-    errors.email = "Informe um email valido.";
+  if (!identifier) {
+    errors.identifier = "Informe seu email ou username.";
+  } else if (!isEmailLogin && !USERNAME_REGEX.test(identifier)) {
+    errors.identifier = "Informe um email valido ou username valido.";
   }
 
   if (!password) {
@@ -53,7 +62,8 @@ function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
   return {
     isValid: true,
     data: {
-      email,
+      identifier,
+      isEmailLogin,
       password,
     },
   };
@@ -62,7 +72,7 @@ function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
 function getInvalidCredentialsResponse() {
   return NextResponse.json(
     {
-      message: "Email ou senha invalidos.",
+      message: "Email, username ou senha invalidos.",
     },
     {
       status: 401,
@@ -103,9 +113,15 @@ export async function POST(request: Request) {
   try {
     await connectMongoDB();
 
-    const user = await UserModel.findOne({
-      email: validation.data.email,
-    }).select("+passwordHash");
+    const user = await UserModel.findOne(
+      validation.data.isEmailLogin
+        ? {
+            email: validation.data.identifier,
+          }
+        : {
+            username: validation.data.identifier,
+          },
+    ).select("+passwordHash");
 
     if (!user) {
       return getInvalidCredentialsResponse();
@@ -124,6 +140,7 @@ export async function POST(request: Request) {
       id: user._id.toString(),
       name: user.name,
       email: user.email,
+      username: user.username,
     };
     const sessionToken = createSessionToken(sessionUser);
 

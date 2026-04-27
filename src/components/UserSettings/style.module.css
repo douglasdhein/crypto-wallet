@@ -120,6 +120,7 @@
   padding-top: 1rem;
 }
 
+.usernameForm,
 .passwordForm,
 .field {
   display: grid;
@@ -215,8 +216,55 @@
   gap: 0.75rem;
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgb(9 9 11 / 65%);
+  backdrop-filter: blur(6px);
+}
+
+.passwordAlert,
+.deleteAlert {
+  width: min(100%, 28rem);
+  display: grid;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 35%);
+}
+
+.passwordAlert {
+  border: 1px solid var(--border-strong);
+}
+
+.deleteAlert {
+  border: 1px solid var(--warning-border);
+}
+
+.passwordAlertTitle,
+.deleteAlertText {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.passwordAlertActions,
+.deleteAlertActions {
+  display: grid;
+  gap: 0.75rem;
+}
+
 @media (min-width: 480px) {
-  .inlineActions {
+  .inlineActions,
+  .passwordAlertActions,
+  .deleteAlertActions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
