@@ -1,7 +1,14 @@
 "use client";
 
-import { ChartNoAxesCombined, LogOut, Settings, User } from "lucide-react";
+import {
+  ChartNoAxesCombined,
+  House,
+  LogOut,
+  Settings,
+  User,
+} from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "@/components/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -25,9 +32,12 @@ type AppHeaderProps = {
 };
 
 export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
+  const pathname = usePathname();
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoadingSession, setIsLoadingSession] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const shouldShowHomeButton =
+    pathname === "/portfolio" || pathname === "/settings";
 
   useEffect(() => {
     async function loadSession() {
@@ -70,6 +80,20 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
 
       <div className={styles.actions}>
         <ThemeToggle initialTheme={initialTheme} />
+
+        {shouldShowHomeButton ? (
+          <Link
+            aria-label="Voltar para a pagina inicial"
+            className={buttonVariants({
+              className: styles.homeButton,
+              size: "icon",
+            })}
+            href="/"
+            title="Voltar para a pagina inicial"
+          >
+            <House aria-hidden="true" className={styles.actionIcon} />
+          </Link>
+        ) : null}
 
         <Link
           aria-label="Abrir portfolio"

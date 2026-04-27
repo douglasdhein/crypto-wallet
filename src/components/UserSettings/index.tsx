@@ -169,12 +169,8 @@ export function UserSettings() {
   }
 
   return (
-    <main className={styles.page}>
+    <>
       <section className={styles.panel}>
-        <Link className={styles.backLink} href="/">
-          Voltar ao dashboard
-        </Link>
-
         <div className={styles.heading}>
           <p className={styles.brand}>Crypto Wallet</p>
           <h1 className={styles.title}>Configuracoes do usuario</h1>
@@ -423,6 +419,6 @@ export function UserSettings() {
         </div>
       </div>
       ) : null}
-    </main>
+    </>
   );
 }
