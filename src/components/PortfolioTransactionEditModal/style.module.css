@@ -1,0 +1,190 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgb(9 9 11 / 65%);
+  backdrop-filter: blur(6px);
+}
+
+.modal {
+  width: min(100%, 34rem);
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 35%);
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  background: var(--panel-background);
+}
+
+.tabButton {
+  width: 100%;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.4375rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.tabButtonActive {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  box-shadow: var(--shadow-button);
+}
+
+.tabButtonInactive {
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.formGrid,
+.field {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.field {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.fieldHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.375rem 0.75rem;
+}
+
+.fieldHint {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.dateGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.timeSelectGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.timeField {
+  display: grid;
+  gap: 0.375rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.input {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  font-size: 0.95rem;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.input:disabled,
+.tabButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.82;
+}
+
+.input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-focus-ring);
+}
+
+.feedback {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--error-text);
+  background: var(--error-background);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.primaryButton {
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.primaryButton:hover {
+  background: var(--primary-hover);
+}
+
+.secondaryButton {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--panel-background);
+}
+
+.secondaryButton:hover {
+  background: var(--panel-muted-strong);
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  color: var(--primary-foreground);
+  background: var(--text-muted);
+  cursor: not-allowed;
+}
+
+@media (min-width: 480px) {
+  .actions,
+  .dateGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

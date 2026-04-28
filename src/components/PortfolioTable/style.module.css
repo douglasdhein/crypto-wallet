@@ -1,0 +1,542 @@
+.wrapper {
+  overflow: hidden;
+  scroll-margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  background: var(--panel-muted);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  background: var(--panel-background);
+}
+
+.tabButton {
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.4375rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.tabButtonActive {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  box-shadow: var(--shadow-button);
+}
+
+.tabButtonInactive {
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.tabButtonInactive:hover {
+  color: var(--text-primary);
+  background: var(--panel-muted-strong);
+}
+
+.searchForm {
+  width: 100%;
+}
+
+.tableActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.addButton {
+  white-space: nowrap;
+}
+
+.searchInput {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.searchInput::placeholder {
+  color: var(--text-placeholder);
+}
+
+.searchInput:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.table {
+  min-width: 900px;
+}
+
+.tableHead {
+  color: var(--text-muted);
+  background: var(--panel-muted);
+}
+
+.headerRow {
+  border-bottom-color: var(--border);
+}
+
+.coinHeader,
+.coinTableCell {
+  text-align: left;
+}
+
+.actionsHeader {
+  text-align: center;
+}
+
+.tableRow {
+  background: var(--panel-background);
+}
+
+.valueCell,
+.placeholderCell {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.placeholderCell {
+  color: var(--text-muted);
+}
+
+.coinCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.coinLogo,
+.coinFallback {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
+.coinFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.coinName {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.coinText {
+  min-width: 0;
+  text-align: left;
+}
+
+.coinSymbol {
+  margin-top: 0.125rem;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.percentBadge {
+  display: inline-flex;
+  min-width: 4.5rem;
+  justify-content: flex-start;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.positiveText {
+  color: var(--positive);
+}
+
+.negativeText {
+  color: var(--negative);
+}
+
+.trendCell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sparkline {
+  width: 5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke-width: 3;
+}
+
+.sparkline path {
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+.positiveStroke {
+  color: var(--positive-chart);
+}
+
+.negativeStroke {
+  color: var(--negative-chart);
+}
+
+.analyticsPanel {
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.analyticsGrid {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.chartArea {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+}
+
+.chartWrap {
+  position: relative;
+  width: min(100%, 18rem);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.pieChart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chartTrack,
+.chartSegment {
+  fill: none;
+  stroke-width: 22;
+  transform: rotate(-90deg);
+  transform-origin: 90px 90px;
+}
+
+.chartTrack {
+  stroke: var(--border-soft);
+}
+
+.chartSegment {
+  filter: drop-shadow(0 0.625rem 1rem rgb(0 0 0 / 10%));
+  stroke-linecap: round;
+  transition:
+    stroke-dasharray 180ms ease,
+    stroke-dashoffset 180ms ease;
+}
+
+.chartCenter {
+  position: absolute;
+  inset: 50%;
+  width: 7.75rem;
+  height: 7.75rem;
+  display: grid;
+  place-content: center;
+  gap: 0.125rem;
+  border-radius: 999px;
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--panel-background) 88%, transparent);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.chartLabel {
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.chartValue {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.5rem;
+}
+
+.allocationContent {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.analyticsHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.375rem 1rem;
+}
+
+.analyticsHeading h3 {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.5rem;
+}
+
+.analyticsHeading p {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.allocationList {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.allocationItem {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.875rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.25rem;
+  transition: background-color 160ms ease;
+}
+
+.allocationItem:hover {
+  background: var(--panel-muted);
+}
+
+.allocationSwatch {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 0.25rem var(--panel-muted-strong);
+}
+
+.allocationCoin {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.allocationLogo,
+.allocationFallback {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
+.allocationFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.allocationText {
+  min-width: 0;
+}
+
+.allocationName {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 750;
+  line-height: 1.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.allocationSymbol {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1rem;
+}
+
+.allocationNumbers {
+  display: grid;
+  gap: 0.125rem;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.allocationNumbers strong {
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.allocationNumbers span {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.analyticsEmpty {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 12rem;
+  place-content: center;
+  padding: 1.5rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.analyticsEmpty p {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.analyticsEmpty span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.actionsCell {
+  text-align: center;
+}
+
+.actionButtons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.iconButton:hover {
+  border-color: var(--border-strong);
+  color: var(--primary);
+  background: var(--panel-muted-strong);
+}
+
+.actionIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.optionsMenu {
+  position: fixed;
+  z-index: 60;
+  width: 10rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.375rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-panel);
+  transform: translateY(-50%);
+}
+
+.optionButton {
+  width: 100%;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.625rem 0.75rem;
+  color: var(--text-muted);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.optionButton:hover {
+  background: var(--panel-muted-strong);
+}
+
+.emptyCell {
+  height: 8rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .searchForm {
+    max-width: 18rem;
+  }
+
+  .tableActions {
+    width: auto;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .analyticsGrid {
+    grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
+  }
+}

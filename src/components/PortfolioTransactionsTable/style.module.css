@@ -1,0 +1,291 @@
+.wrapper {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  background: var(--panel-muted);
+}
+
+.backButton {
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5625rem 0.875rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.backButton:hover {
+  border-color: var(--border-strong);
+  color: var(--primary);
+  background: var(--panel-muted-strong);
+}
+
+.backIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.coinHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.coinLogo,
+.coinFallback {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
+.coinFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.coinText {
+  min-width: 0;
+}
+
+.title {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.5rem;
+}
+
+.symbol {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.feedback {
+  margin: 1rem 1.25rem 0;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--error-text);
+  background: var(--error-background);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.table {
+  min-width: 900px;
+}
+
+.tableHead {
+  color: var(--text-muted);
+  background: var(--panel-muted);
+}
+
+.headerRow {
+  border-bottom-color: var(--border);
+}
+
+.tableRow {
+  background: var(--panel-background);
+}
+
+.valueCell {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.typeBadge {
+  display: inline-flex;
+  min-width: 4.75rem;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1rem;
+}
+
+.buyBadge {
+  color: var(--positive);
+  background: var(--success-background);
+}
+
+.sellBadge {
+  color: var(--negative);
+  background: var(--error-background);
+}
+
+.actionsHeader,
+.actionsCell {
+  text-align: center;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.iconButton:hover {
+  border-color: var(--border-strong);
+  color: var(--primary);
+  background: var(--panel-muted-strong);
+}
+
+.actionIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgb(9 9 11 / 65%);
+  backdrop-filter: blur(6px);
+}
+
+.deleteAlert {
+  width: min(100%, 28rem);
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 35%);
+}
+
+.deleteAlertText {
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+.deleteFeedback {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--error-text);
+  background: var(--error-background);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.deleteAlertActions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dangerButton,
+.secondaryButton {
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.dangerButton {
+  color: var(--danger-foreground);
+  background: var(--danger);
+}
+
+.dangerButton:hover {
+  background: var(--danger-hover);
+}
+
+.secondaryButton {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--panel-background);
+}
+
+.secondaryButton:hover {
+  background: var(--panel-muted-strong);
+}
+
+.dangerButton:disabled,
+.secondaryButton:disabled {
+  color: var(--primary-foreground);
+  background: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.emptyCell {
+  height: 8rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .backButton {
+    order: 2;
+  }
+
+  .deleteAlertActions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
