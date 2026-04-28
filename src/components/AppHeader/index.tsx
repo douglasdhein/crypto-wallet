@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AppLogo } from "@/components/AppLogo";
 import { Button, buttonVariants } from "@/components/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import type { Theme } from "@/lib/theme";
@@ -73,10 +74,7 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
 
   return (
     <header className={styles.header}>
-      <div>
-        <p className={styles.brand}>Crypto Wallet</p>
-        <h1 className={styles.title}>Dashboard de criptomoedas</h1>
-      </div>
+      <AppLogo />
 
       <div className={styles.actions}>
         <ThemeToggle initialTheme={initialTheme} />

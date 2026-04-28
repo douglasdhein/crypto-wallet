@@ -1,0 +1,31 @@
+.logoLink {
+  width: min(17rem, 70vw);
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.darkLogo {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .lightLogo {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .darkLogo {
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .logoLink {
+    width: 18rem;
+  }
+}
