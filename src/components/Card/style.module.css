@@ -1,0 +1,21 @@
+.card {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
+}
+
+.cardHeader {
+  padding: 1rem 1rem 0;
+}
+
+.cardTitle {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.cardContent {
+  padding: 0.75rem 1rem 1rem;
+}

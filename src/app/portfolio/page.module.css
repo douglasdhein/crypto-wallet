@@ -15,53 +15,10 @@
   gap: 1.5rem;
 }
 
-.panel {
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 2rem;
-  background: var(--panel-background);
-  box-shadow: var(--shadow-panel);
-}
-
-.content {
-  display: grid;
-  justify-items: start;
-  gap: 1rem;
-}
-
-.title {
-  max-width: 34rem;
-  color: var(--text-primary);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 2.5rem;
-}
-
-.description {
-  max-width: 32rem;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.625rem;
-}
-
-.ctaButton {
-  margin-top: 0.5rem;
-}
-
 @media (min-width: 640px) {
   .page {
     padding-right: 2rem;
     padding-left: 2rem;
-  }
-
-  .panel {
-    padding: 2.5rem;
-  }
-
-  .title {
-    font-size: 2.5rem;
-    line-height: 3rem;
   }
 }
 

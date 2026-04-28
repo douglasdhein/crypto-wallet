@@ -49,6 +49,10 @@ type CoinGeckoTrendingResponse = {
   }>;
 };
 
+type CoinGeckoMarketChartRangeResponse = {
+  prices: Array<[number, number]>;
+};
+
 type CoinGeckoErrorResponse = {
   error?: string;
   status?: {
@@ -59,6 +63,7 @@ type CoinGeckoErrorResponse = {
 const DEFAULT_BASE_URL = 'https://api.coingecko.com/api/v3';
 const MARKET_TABLE_LIMIT = 15;
 const SEARCH_RESULT_LIMIT = 15;
+const HISTORICAL_PRICE_RANGE_SECONDS = 60 * 60 * 12;
 
 export class CoinGeckoError extends Error {
   status: number;
@@ -292,4 +297,52 @@ export async function searchCryptoMarket(searchTerm: string) {
   const markets = await getMarketsByIds(ids);
 
   return sortMarketsByIdOrder(markets, ids).map(normalizeMarketItem);
+}
+
+export async function getHistoricalCoinPrice(coinId: string, date: Date) {
+  const timestamp = Math.floor(date.getTime() / 1000);
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+
+  if (!Number.isFinite(timestamp) || timestamp > currentTimestamp) {
+    throw new CoinGeckoError('Informe uma data de compra valida.', 400);
+  }
+
+  const marketChart = await requestCoinGecko<CoinGeckoMarketChartRangeResponse>(
+    `/coins/${coinId}/market_chart/range`,
+    {
+      from: String(Math.max(timestamp - HISTORICAL_PRICE_RANGE_SECONDS, 0)),
+      to: String(
+        Math.min(timestamp + HISTORICAL_PRICE_RANGE_SECONDS, currentTimestamp),
+      ),
+      vs_currency: 'usd',
+    },
+  );
+
+  const closestPrice = marketChart.prices.reduce<
+    { distance: number; price: number } | null
+  >((closest, [priceTimestamp, price]) => {
+    const distance = Math.abs(priceTimestamp - date.getTime());
+
+    if (!Number.isFinite(price) || price <= 0) {
+      return closest;
+    }
+
+    if (!closest || distance < closest.distance) {
+      return {
+        distance,
+        price,
+      };
+    }
+
+    return closest;
+  }, null);
+
+  if (!closestPrice) {
+    throw new CoinGeckoError(
+      'Nao foi possivel encontrar o preco historico desta moeda.',
+      404,
+    );
+  }
+
+  return closestPrice.price;
 }

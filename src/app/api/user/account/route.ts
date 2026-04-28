@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromToken, SESSION_COOKIE_NAME } from "@/lib/auth/session";
 import { connectMongoDB } from "@/lib/db/mongodb";
+import { PortfolioCoinModel } from "@/models/PortfolioCoin";
+import { PortfolioTransactionModel } from "@/models/PortfolioTransaction";
 import { UserModel } from "@/models/User";
 
 export const runtime = "nodejs";
@@ -35,6 +37,12 @@ export async function DELETE(request: NextRequest) {
   try {
     await connectMongoDB();
 
+    await PortfolioCoinModel.deleteMany({
+      userId: sessionUser.id,
+    });
+    await PortfolioTransactionModel.deleteMany({
+      userId: sessionUser.id,
+    });
     await UserModel.findByIdAndDelete(sessionUser.id);
 
     const response = NextResponse.json({

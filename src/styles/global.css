@@ -17,3 +17,28 @@ textarea,
 select {
   font: inherit;
 }
+
+:where(
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  strong,
+  label,
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  table,
+  th,
+  td,
+  a
+) {
+  font-weight: 400 !important;
+}

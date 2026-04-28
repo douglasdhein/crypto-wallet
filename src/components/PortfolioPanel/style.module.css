@@ -1,0 +1,150 @@
+.panel {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-panel);
+}
+
+.content {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+
+.title {
+  max-width: 34rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+}
+
+.description {
+  max-width: 32rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.625rem;
+}
+
+.loadingText {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+.ctaButton {
+  margin-top: 0.5rem;
+}
+
+.feedback {
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  color: var(--error-text);
+  background: var(--error-background);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgb(9 9 11 / 65%);
+  backdrop-filter: blur(6px);
+}
+
+.deleteAlert {
+  width: min(100%, 28rem);
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--warning-border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  color: var(--text-primary);
+  background: var(--panel-background);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 35%);
+}
+
+.deleteAlertText {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.deleteFeedback {
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--error-text);
+  background: var(--error-background);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.deleteAlertActions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dangerButton,
+.secondaryButton {
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.dangerButton {
+  color: var(--danger-foreground);
+  background: var(--danger);
+}
+
+.dangerButton:hover {
+  background: var(--danger-hover);
+}
+
+.secondaryButton {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--panel-background);
+}
+
+.secondaryButton:hover {
+  background: var(--panel-muted-strong);
+}
+
+.dangerButton:disabled,
+.secondaryButton:disabled {
+  color: var(--primary-foreground);
+  background: var(--text-muted);
+  cursor: not-allowed;
+}
+
+@media (min-width: 640px) {
+  .panel {
+    padding: 2.5rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .deleteAlertActions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
