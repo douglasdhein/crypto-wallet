@@ -171,7 +171,7 @@ export function PortfolioTransactionModal({
     setFeedbackMessage(null);
 
     if (!selectedCoin) {
-      setFeedbackMessage('Selecione uma moeda para adicionar a transacao.');
+      setFeedbackMessage('Selecione uma moeda para adicionar a transação.');
       return;
     }
 
@@ -192,31 +192,33 @@ export function PortfolioTransactionModal({
     }
 
     if (activeTab === 'sell' && parsedSellQuantity > selectedCoinHoldings) {
-      setFeedbackMessage('A quantidade vendida nao pode ser maior que seu saldo.');
+      setFeedbackMessage(
+        'A quantidade vendida não pode ser maior que seu saldo.',
+      );
       return;
     }
 
     if (!transactionDate || !transactionTime) {
-      setFeedbackMessage('Informe data e horario da transacao.');
+      setFeedbackMessage('Informe data e horário da transação.');
       return;
     }
 
     const executedAt = new Date(`${transactionDate}T${transactionTime}`);
 
     if (Number.isNaN(executedAt.getTime())) {
-      setFeedbackMessage('Informe data e horario validos.');
+      setFeedbackMessage('Informe data e horário válidos.');
       return;
     }
 
     if (executedAt < new Date(`${minimumTransactionDate}T00:00`)) {
       setFeedbackMessage(
-        'A data da transacao deve estar dentro dos ultimos 365 dias.',
+        'A data da transação deve estar dentro dos últimos 365 dias.',
       );
       return;
     }
 
     if (executedAt.getTime() > Date.now()) {
-      setFeedbackMessage('A data da transacao nao pode ser futura.');
+      setFeedbackMessage('A data da transação não pode ser futura.');
       return;
     }
 
@@ -243,7 +245,7 @@ export function PortfolioTransactionModal({
 
       if (!result.ok) {
         setFeedbackMessage(
-          result.message ?? 'Nao foi possivel adicionar a transacao.',
+          result.message ?? 'Não foi possível adicionar a transação.',
         );
         return;
       }
@@ -269,7 +271,7 @@ export function PortfolioTransactionModal({
         role="dialog"
       >
         <h2 className={styles.title} id="portfolio-transaction-modal-title">
-          Add Transa&ccedil;&atilde;o
+          Adicionar Transação
         </h2>
 
         <div className={styles.tabs}>
@@ -322,8 +324,10 @@ export function PortfolioTransactionModal({
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) => handleTotalAmountChange(event.target.value)}
-                placeholder="Ex: 1.234,56"
+                onChange={(event) =>
+                  handleTotalAmountChange(event.target.value)
+                }
+                placeholder="Ex: US$ 1.234,56"
                 type="text"
                 value={totalAmountUsd}
               />
@@ -331,17 +335,19 @@ export function PortfolioTransactionModal({
           ) : (
             <label className={styles.field}>
               <span className={styles.fieldHeader}>
-                <span>Quantidade vendida</span>
+                <span>Quantidade Vendida</span>
                 <span className={styles.fieldHint}>
                   {quantityFormatter.format(selectedCoinHoldings)}{' '}
-                  {selectedCoin?.symbol ?? ''} disponivel
+                  {selectedCoin?.symbol ?? ''} disponível
                 </span>
               </span>
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) => handleSellQuantityChange(event.target.value)}
-                placeholder="Ex: 0,5"
+                onChange={(event) =>
+                  handleSellQuantityChange(event.target.value)
+                }
+                placeholder="Ex: 10.50"
                 type="text"
                 value={sellQuantity}
               />
@@ -362,7 +368,7 @@ export function PortfolioTransactionModal({
             </label>
 
             <div className={styles.field}>
-              <span id="transaction-time-label">Horario</span>
+              <span id="transaction-time-label">Horário</span>
               <div
                 aria-labelledby="transaction-time-label"
                 className={styles.timeSelectGrid}
@@ -416,11 +422,7 @@ export function PortfolioTransactionModal({
             onClick={handleAddTransaction}
             type="button"
           >
-            {isAddingTransaction ? (
-              'Adicionando...'
-            ) : (
-              <>Add Transa&ccedil;&atilde;o</>
-            )}
+            {isAddingTransaction ? 'Adicionando' : <>Adicionar Transação</>}
           </button>
 
           <button

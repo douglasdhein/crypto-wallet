@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ArrowLeft, Pencil, Trash } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import type { PortfolioCoin } from "@/components/PortfolioTable";
-import { PortfolioTransactionEditModal } from "@/components/PortfolioTransactionEditModal";
+import { ArrowLeft, Pencil, Trash } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import type { PortfolioCoin } from '@/components/PortfolioTable';
+import { PortfolioTransactionEditModal } from '@/components/PortfolioTransactionEditModal';
 import {
   Table,
   TableBody,
@@ -12,10 +12,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/Table";
-import styles from "./style.module.css";
+} from '@/components/Table';
+import styles from './style.module.css';
 
-type PortfolioTransactionType = "buy" | "sell";
+type PortfolioTransactionType = 'buy' | 'sell';
 
 type PortfolioTransaction = {
   id: string;
@@ -40,11 +40,11 @@ type PortfolioTransactionPayload = {
 } & (
   | {
       totalAmountUsd: number;
-      type: "buy";
+      type: 'buy';
     }
   | {
       quantity: number;
-      type: "sell";
+      type: 'sell';
     }
 );
 
@@ -60,38 +60,41 @@ type PortfolioTransactionsTableProps = {
   onHoldingsChange: (coinId: string, holdings: number) => void;
 };
 
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  currency: "USD",
+const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+  currency: 'USD',
   maximumFractionDigits: 2,
-  style: "currency",
+  style: 'currency',
 });
 
-const quantityFormatter = new Intl.NumberFormat("pt-BR", {
+const quantityFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 8,
 });
 
-const dateTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
-  dateStyle: "short",
-  timeStyle: "short",
+const dateTimeFormatter = new Intl.DateTimeFormat('pt-BR', {
+  dateStyle: 'short',
+  timeStyle: 'short',
 });
 
 function formatTransactionType(type: PortfolioTransactionType) {
-  return type === "buy" ? "Compra" : "Venda";
+  return type === 'buy' ? 'Compra' : 'Venda';
 }
 
 function formatDateTime(value: string) {
   const date = new Date(value);
 
   if (Number.isNaN(date.getTime())) {
-    return "-";
+    return '-';
   }
 
   return dateTimeFormatter.format(date);
 }
 
-function formatTransactionCurrency(value: number, type: PortfolioTransactionType) {
-  if (type === "sell") {
-    return "-";
+function formatTransactionCurrency(
+  value: number,
+  type: PortfolioTransactionType,
+) {
+  if (type === 'sell') {
+    return '-';
   }
 
   return currencyFormatter.format(value);
@@ -123,7 +126,7 @@ export function PortfolioTransactionsTable({
         const response = await fetch(
           `/api/portfolio/transactions?coinId=${encodeURIComponent(coin.id)}`,
           {
-            cache: "no-store",
+            cache: 'no-store',
             signal: controller.signal,
           },
         );
@@ -131,13 +134,13 @@ export function PortfolioTransactionsTable({
 
         if (!response.ok) {
           throw new Error(
-            result.message ?? "Nao foi possivel carregar as transacoes.",
+            result.message ?? 'Não foi possível carregar as transações.',
           );
         }
 
         setTransactions(result.data ?? []);
       } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
+        if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
 
@@ -145,7 +148,7 @@ export function PortfolioTransactionsTable({
         setFeedbackMessage(
           error instanceof Error
             ? error.message
-            : "Nao foi possivel carregar as transacoes.",
+            : 'Não foi possível carregar as transações.',
         );
       } finally {
         setIsLoadingTransactions(false);
@@ -165,10 +168,10 @@ export function PortfolioTransactionsTable({
     setFeedbackMessage(null);
 
     try {
-      const response = await fetch("/api/portfolio/transactions", {
-        method: "PATCH",
+      const response = await fetch('/api/portfolio/transactions', {
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(transaction),
       });
@@ -177,11 +180,11 @@ export function PortfolioTransactionsTable({
       if (
         !response.ok ||
         !result.transaction ||
-        typeof result.holdings !== "number"
+        typeof result.holdings !== 'number'
       ) {
         return {
           ok: false,
-          message: result.message ?? "Nao foi possivel editar a transacao.",
+          message: result.message ?? 'Não foi possível editar a transação.',
         };
       }
 
@@ -200,7 +203,7 @@ export function PortfolioTransactionsTable({
     } catch {
       return {
         ok: false,
-        message: "Nao foi possivel conectar ao servidor.",
+        message: 'Não foi possível conectar ao servidor.',
       };
     }
   }
@@ -223,10 +226,10 @@ export function PortfolioTransactionsTable({
     setIsDeletingTransaction(true);
 
     try {
-      const response = await fetch("/api/portfolio/transactions", {
-        method: "DELETE",
+      const response = await fetch('/api/portfolio/transactions', {
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: transactionPendingDeletion.id,
@@ -235,9 +238,13 @@ export function PortfolioTransactionsTable({
       const result =
         (await response.json()) as PortfolioDeleteTransactionResponse;
 
-      if (!response.ok || !result.coinId || typeof result.holdings !== "number") {
+      if (
+        !response.ok ||
+        !result.coinId ||
+        typeof result.holdings !== 'number'
+      ) {
         setDeleteFeedback(
-          result.message ?? "Nao foi possivel excluir a transacao.",
+          result.message ?? 'Não foi possível excluir a transação.',
         );
         return;
       }
@@ -250,7 +257,7 @@ export function PortfolioTransactionsTable({
       onHoldingsChange(result.coinId, result.holdings);
       setTransactionPendingDeletion(null);
     } catch {
-      setDeleteFeedback("Nao foi possivel conectar ao servidor.");
+      setDeleteFeedback('Não foi possível conectar ao servidor.');
     } finally {
       setIsDeletingTransaction(false);
     }
@@ -294,18 +301,18 @@ export function PortfolioTransactionsTable({
         <TableHeader className={styles.tableHead}>
           <TableRow className={styles.headerRow}>
             <TableHead>Tipo</TableHead>
-            <TableHead>Pre&ccedil;o</TableHead>
+            <TableHead>Preço</TableHead>
             <TableHead>Quantidade</TableHead>
-            <TableHead>Data &amp; Hora</TableHead>
+            <TableHead>Data & Hora</TableHead>
             <TableHead>Custo</TableHead>
-            <TableHead className={styles.actionsHeader}>Actions</TableHead>
+            <TableHead className={styles.actionsHeader}>Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isLoadingTransactions ? (
             <TableRow className={styles.tableRow}>
               <TableCell className={styles.emptyCell} colSpan={6}>
-                Carregando transa&ccedil;&otilde;es...
+                Carregando transações
               </TableCell>
             </TableRow>
           ) : transactions.length > 0 ? (
@@ -314,7 +321,7 @@ export function PortfolioTransactionsTable({
                 <TableCell>
                   <span
                     className={`${styles.typeBadge} ${
-                      transaction.type === "buy"
+                      transaction.type === 'buy'
                         ? styles.buyBadge
                         : styles.sellBadge
                     }`}
@@ -343,20 +350,23 @@ export function PortfolioTransactionsTable({
                 <TableCell className={styles.actionsCell}>
                   <div className={styles.actionButtons}>
                     <button
-                      aria-label={`Editar transacao de ${coin.name}`}
+                      aria-label={`Editar transação de ${coin.name}`}
                       className={styles.iconButton}
                       onClick={() => setEditingTransaction(transaction)}
-                      title={`Editar transacao de ${coin.name}`}
+                      title={`Editar`}
                       type="button"
                     >
-                      <Pencil aria-hidden="true" className={styles.actionIcon} />
+                      <Pencil
+                        aria-hidden="true"
+                        className={styles.actionIcon}
+                      />
                     </button>
 
                     <button
-                      aria-label={`Excluir transacao de ${coin.name}`}
+                      aria-label={`Excluir transação de ${coin.name}`}
                       className={styles.iconButton}
                       onClick={() => setTransactionPendingDeletion(transaction)}
-                      title={`Excluir transacao de ${coin.name}`}
+                      title={`Excluir`}
                       type="button"
                     >
                       <Trash aria-hidden="true" className={styles.actionIcon} />
@@ -368,7 +378,7 @@ export function PortfolioTransactionsTable({
           ) : (
             <TableRow className={styles.tableRow}>
               <TableCell className={styles.emptyCell} colSpan={6}>
-                Nenhuma transa&ccedil;&atilde;o encontrada.
+                Nenhuma transação encontrada.
               </TableCell>
             </TableRow>
           )}
@@ -393,8 +403,7 @@ export function PortfolioTransactionsTable({
             role="alertdialog"
           >
             <p className={styles.deleteAlertText} id="delete-transaction-title">
-              Voc&ecirc; tem certeza de que deseja excluir esta
-              transa&ccedil;&atilde;o?
+              Você tem certeza de que deseja excluir esta transação?
             </p>
 
             {deleteFeedback ? (
@@ -408,7 +417,7 @@ export function PortfolioTransactionsTable({
                 onClick={handleConfirmDeleteTransaction}
                 type="button"
               >
-                {isDeletingTransaction ? "Excluindo..." : "Confirmar"}
+                {isDeletingTransaction ? 'Excluindo' : 'Confirmar'}
               </button>
 
               <button

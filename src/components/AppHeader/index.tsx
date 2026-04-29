@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   ChartNoAxesCombined,
@@ -6,15 +6,15 @@ import {
   LogOut,
   Settings,
   User,
-} from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { AppLogo } from "@/components/AppLogo";
-import { Button, buttonVariants } from "@/components/Button";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import type { Theme } from "@/lib/theme";
-import styles from "./style.module.css";
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { AppLogo } from '@/components/AppLogo';
+import { Button, buttonVariants } from '@/components/Button';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import type { Theme } from '@/lib/theme';
+import styles from './style.module.css';
 
 type SessionUser = {
   id: string;
@@ -32,19 +32,19 @@ type AppHeaderProps = {
   initialTheme?: Theme;
 };
 
-export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
+export function AppHeader({ initialTheme = 'dark' }: AppHeaderProps) {
   const pathname = usePathname();
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoadingSession, setIsLoadingSession] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const shouldShowHomeButton =
-    pathname === "/portfolio" || pathname === "/settings";
+    pathname === '/portfolio' || pathname === '/settings';
 
   useEffect(() => {
     async function loadSession() {
       try {
-        const response = await fetch("/api/auth/session", {
-          cache: "no-store",
+        const response = await fetch('/api/auth/session', {
+          cache: 'no-store',
         });
         const session = (await response.json()) as SessionResponse;
 
@@ -62,8 +62,8 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
   async function handleLogout() {
     try {
       setIsLoggingOut(true);
-      await fetch("/api/auth/logout", {
-        method: "POST",
+      await fetch('/api/auth/logout', {
+        method: 'POST',
       });
       setUser(null);
       window.location.reload();
@@ -81,26 +81,26 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
 
         {shouldShowHomeButton ? (
           <Link
-            aria-label="Voltar para a pagina inicial"
+            aria-label="Página Inicial"
             className={buttonVariants({
               className: styles.homeButton,
-              size: "icon",
+              size: 'icon',
             })}
             href="/"
-            title="Voltar para a pagina inicial"
+            title="Página Inicial"
           >
             <House aria-hidden="true" className={styles.actionIcon} />
           </Link>
         ) : null}
 
         <Link
-          aria-label="Abrir portfolio"
+          aria-label="Portfolio"
           className={buttonVariants({
             className: styles.portfolioButton,
-            size: "icon",
+            size: 'icon',
           })}
           href="/portfolio"
-          title="Abrir portfolio"
+          title="Portfolio"
         >
           <ChartNoAxesCombined
             aria-hidden="true"
@@ -111,13 +111,13 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
         {user ? (
           <div className={styles.userActions}>
             <Link
-              aria-label="Abrir configuracoes do usuario"
+              aria-label="Configurações"
               className={buttonVariants({
                 className: styles.userButton,
-                size: "icon",
+                size: 'icon',
               })}
               href="/settings"
-              title="Configuracoes do usuario"
+              title="Configurações"
             >
               <Settings aria-hidden="true" className={styles.actionIcon} />
             </Link>
@@ -125,10 +125,10 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
             <Button
               className={styles.logoutButton}
               disabled={isLoggingOut}
-              aria-label={isLoggingOut ? "Saindo da conta" : "Sair da conta"}
+              aria-label={isLoggingOut ? 'Sair' : 'Sair'}
               onClick={handleLogout}
               size="icon"
-              title={isLoggingOut ? "Saindo da conta" : "Sair da conta"}
+              title={isLoggingOut ? 'Sair' : 'Sair'}
               type="button"
             >
               <LogOut aria-hidden="true" className={styles.actionIcon} />
@@ -137,13 +137,13 @@ export function AppHeader({ initialTheme = "dark" }: AppHeaderProps) {
         ) : (
           <Link
             aria-disabled={isLoadingSession}
-            aria-label="Acessar login"
+            aria-label="Acessar"
             className={buttonVariants({
               className: styles.loginButton,
-              size: "icon",
+              size: 'icon',
             })}
             href="/login"
-            title="Acessar login"
+            title="Acessar"
           >
             <User aria-hidden="true" className={styles.loginIcon} />
           </Link>

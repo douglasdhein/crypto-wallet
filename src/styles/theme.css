@@ -1,13 +1,13 @@
 :root {
-  --background: #ffffff;
+  --background: #e8ecf1;
   --foreground: #171717;
-  --page-background: #fafafa;
-  --panel-background: #ffffff;
-  --panel-muted: #fbfbfd;
-  --panel-muted-strong: #f4f4f5;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --border-soft: #f4f4f5;
+  --page-background: #e8ecf1;
+  --panel-background: #f1f3f5;
+  --panel-muted: #edf0f4;
+  --panel-muted-strong: #e1e6ed;
+  --border: #cfd6df;
+  --border-strong: #b9c3cf;
+  --border-soft: #dfe5ec;
   --text-primary: #09090b;
   --text-secondary: #52525b;
   --text-muted: #71717a;
@@ -16,7 +16,7 @@
   --brand-hover: #065f46;
   --primary: #18181b;
   --primary-hover: #27272a;
-  --primary-foreground: #ffffff;
+  --primary-foreground: #f8fafc;
   --danger: #b91c1c;
   --danger-hover: #991b1b;
   --danger-foreground: #ffffff;
@@ -35,10 +35,10 @@
   --warning-background: #fffbeb;
   --focus-ring: rgb(24 24 27 / 8%);
   --brand-focus-ring: rgb(4 120 87 / 12%);
-  --shadow-soft: 0 1px 2px rgb(15 23 42 / 4%),
-    0 8px 24px rgb(15 23 42 / 5%);
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 3%),
+    0 8px 24px rgb(15 23 42 / 4%);
   --shadow-panel: 0 1px 2px rgb(15 23 42 / 4%),
-    0 18px 48px rgb(15 23 42 / 8%);
+    0 18px 48px rgb(15 23 42 / 6%);
   --shadow-button: 0 1px 2px rgb(24 24 27 / 18%);
 }
 

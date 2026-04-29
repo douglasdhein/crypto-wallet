@@ -26,7 +26,7 @@ export async function DELETE(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para deletar a conta.",
+        message: "Você precisa estar logado para deletar a conta.",
       },
       {
         status: 401,
@@ -57,7 +57,7 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel deletar a conta.",
+        message: "Não foi possível deletar a conta.",
       },
       {
         status: 500,

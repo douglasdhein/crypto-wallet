@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import type { FormEvent } from "react";
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import styles from "./style.module.css";
+import type { FormEvent } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { AppLogo } from '@/components/AppLogo';
+import styles from './style.module.css';
 
-type AuthPanelMode = "login" | "register";
-type MessageType = "success" | "error" | "info";
+type AuthPanelMode = 'login' | 'register';
+type MessageType = 'success' | 'error' | 'info';
 type FieldErrors = Partial<
-  Record<"name" | "username" | "email" | "identifier" | "password", string>
+  Record<'name' | 'username' | 'email' | 'identifier' | 'password', string>
 >;
 
 type AuthPanelProps = {
@@ -32,33 +33,35 @@ type AuthApiResponse = RegisterApiResponse & {
 
 const authContent = {
   login: {
-    title: "Entrar na conta",
-    description: "Acesse seu dashboard para acompanhar suas criptomoedas.",
-    buttonLabel: "Entrar",
-    footerText: "Ainda nao tem uma conta?",
-    footerLinkLabel: "Criar cadastro",
-    footerHref: "/register",
+    title: 'Iniciar sessão',
+    description:
+      'Fique atualizado sobre suas moedas e monitore o desempenho do seu portfólio.',
+    buttonLabel: 'Entrar',
+    footerText: 'Ainda não possui uma conta?',
+    footerLinkLabel: 'Criar cadastro',
+    footerHref: '/register',
   },
   register: {
-    title: "Criar cadastro",
-    description: "Crie sua conta para salvar preferencias e evoluir o painel.",
-    buttonLabel: "Cadastrar",
-    footerText: "Ja tem uma conta?",
-    footerLinkLabel: "Fazer login",
-    footerHref: "/login",
+    title: 'Crie seu cadastro',
+    description:
+      'Fique atualizado sobre suas moedas e monitore o desempenho do seu portfólio.',
+    buttonLabel: 'Cadastrar',
+    footerText: 'Já possui uma conta?',
+    footerLinkLabel: 'Fazer login',
+    footerHref: '/login',
   },
 };
 
 function getFormValue(formData: FormData, fieldName: string) {
   const value = formData.get(fieldName);
 
-  return typeof value === "string" ? value : "";
+  return typeof value === 'string' ? value : '';
 }
 
 export function AuthPanel({ mode }: AuthPanelProps) {
   const router = useRouter();
   const content = authContent[mode];
-  const isRegister = mode === "register";
+  const isRegister = mode === 'register';
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState<{
@@ -74,26 +77,26 @@ export function AuthPanel({ mode }: AuthPanelProps) {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const endpoint = isRegister ? "/api/auth/register" : "/api/auth/login";
+    const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
     const payload = isRegister
       ? {
-          name: getFormValue(formData, "name"),
-          username: getFormValue(formData, "username"),
-          email: getFormValue(formData, "email"),
-          password: getFormValue(formData, "password"),
+          name: getFormValue(formData, 'name'),
+          username: getFormValue(formData, 'username'),
+          email: getFormValue(formData, 'email'),
+          password: getFormValue(formData, 'password'),
         }
       : {
-          identifier: getFormValue(formData, "identifier"),
-          password: getFormValue(formData, "password"),
+          identifier: getFormValue(formData, 'identifier'),
+          password: getFormValue(formData, 'password'),
         };
 
     try {
       setIsSubmitting(true);
 
       const response = await fetch(endpoint, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -103,26 +106,26 @@ export function AuthPanel({ mode }: AuthPanelProps) {
       if (!response.ok) {
         setFieldErrors(result.errors ?? {});
         setMessage({
-          type: "error",
-          text: result.message ?? "Nao foi possivel realizar o cadastro.",
+          type: 'error',
+          text: result.message ?? 'Não foi possível realizar o cadastro.',
         });
         return;
       }
 
       form.reset();
       setMessage({
-        type: "success",
-        text: result.message ?? "Operacao realizada com sucesso.",
+        type: 'success',
+        text: result.message ?? 'Operação realizada com sucesso.',
       });
 
       if (!isRegister) {
-        router.push("/");
+        router.push('/');
         router.refresh();
       }
     } catch {
       setMessage({
-        type: "error",
-        text: "Nao foi possivel conectar ao servidor.",
+        type: 'error',
+        text: 'Não foi possível conectar ao servidor.',
       });
     } finally {
       setIsSubmitting(false);
@@ -133,11 +136,11 @@ export function AuthPanel({ mode }: AuthPanelProps) {
     <main className={styles.page}>
       <section className={styles.panel}>
         <Link className={styles.backLink} href="/">
-          Voltar ao dashboard
+          Voltar à página inicial
         </Link>
 
         <div className={styles.heading}>
-          <p className={styles.brand}>Crypto Wallet</p>
+          <AppLogo size="compact" />
           <h1 className={styles.title}>{content.title}</h1>
           <p className={styles.description}>{content.description}</p>
         </div>
@@ -145,14 +148,14 @@ export function AuthPanel({ mode }: AuthPanelProps) {
         <form className={styles.form} onSubmit={handleSubmit}>
           {isRegister ? (
             <label className={styles.field}>
-              <span>Nome</span>
+              <span>Nome Completo</span>
               <input
                 autoComplete="name"
                 className={styles.input}
                 disabled={isSubmitting}
                 minLength={2}
                 name="name"
-                placeholder="Seu nome"
+                placeholder="Digite seu nome"
                 required
                 type="text"
               />
@@ -173,7 +176,7 @@ export function AuthPanel({ mode }: AuthPanelProps) {
                 minLength={3}
                 name="username"
                 pattern="[a-zA-Z0-9_]+"
-                placeholder="seu_username"
+                placeholder="Digite seu username"
                 required
                 type="text"
               />
@@ -186,15 +189,19 @@ export function AuthPanel({ mode }: AuthPanelProps) {
           ) : null}
 
           <label className={styles.field}>
-            <span>{isRegister ? "Email" : "Email ou username"}</span>
+            <span>{isRegister ? 'E-mail' : 'E-mail/Username'}</span>
             <input
-              autoComplete={isRegister ? "email" : "username"}
+              autoComplete={isRegister ? 'email' : 'username'}
               className={styles.input}
               disabled={isSubmitting}
-              name={isRegister ? "email" : "identifier"}
-              placeholder={isRegister ? "voce@email.com" : "voce@email.com ou username"}
+              name={isRegister ? 'email' : 'identifier'}
+              placeholder={
+                isRegister
+                  ? 'Digite seu e-mail'
+                  : 'Digite seu e-mail ou username'
+              }
               required
-              type={isRegister ? "email" : "text"}
+              type={isRegister ? 'email' : 'text'}
             />
             {fieldErrors.email || fieldErrors.identifier ? (
               <span className={styles.fieldError}>
@@ -206,19 +213,17 @@ export function AuthPanel({ mode }: AuthPanelProps) {
           <label className={styles.field}>
             <span>Senha</span>
             <input
-              autoComplete={isRegister ? "new-password" : "current-password"}
+              autoComplete={isRegister ? 'new-password' : 'current-password'}
               className={styles.input}
               disabled={isSubmitting}
               minLength={isRegister ? 8 : undefined}
               name="password"
-              placeholder="Sua senha"
+              placeholder="Digite sua senha"
               required
               type="password"
             />
             {fieldErrors.password ? (
-              <span className={styles.fieldError}>
-                {fieldErrors.password}
-              </span>
+              <span className={styles.fieldError}>{fieldErrors.password}</span>
             ) : null}
           </label>
 
@@ -236,12 +241,12 @@ export function AuthPanel({ mode }: AuthPanelProps) {
             disabled={isSubmitting}
             type="submit"
           >
-            {isSubmitting ? "Enviando..." : content.buttonLabel}
+            {isSubmitting ? 'Enviando...' : content.buttonLabel}
           </button>
         </form>
 
         <p className={styles.footerText}>
-          {content.footerText}{" "}
+          {content.footerText}{' '}
           <Link className={styles.footerLink} href={content.footerHref}>
             {content.footerLinkLabel}
           </Link>

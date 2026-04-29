@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import type { PortfolioCoin } from "@/components/PortfolioTable";
-import styles from "./style.module.css";
+import Image from 'next/image';
+import { useEffect, useMemo, useState } from 'react';
+import type { PortfolioCoin } from '@/components/PortfolioTable';
+import styles from './style.module.css';
 
 type CryptoMarketResponse = {
   data?: PortfolioCoin[];
@@ -28,7 +28,7 @@ export function PortfolioCoinModal({
   onAddCoin,
   onClose,
 }: PortfolioCoinModalProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<PortfolioCoin[]>([]);
   const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
@@ -56,7 +56,7 @@ export function PortfolioCoinModal({
             normalizedSearchTerm,
           )}`,
           {
-            cache: "no-store",
+            cache: 'no-store',
             signal: controller.signal,
           },
         );
@@ -64,7 +64,7 @@ export function PortfolioCoinModal({
 
         if (!response.ok) {
           throw new Error(
-            result.message ?? "Nao foi possivel pesquisar criptomoedas.",
+            result.message ?? 'Não foi possível pesquisar criptomoedas.',
           );
         }
 
@@ -75,7 +75,7 @@ export function PortfolioCoinModal({
         setResults(result.data ?? []);
         setSelectedCoinId(null);
       } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
+        if (error instanceof DOMException && error.name === 'AbortError') {
           return;
         }
 
@@ -88,7 +88,7 @@ export function PortfolioCoinModal({
         setFeedbackMessage(
           error instanceof Error
             ? error.message
-            : "Nao foi possivel pesquisar criptomoedas.",
+            : 'Não foi possível pesquisar criptomoedas.',
         );
       } finally {
         if (isActiveSearch) {
@@ -119,7 +119,7 @@ export function PortfolioCoinModal({
   }
 
   function handleClose() {
-    setSearchTerm("");
+    setSearchTerm('');
     setResults([]);
     setSelectedCoinId(null);
     setFeedbackMessage(null);
@@ -130,7 +130,7 @@ export function PortfolioCoinModal({
 
   async function handleAddCoin() {
     if (!selectedCoin) {
-      setFeedbackMessage("Selecione uma moeda antes de adicionar.");
+      setFeedbackMessage('Selecione uma moeda antes de adicionar.');
       return;
     }
 
@@ -141,7 +141,7 @@ export function PortfolioCoinModal({
 
       if (!result.ok) {
         setFeedbackMessage(
-          result.message ?? "Nao foi possivel adicionar a moeda ao portfolio.",
+          result.message ?? 'Não foi possível adicionar a moeda ao portfólio.',
         );
         return;
       }
@@ -155,7 +155,7 @@ export function PortfolioCoinModal({
   return (
     <div
       aria-hidden={!isOpen}
-      className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ""}`}
+      className={`${styles.overlay} ${isOpen ? styles.overlayOpen : ''}`}
     >
       <div
         aria-labelledby="portfolio-coin-modal-title"
@@ -165,7 +165,7 @@ export function PortfolioCoinModal({
       >
         <div className={styles.heading}>
           <h2 className={styles.title} id="portfolio-coin-modal-title">
-            Adicionar moeda
+            Adicionar Moeda
           </h2>
           <p className={styles.description}>
             Pesquise pelo nome ou token da criptomoeda.
@@ -173,7 +173,6 @@ export function PortfolioCoinModal({
         </div>
 
         <label className={styles.field}>
-          <span>Pesquisar moeda</span>
           <input
             className={styles.input}
             onChange={(event) => handleSearchTermChange(event.target.value)}
@@ -186,7 +185,7 @@ export function PortfolioCoinModal({
         {normalizedSearchTerm.length >= 2 ? (
           <div className={styles.resultsList}>
             {isSearching ? (
-              <p className={styles.stateMessage}>Buscando moedas...</p>
+              <p className={styles.stateMessage}>Buscando moedas</p>
             ) : null}
 
             {!isSearching && results.length === 0 ? (
@@ -201,7 +200,7 @@ export function PortfolioCoinModal({
                 <button
                   aria-pressed={isSelected}
                   className={`${styles.resultButton} ${
-                    isSelected ? styles.resultButtonSelected : ""
+                    isSelected ? styles.resultButtonSelected : ''
                   }`}
                   disabled={isAdded}
                   key={coin.id}
@@ -228,7 +227,7 @@ export function PortfolioCoinModal({
                     </span>
                   </span>
                   <span className={styles.resultStatus}>
-                    {isAdded ? "Adicionada" : isSelected ? "Selecionada" : ""}
+                    {isAdded ? 'Adicionada' : isSelected ? 'Selecionada' : ''}
                   </span>
                 </button>
               );
@@ -247,7 +246,7 @@ export function PortfolioCoinModal({
             onClick={handleAddCoin}
             type="button"
           >
-            {isAddingCoin ? "Adicionando..." : "Add Coins"}
+            {isAddingCoin ? 'Adicionando' : 'Adicionar Moeda'}
           </button>
 
           <button

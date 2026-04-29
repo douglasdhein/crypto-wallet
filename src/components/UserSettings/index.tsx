@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
-import { useEffect, useState } from "react";
-import styles from "./style.module.css";
+import { User } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import type { FormEvent } from 'react';
+import { useEffect, useState } from 'react';
+import styles from './style.module.css';
 
 type SessionUser = {
   id: string;
@@ -23,15 +24,15 @@ type ApiResponse = {
   user?: SessionUser;
 };
 
-type ActiveModal = "password" | "delete" | null;
+type ActiveModal = 'password' | 'delete' | null;
 
 export function UserSettings() {
   const router = useRouter();
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordAlertMessage, setPasswordAlertMessage] = useState<
     string | null
   >(null);
@@ -45,8 +46,8 @@ export function UserSettings() {
   useEffect(() => {
     async function loadSession() {
       try {
-        const response = await fetch("/api/auth/session", {
-          cache: "no-store",
+        const response = await fetch('/api/auth/session', {
+          cache: 'no-store',
         });
         const session = (await response.json()) as SessionResponse;
 
@@ -69,10 +70,10 @@ export function UserSettings() {
     try {
       setIsUpdatingUsername(true);
 
-      const response = await fetch("/api/user/username", {
-        method: "PATCH",
+      const response = await fetch('/api/user/username', {
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username,
@@ -81,7 +82,9 @@ export function UserSettings() {
       const result = (await response.json()) as ApiResponse;
 
       if (!response.ok) {
-        setErrorMessage(result.message ?? "Nao foi possivel salvar o username.");
+        setErrorMessage(
+          result.message ?? 'Não foi possível salvar o username.',
+        );
         return;
       }
 
@@ -89,10 +92,10 @@ export function UserSettings() {
         setUser(result.user);
       }
 
-      setUsername("");
-      setFeedbackMessage(result.message ?? "Username salvo com sucesso.");
+      setUsername('');
+      setFeedbackMessage(result.message ?? 'Username salvo com sucesso.');
     } catch {
-      setErrorMessage("Nao foi possivel conectar ao servidor.");
+      setErrorMessage('Não foi possível conectar ao servidor.');
     } finally {
       setIsUpdatingUsername(false);
     }
@@ -105,17 +108,17 @@ export function UserSettings() {
     setPasswordAlertMessage(null);
 
     if (newPassword !== confirmPassword) {
-      setPasswordAlertMessage("As senhas digitadas precisam ser iguais.");
+      setPasswordAlertMessage('As senhas digitadas precisam ser iguais.');
       return;
     }
 
     try {
       setIsUpdatingPassword(true);
 
-      const response = await fetch("/api/user/password", {
-        method: "PATCH",
+      const response = await fetch('/api/user/password', {
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           password: newPassword,
@@ -124,16 +127,16 @@ export function UserSettings() {
       const result = (await response.json()) as ApiResponse;
 
       if (!response.ok) {
-        setErrorMessage(result.message ?? "Nao foi possivel alterar a senha.");
+        setErrorMessage(result.message ?? 'Não foi possível alterar a senha.');
         return;
       }
 
-      setNewPassword("");
-      setConfirmPassword("");
+      setNewPassword('');
+      setConfirmPassword('');
       setActiveModal(null);
-      setFeedbackMessage(result.message ?? "Senha alterada com sucesso.");
+      setFeedbackMessage(result.message ?? 'Senha alterada com sucesso.');
     } catch {
-      setErrorMessage("Nao foi possivel conectar ao servidor.");
+      setErrorMessage('Não foi possível conectar ao servidor.');
     } finally {
       setIsUpdatingPassword(false);
     }
@@ -145,13 +148,13 @@ export function UserSettings() {
     setIsDeletingAccount(true);
 
     try {
-      const response = await fetch("/api/user/account", {
-        method: "DELETE",
+      const response = await fetch('/api/user/account', {
+        method: 'DELETE',
       });
       const result = (await response.json()) as ApiResponse;
 
       if (!response.ok) {
-        setErrorMessage(result.message ?? "Nao foi possivel deletar a conta.");
+        setErrorMessage(result.message ?? 'Não foi possível deletar a conta.');
         setActiveModal(null);
         setIsDeletingAccount(false);
         return;
@@ -159,10 +162,10 @@ export function UserSettings() {
 
       setActiveModal(null);
       setIsDeletingAccount(false);
-      router.push("/");
+      router.push('/');
       router.refresh();
     } catch {
-      setErrorMessage("Nao foi possivel conectar ao servidor.");
+      setErrorMessage('Não foi possível conectar ao servidor.');
       setActiveModal(null);
       setIsDeletingAccount(false);
     }
@@ -172,56 +175,87 @@ export function UserSettings() {
     <>
       <section className={styles.panel}>
         <div className={styles.heading}>
-          <p className={styles.brand}>Crypto Wallet</p>
-          <h1 className={styles.title}>Configuracoes do usuario</h1>
+          <h1 className={styles.title}>Configurações do Usuário</h1>
           <p className={styles.description}>
             Consulte os dados principais da sua conta.
           </p>
         </div>
 
         {isLoading ? (
-          <div className={styles.stateBox}>Carregando dados da conta...</div>
+          <div className={styles.stateBox}>Carregando dados da conta</div>
         ) : user ? (
           <div className={styles.profileBox}>
-            <div className={styles.avatar} aria-hidden="true">
-              {user.name.charAt(0).toUpperCase()}
+            <div className={styles.profileHero}>
+              <div className={styles.avatar} aria-hidden="true">
+                <User className={styles.avatarIcon} />
+              </div>
+
+              <div className={styles.profileSummary}>
+                <p className={styles.profileName}>{user.name}</p>
+                <p className={styles.profileEmail}>{user.email}</p>
+              </div>
             </div>
 
             <div className={styles.profileInfo}>
-              <div>
+              <div className={styles.profileItem}>
                 <span className={styles.label}>Nome</span>
                 <p className={styles.value}>{user.name}</p>
               </div>
 
-              <div>
+              <div className={styles.profileItem}>
                 <span className={styles.label}>Username</span>
                 <p className={styles.value}>
-                  {user.username ?? "Nao informado"}
+                  {user.username ? (
+                    user.username
+                  ) : (
+                    <span className={styles.emptyValue}>Não informado</span>
+                  )}
                 </p>
               </div>
 
-              <div>
-                <span className={styles.label}>Email</span>
+              <div className={styles.profileItem}>
+                <span className={styles.label}>E-mail</span>
                 <p className={styles.value}>{user.email}</p>
               </div>
             </div>
 
             <div className={styles.actionsBox}>
-              <button
-                className={styles.primaryButton}
-                disabled={
-                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-                }
-                onClick={() => {
-                  setFeedbackMessage(null);
-                  setErrorMessage(null);
-                  setPasswordAlertMessage(null);
-                  setActiveModal("password");
-                }}
-                type="button"
-              >
-                Alterar senha
-              </button>
+              <div className={styles.inlineActions}>
+                <button
+                  className={styles.primaryButton}
+                  disabled={
+                    isUpdatingUsername ||
+                    isUpdatingPassword ||
+                    isDeletingAccount
+                  }
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setErrorMessage(null);
+                    setPasswordAlertMessage(null);
+                    setActiveModal('password');
+                  }}
+                  type="button"
+                >
+                  Alterar Senha
+                </button>
+
+                <button
+                  className={styles.dangerButton}
+                  disabled={
+                    isUpdatingUsername ||
+                    isUpdatingPassword ||
+                    isDeletingAccount
+                  }
+                  onClick={() => {
+                    setFeedbackMessage(null);
+                    setErrorMessage(null);
+                    setActiveModal('delete');
+                  }}
+                  type="button"
+                >
+                  Deletar Conta
+                </button>
+              </div>
 
               {!user.username ? (
                 <form
@@ -229,7 +263,7 @@ export function UserSettings() {
                   onSubmit={handleUpdateUsername}
                 >
                   <label className={styles.field}>
-                    <span>Definir username</span>
+                    <span>Definir Username</span>
                     <input
                       autoComplete="username"
                       className={styles.input}
@@ -258,25 +292,10 @@ export function UserSettings() {
                     }
                     type="submit"
                   >
-                    {isUpdatingUsername ? "Salvando..." : "Salvar username"}
+                    {isUpdatingUsername ? 'Salvando' : 'Salvar username'}
                   </button>
                 </form>
               ) : null}
-
-              <button
-                className={styles.dangerButton}
-                disabled={
-                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-                }
-                onClick={() => {
-                  setFeedbackMessage(null);
-                  setErrorMessage(null);
-                  setActiveModal("delete");
-                }}
-                type="button"
-              >
-                Deletar conta
-              </button>
 
               {feedbackMessage ? (
                 <p className={`${styles.feedback} ${styles.success}`}>
@@ -293,131 +312,131 @@ export function UserSettings() {
           </div>
         ) : (
           <div className={styles.stateBox}>
-            <p>Voce precisa estar logado para acessar suas configuracoes.</p>
+            <p>Você precisa estar logado para acessar suas configurações.</p>
             <Link className={styles.loginLink} href="/login">
-              Fazer login
+              Fazer Login
             </Link>
           </div>
         )}
       </section>
 
-      {activeModal === "password" ? (
+      {activeModal === 'password' ? (
         <div className={styles.modalOverlay}>
-        <form
-          aria-labelledby="password-alert-title"
-          aria-modal="true"
-          className={styles.passwordAlert}
-          onSubmit={handleUpdatePassword}
-          role="dialog"
-        >
-          <p className={styles.passwordAlertTitle} id="password-alert-title">
-            Alterar senha
-          </p>
-
-          <label className={styles.field}>
-            <span>Nova senha</span>
-            <input
-              autoComplete="new-password"
-              className={styles.input}
-              disabled={
-                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-              }
-              minLength={8}
-              onChange={(event) => setNewPassword(event.target.value)}
-              placeholder="Digite a nova senha"
-              required
-              type="password"
-              value={newPassword}
-            />
-          </label>
-
-          <label className={styles.field}>
-            <span>Confirmar senha</span>
-            <input
-              autoComplete="new-password"
-              className={styles.input}
-              disabled={
-                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-              }
-              minLength={8}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              placeholder="Digite a senha novamente"
-              required
-              type="password"
-              value={confirmPassword}
-            />
-          </label>
-
-          {passwordAlertMessage ? (
-            <p className={`${styles.feedback} ${styles.error}`}>
-              {passwordAlertMessage}
+          <form
+            aria-labelledby="password-alert-title"
+            aria-modal="true"
+            className={styles.passwordAlert}
+            onSubmit={handleUpdatePassword}
+            role="dialog"
+          >
+            <p className={styles.passwordAlertTitle} id="password-alert-title">
+              Alterar Senha
             </p>
-          ) : null}
 
-          <div className={styles.passwordAlertActions}>
-            <button
-              className={styles.primaryButton}
-              disabled={
-                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-              }
-              type="submit"
-            >
-              {isUpdatingPassword ? "Alterando..." : "Confirmar"}
-            </button>
+            <label className={styles.field}>
+              <span>Nova Senha</span>
+              <input
+                autoComplete="new-password"
+                className={styles.input}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                minLength={8}
+                onChange={(event) => setNewPassword(event.target.value)}
+                placeholder="Digite a nova senha"
+                required
+                type="password"
+                value={newPassword}
+              />
+            </label>
 
-            <button
-              className={styles.secondaryButton}
-              disabled={isUpdatingPassword}
-              onClick={() => {
-                setNewPassword("");
-                setConfirmPassword("");
-                setPasswordAlertMessage(null);
-                setActiveModal(null);
-              }}
-              type="button"
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
+            <label className={styles.field}>
+              <span>Confirmar Senha</span>
+              <input
+                autoComplete="new-password"
+                className={styles.input}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                minLength={8}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                placeholder="Digite a senha novamente"
+                required
+                type="password"
+                value={confirmPassword}
+              />
+            </label>
+
+            {passwordAlertMessage ? (
+              <p className={`${styles.feedback} ${styles.error}`}>
+                {passwordAlertMessage}
+              </p>
+            ) : null}
+
+            <div className={styles.passwordAlertActions}>
+              <button
+                className={styles.primaryButton}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                type="submit"
+              >
+                {isUpdatingPassword ? 'Alterando' : 'Confirmar'}
+              </button>
+
+              <button
+                className={styles.secondaryButton}
+                disabled={isUpdatingPassword}
+                onClick={() => {
+                  setNewPassword('');
+                  setConfirmPassword('');
+                  setPasswordAlertMessage(null);
+                  setActiveModal(null);
+                }}
+                type="button"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
         </div>
       ) : null}
 
-      {activeModal === "delete" ? (
+      {activeModal === 'delete' ? (
         <div className={styles.modalOverlay}>
-        <div
-          aria-labelledby="delete-account-title"
-          aria-modal="true"
-          className={styles.deleteAlert}
-          role="alertdialog"
-        >
-          <p className={styles.deleteAlertText} id="delete-account-title">
-            Voc&ecirc; tem certeza de que deseja excluir sua conta?
-          </p>
+          <div
+            aria-labelledby="delete-account-title"
+            aria-modal="true"
+            className={styles.deleteAlert}
+            role="alertdialog"
+          >
+            <p className={styles.deleteAlertText} id="delete-account-title">
+              Você tem certeza de que deseja excluir sua conta?
+            </p>
 
-          <div className={styles.deleteAlertActions}>
-            <button
-              className={styles.dangerButton}
-              disabled={
-                isUpdatingUsername || isUpdatingPassword || isDeletingAccount
-              }
-              onClick={handleDeleteAccount}
-              type="button"
-            >
-              {isDeletingAccount ? "Deletando..." : "Sim"}
-            </button>
+            <div className={styles.deleteAlertActions}>
+              <button
+                className={styles.dangerButton}
+                disabled={
+                  isUpdatingUsername || isUpdatingPassword || isDeletingAccount
+                }
+                onClick={handleDeleteAccount}
+                type="button"
+              >
+                {isDeletingAccount ? 'Deletando' : 'Sim'}
+              </button>
 
-            <button
-              className={styles.secondaryButton}
-              disabled={isDeletingAccount}
-              onClick={() => setActiveModal(null)}
-              type="button"
-            >
-              N&atilde;o
-            </button>
+              <button
+                className={styles.secondaryButton}
+                disabled={isDeletingAccount}
+                onClick={() => setActiveModal(null)}
+                type="button"
+              >
+                Cancelar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       ) : null}
     </>
   );

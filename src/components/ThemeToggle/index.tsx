@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { Moon, Sun } from "lucide-react";
-import { useSyncExternalStore } from "react";
-import { Button } from "@/components/Button";
-import { normalizeTheme, THEME_COOKIE_NAME, type Theme } from "@/lib/theme";
-import styles from "./style.module.css";
+import { Moon, Sun } from 'lucide-react';
+import { useSyncExternalStore } from 'react';
+import { Button } from '@/components/Button';
+import { normalizeTheme, THEME_COOKIE_NAME, type Theme } from '@/lib/theme';
+import styles from './style.module.css';
 
 const themeListeners = new Set<() => void>();
 
 function getThemeSnapshot(): Theme {
-  if (typeof window === "undefined") {
-    return "dark";
+  if (typeof window === 'undefined') {
+    return 'dark';
   }
 
   return normalizeTheme(document.documentElement.dataset.theme);
@@ -34,7 +34,7 @@ type ThemeToggleProps = {
   initialTheme?: Theme;
 };
 
-export function ThemeToggle({ initialTheme = "dark" }: ThemeToggleProps) {
+export function ThemeToggle({ initialTheme = 'dark' }: ThemeToggleProps) {
   const theme = useSyncExternalStore(
     subscribeToTheme,
     getThemeSnapshot,
@@ -42,20 +42,20 @@ export function ThemeToggle({ initialTheme = "dark" }: ThemeToggleProps) {
   );
 
   function handleToggleTheme() {
-    const nextTheme = theme === "light" ? "dark" : "light";
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
 
     applyTheme(nextTheme);
   }
 
-  const isDarkTheme = theme === "dark";
+  const isDarkTheme = theme === 'dark';
 
   return (
     <Button
-      aria-label={isDarkTheme ? "Alterar para tema claro" : "Alterar para tema escuro"}
+      aria-label={isDarkTheme ? 'Tema Claro' : 'Tema Escuro'}
       className={styles.button}
       onClick={handleToggleTheme}
       size="icon"
-      title={isDarkTheme ? "Alterar para tema claro" : "Alterar para tema escuro"}
+      title={isDarkTheme ? 'Tema Claro' : 'Tema Escuro'}
       type="button"
     >
       {isDarkTheme ? (

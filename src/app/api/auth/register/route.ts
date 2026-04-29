@@ -46,11 +46,11 @@ function validateRegisterBody(
   const errors: Record<string, string> = {};
 
   if (name.length < 2) {
-    errors.name = "Informe um nome com pelo menos 2 caracteres.";
+    errors.name = "Informe um nome com pelo menos dois caracteres.";
   }
 
   if (!EMAIL_REGEX.test(email)) {
-    errors.email = "Informe um email valido.";
+    errors.email = "Informe um email válido.";
   }
 
   if (
@@ -59,11 +59,11 @@ function validateRegisterBody(
     !USERNAME_REGEX.test(username)
   ) {
     errors.username =
-      "Informe um username de 3 a 30 caracteres usando letras, numeros ou underline.";
+      "Informe um username de três à trinta caracteres usando letras, números ou caracteres especiais.";
   }
 
   if (password.length < MIN_PASSWORD_LENGTH) {
-    errors.password = "A senha deve ter pelo menos 8 caracteres.";
+    errors.password = "A senha deve ter pelo menos oito caracteres.";
   }
 
   if (Object.keys(errors).length > 0) {
@@ -114,7 +114,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -127,7 +127,7 @@ export async function POST(request: Request) {
   if (!validation.isValid) {
     return NextResponse.json(
       {
-        message: "Dados invalidos.",
+        message: "Dados inválidos.",
         errors: validation.errors,
       },
       {
@@ -156,8 +156,8 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           message: isEmailInUse
-            ? "Ja existe um usuario cadastrado com este email."
-            : "Ja existe um usuario cadastrado com este username.",
+            ? "Já existe um usuário cadastrado com este email."
+            : "Já existe um usuário cadastrado com este username.",
         },
         {
           status: 409,
@@ -176,7 +176,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: "Usuario cadastrado com sucesso.",
+        message: "Usuário cadastrado com sucesso.",
         user: {
           id: user._id.toString(),
           name: user.name,
@@ -192,7 +192,7 @@ export async function POST(request: Request) {
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
         {
-          message: "Ja existe um usuario cadastrado com este email ou username.",
+          message: "Já existe um usuário cadastrado com este email ou username.",
         },
         {
           status: 409,
@@ -201,12 +201,12 @@ export async function POST(request: Request) {
     }
 
     if (isMongoDBConnectionError(error)) {
-      console.error("Erro de conexao com MongoDB:", error);
+      console.error("Erro de conexão com MongoDB:", error);
 
       return NextResponse.json(
         {
           message:
-            "Nao foi possivel conectar ao MongoDB. Verifique a URI e o Network Access no MongoDB Atlas.",
+            "Não foi possível conectar ao MongoDB. Verifique a URI e o Network Access no MongoDB Atlas.",
         },
         {
           status: 503,
@@ -214,11 +214,11 @@ export async function POST(request: Request) {
       );
     }
 
-    console.error("Erro ao cadastrar usuario:", error);
+    console.error("Erro ao cadastrar usuário:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel cadastrar o usuario.",
+        message: "Não foi possivel cadastrar o usuário.",
       },
       {
         status: 500,

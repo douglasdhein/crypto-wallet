@@ -52,11 +52,11 @@ const SEARCH_DEBOUNCE_MS = 400;
 const marketTables: MarketTable[] = [
   {
     key: 'top',
-    label: 'Top',
+    label: 'Tudo',
   },
   {
     key: 'trending',
-    label: 'Trending',
+    label: 'Destaques',
   },
 ];
 
@@ -219,14 +219,17 @@ export function CryptoMarketTabs() {
       }));
 
       try {
-        const response = await fetch(`/api/crypto/market?type=${activeTableKey}`, {
-          cache: 'no-store',
-        });
+        const response = await fetch(
+          `/api/crypto/market?type=${activeTableKey}`,
+          {
+            cache: 'no-store',
+          },
+        );
         const result = (await response.json()) as CryptoMarketResponse;
 
         if (!response.ok) {
           throw new Error(
-            result.message ?? 'Nao foi possivel carregar a tabela.',
+            result.message ?? 'Não foi possível carregar a tabela.',
           );
         }
 
@@ -247,7 +250,7 @@ export function CryptoMarketTabs() {
             error:
               error instanceof Error
                 ? error.message
-                : 'Nao foi possivel carregar a tabela.',
+                : 'Não foi possível carregar a tabela.',
             isLoading: false,
           },
         }));
@@ -284,7 +287,7 @@ export function CryptoMarketTabs() {
 
         if (!response.ok) {
           throw new Error(
-            result.message ?? 'Nao foi possivel pesquisar criptomoedas.',
+            result.message ?? 'Não foi possível pesquisar criptomoedas.',
           );
         }
 
@@ -304,7 +307,7 @@ export function CryptoMarketTabs() {
           error:
             error instanceof Error
               ? error.message
-              : 'Nao foi possivel pesquisar criptomoedas.',
+              : 'Não foi possível pesquisar criptomoedas.',
           isLoading: false,
         }));
       }
@@ -348,7 +351,7 @@ export function CryptoMarketTabs() {
             aria-label="Buscar criptomoeda"
             className={styles.searchInput}
             onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Buscar por Bitcoin ou BTC"
+            placeholder="Pesquisar"
             type="search"
             value={searchTerm}
           />
@@ -364,10 +367,10 @@ export function CryptoMarketTabs() {
           <TableRow className={styles.headerRow}>
             <TableHead className={styles.rankHeader}>#</TableHead>
             <TableHead>Nome</TableHead>
-            <TableHead>Preco</TableHead>
+            <TableHead>Preço</TableHead>
             <TableHead>24h</TableHead>
-            <TableHead>Market cap</TableHead>
-            <TableHead>Ultimos 7 dias</TableHead>
+            <TableHead>Capitalização de mercado</TableHead>
+            <TableHead>Últimos 7 dias</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

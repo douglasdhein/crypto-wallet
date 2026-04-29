@@ -93,7 +93,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
 
         if (!response.ok) {
           throw new Error(
-            result.message ?? 'Nao foi possivel carregar seu portfolio.',
+            result.message ?? 'Não foi possível carregar seu portfólio.',
           );
         }
 
@@ -118,7 +118,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
         setPortfolioError(
           error instanceof Error
             ? error.message
-            : 'Nao foi possivel carregar seu portfolio.',
+            : 'Não foi possível carregar seu portfólio.',
         );
       } finally {
         if (showLoading) {
@@ -167,7 +167,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
       if (!response.ok) {
         return {
           ok: false,
-          message: result.message ?? 'Nao foi possivel adicionar a moeda.',
+          message: result.message ?? 'Não foi possível adicionar a moeda.',
         };
       }
 
@@ -191,7 +191,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
     } catch {
       return {
         ok: false,
-        message: 'Nao foi possivel conectar ao servidor.',
+        message: 'Não foi possível conectar ao servidor.',
       };
     }
   }
@@ -202,10 +202,10 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
     setPortfolioError(null);
 
     try {
-      const response = await fetch("/api/portfolio/coins", {
-        method: "DELETE",
+      const response = await fetch('/api/portfolio/coins', {
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: coinId,
@@ -216,7 +216,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
       if (!response.ok) {
         return {
           ok: false,
-          message: result.message ?? "Nao foi possivel excluir a moeda.",
+          message: result.message ?? 'Não foi possível excluir a moeda.',
         };
       }
 
@@ -233,7 +233,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
     } catch {
       return {
         ok: false,
-        message: "Nao foi possivel conectar ao servidor.",
+        message: 'Não foi possível conectar ao servidor.',
       };
     }
   }
@@ -253,10 +253,14 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
       });
       const result = (await response.json()) as PortfolioTransactionResponse;
 
-      if (!response.ok || !result.coinId || typeof result.holdings !== 'number') {
+      if (
+        !response.ok ||
+        !result.coinId ||
+        typeof result.holdings !== 'number'
+      ) {
         return {
           ok: false,
-          message: result.message ?? 'Nao foi possivel adicionar a transacao.',
+          message: result.message ?? 'Não foi possível adicionar a transação.',
         };
       }
 
@@ -291,7 +295,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
     } catch {
       return {
         ok: false,
-        message: 'Nao foi possivel conectar ao servidor.',
+        message: 'Não foi possível conectar ao servidor.',
       };
     }
   }
@@ -374,7 +378,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
 
       if (!result.ok) {
         setDeleteFeedback(
-          result.message ?? "Nao foi possivel excluir a moeda.",
+          result.message ?? 'Não foi possível excluir a moeda.',
         );
         return;
       }
@@ -388,12 +392,13 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
   return (
     <>
       {!isAuthenticated ? (
-        <section className={styles.panel}>
-          <div className={styles.content}>
+        <section className={`${styles.panel} ${styles.emptyPanel}`}>
+          <div className={`${styles.content} ${styles.emptyContent}`}>
             <h1 className={styles.title}>Portfólio de Criptomoedas</h1>
             <p className={styles.description}>
-              Acompanhe seus lucros, perdas e a valoriza&ccedil;&atilde;o do seu
-              portfólio com nossa plataforma f&aacute;cil de usar.
+              Seja para observar o mercado de criptomoedas ou para monitorar
+              cuidadosamente suas participações, a Crypto Wallet é ideal para
+              atender às suas necessidades.
             </p>
             <Link
               className={buttonVariants({ className: styles.ctaButton })}
@@ -406,31 +411,28 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
       ) : null}
 
       {shouldShowLoadingPanel ? (
-        <section className={styles.panel}>
-          <div className={styles.content}>
-            <p className={styles.loadingText}>
-              Carregando seu portf&oacute;lio...
-            </p>
+        <section className={`${styles.panel} ${styles.emptyPanel}`}>
+          <div className={`${styles.content} ${styles.emptyContent}`}>
+            <p className={styles.loadingText}>Carregando seu portfólio</p>
           </div>
         </section>
       ) : null}
 
       {shouldShowEmptyPortfolioPanel ? (
-        <section className={styles.panel}>
-          <div className={styles.content}>
+        <section className={`${styles.panel} ${styles.emptyPanel}`}>
+          <div className={`${styles.content} ${styles.emptyContent}`}>
             <h1 className={styles.title}>
-              Vamos come&ccedil;ar com seu primeiro portf&oacute;lio!
+              Vamos começar com seu primeiro portfólio!
             </h1>
             <p className={styles.description}>
-              Acompanhe lucros, perdas e valoriza&ccedil;&atilde;o, tudo em um
-              s&oacute; lugar.
+              Monitore seus ganhos com criptomoedas de forma profissional.
             </p>
             <button
               className={buttonVariants({ className: styles.ctaButton })}
               onClick={handleOpenCoinModal}
               type="button"
             >
-              Criar seu portf&oacute;lio
+              Criar seu portfólio
             </button>
           </div>
         </section>
@@ -490,8 +492,8 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
                   className={styles.deleteAlertText}
                   id="delete-portfolio-coin-title"
                 >
-                  Voc&ecirc; tem certeza de que deseja excluir{" "}
-                  {coinPendingDeletion.name} do portf&oacute;lio?
+                  Você tem certeza de que deseja excluir{' '}
+                  {coinPendingDeletion.name} do portfólio?
                 </p>
 
                 {deleteFeedback ? (
@@ -505,7 +507,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
                     onClick={handleConfirmDeleteCoin}
                     type="button"
                   >
-                    {isDeletingCoin ? "Excluindo..." : "Confirmar"}
+                    {isDeletingCoin ? 'Excluindo' : 'Confirmar'}
                   </button>
 
                   <button

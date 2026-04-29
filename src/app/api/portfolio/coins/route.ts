@@ -92,7 +92,7 @@ function validatePortfolioCoinBody(
   if (!coinId || !name || !symbol) {
     return {
       isValid: false,
-      message: "Selecione uma moeda valida para adicionar ao portfolio.",
+      message: "Selecione uma moeda válida para adicionar ao portfolio.",
     };
   }
 
@@ -180,7 +180,7 @@ export async function GET(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para acessar o portfolio.",
+        message: "Você precisa estar logado para acessar o portfolio.",
       },
       {
         status: 401,
@@ -222,7 +222,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel carregar as moedas do portfolio.",
+        message: "Não foi possível carregar as moedas do portfolio.",
       },
       {
         status: 500,
@@ -238,7 +238,7 @@ export async function POST(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para adicionar moedas ao portfolio.",
+        message: "Você precisa estar logado para adicionar moedas ao portfolio.",
       },
       {
         status: 401,
@@ -253,7 +253,7 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         coin: existingCoin ? formatPortfolioCoin(existingCoin) : null,
-        message: "Esta moeda ja esta no seu portfolio.",
+        message: "Esta moeda já está no seu portfolio.",
       });
     }
 
@@ -308,7 +308,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel adicionar a moeda ao portfolio.",
+        message: "Não foi possível adicionar a moeda ao portfolio.",
       },
       {
         status: 500,
@@ -324,7 +324,7 @@ export async function DELETE(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para excluir moedas do portfolio.",
+        message: "Você precisa estar logado para excluir moedas do portfolio.",
       },
       {
         status: 401,
@@ -339,7 +339,7 @@ export async function DELETE(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -371,7 +371,7 @@ export async function DELETE(request: NextRequest) {
     if (!deletedCoin) {
       return NextResponse.json(
         {
-          message: "Moeda nao encontrada no portfolio.",
+          message: "Moeda não encontrada no portfolio.",
         },
         {
           status: 404,
@@ -385,14 +385,14 @@ export async function DELETE(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: "Moeda excluida do portfolio.",
+      message: "Moeda excluída do portfolio.",
     });
   } catch (error) {
     console.error("Erro ao excluir moeda do portfolio:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel excluir a moeda do portfolio.",
+        message: "Não foi possível excluir a moeda do portfolio.",
       },
       {
         status: 500,

@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error("Erro ao carregar sessao:", error);
+    console.error("Erro ao carregar sessão:", error);
 
     return NextResponse.json({
       authenticated: true,

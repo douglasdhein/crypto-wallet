@@ -7,10 +7,22 @@
   box-shadow: var(--shadow-panel);
 }
 
+.emptyPanel {
+  max-width: 38rem;
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .content {
   display: grid;
   justify-items: start;
   gap: 1rem;
+}
+
+.emptyContent {
+  justify-items: start;
+  text-align: left;
 }
 
 .title {

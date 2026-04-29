@@ -6,6 +6,10 @@
   text-decoration: none;
 }
 
+.logoLink.compact {
+  width: min(9.75rem, 62vw);
+}
+
 .logo {
   width: 100%;
   height: auto;
@@ -27,5 +31,9 @@
 @media (min-width: 640px) {
   .logoLink {
     width: 18rem;
+  }
+
+  .logoLink.compact {
+    width: 10.2rem;
   }
 }

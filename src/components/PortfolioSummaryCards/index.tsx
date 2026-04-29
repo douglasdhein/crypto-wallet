@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/Card";
-import type { PortfolioCoin } from "@/components/PortfolioTable";
-import styles from "./style.module.css";
+import Image from 'next/image';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/Card';
+import type { PortfolioCoin } from '@/components/PortfolioTable';
+import styles from './style.module.css';
 
 type PortfolioSummaryCardsProps = {
   coins: PortfolioCoin[];
 };
 
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  currency: "USD",
+const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+  currency: 'USD',
   maximumFractionDigits: 2,
-  style: "currency",
+  style: 'currency',
 });
 
-const signedCurrencyFormatter = new Intl.NumberFormat("pt-BR", {
-  currency: "USD",
+const signedCurrencyFormatter = new Intl.NumberFormat('pt-BR', {
+  currency: 'USD',
   maximumFractionDigits: 2,
-  signDisplay: "exceptZero",
-  style: "currency",
+  signDisplay: 'exceptZero',
+  style: 'currency',
 });
 
-const percentFormatter = new Intl.NumberFormat("pt-BR", {
+const percentFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 2,
   minimumFractionDigits: 2,
-  signDisplay: "exceptZero",
-  style: "percent",
+  signDisplay: 'exceptZero',
+  style: 'percent',
 });
 
 function formatPercent(value: number) {
@@ -35,14 +35,14 @@ function formatPercent(value: number) {
 
 function getTone(value: number) {
   if (value > 0) {
-    return "positive";
+    return 'positive';
   }
 
   if (value < 0) {
-    return "negative";
+    return 'negative';
   }
 
-  return "neutral";
+  return 'neutral';
 }
 
 function getPreviousValue(currentValue: number, percentChange24h: number) {
@@ -88,10 +88,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
   const topPerformanceTone = getTone(topPerformance?.percentChange24h ?? 0);
 
   return (
-    <section
-      aria-label="Resumo do portfolio"
-      className={styles.summaryGrid}
-    >
+    <section aria-label="Resumo do portfólio" className={styles.summaryGrid}>
       <Card>
         <CardHeader>
           <CardTitle>Saldo Atual</CardTitle>
@@ -105,7 +102,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Lucro/Preju&iacute;zo do Portfolio 24hrs</CardTitle>
+          <CardTitle>Mudança do Portfólio em 24h</CardTitle>
         </CardHeader>
         <CardContent>
           <p className={`${styles.primaryValue} ${styles[profitLoss24hTone]}`}>
@@ -119,15 +116,19 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Lucro/Preju&iacute;zo total</CardTitle>
+          <CardTitle>Total de Ganhos/Perdas</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className={`${styles.primaryValue} ${styles[totalProfitLossTone]}`}>
+          <p
+            className={`${styles.primaryValue} ${styles[totalProfitLossTone]}`}
+          >
             {totalCostBasis > 0
               ? signedCurrencyFormatter.format(totalProfitLoss)
               : currencyFormatter.format(0)}
           </p>
-          <span className={`${styles.metaValue} ${styles[totalProfitLossTone]}`}>
+          <span
+            className={`${styles.metaValue} ${styles[totalProfitLossTone]}`}
+          >
             {formatPercent(totalProfitLossPercent)}
           </span>
         </CardContent>
@@ -135,7 +136,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Top Performance</CardTitle>
+          <CardTitle>Melhor Desempenho</CardTitle>
         </CardHeader>
         <CardContent>
           {topPerformance ? (

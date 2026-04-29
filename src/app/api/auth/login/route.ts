@@ -45,7 +45,7 @@ function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
   if (!identifier) {
     errors.identifier = "Informe seu email ou username.";
   } else if (!isEmailLogin && !USERNAME_REGEX.test(identifier)) {
-    errors.identifier = "Informe um email valido ou username valido.";
+    errors.identifier = "Informe um email ou username válido.";
   }
 
   if (!password) {
@@ -72,7 +72,7 @@ function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
 function getInvalidCredentialsResponse() {
   return NextResponse.json(
     {
-      message: "Email, username ou senha invalidos.",
+      message: "Dados inválidos.",
     },
     {
       status: 401,
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
   if (!validation.isValid) {
     return NextResponse.json(
       {
-        message: "Dados invalidos.",
+        message: "Dados inválidos.",
         errors: validation.errors,
       },
       {
@@ -165,7 +165,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel realizar o login.",
+        message: "Não foi possível realizar o login.",
       },
       {
         status: 500,

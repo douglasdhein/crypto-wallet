@@ -30,7 +30,7 @@ function validatePasswordBody(
   if (password.length < MIN_PASSWORD_LENGTH) {
     return {
       isValid: false,
-      message: "A nova senha deve ter pelo menos 8 caracteres.",
+      message: "A nova senha deve ter pelo menos oito caracteres.",
     };
   }
 
@@ -47,7 +47,7 @@ export async function PATCH(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para alterar a senha.",
+        message: "Você precisa estar logado para alterar a senha.",
       },
       {
         status: 401,
@@ -62,7 +62,7 @@ export async function PATCH(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -94,7 +94,7 @@ export async function PATCH(request: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          message: "Usuario nao encontrado.",
+          message: "Usuário não encontrado.",
         },
         {
           status: 404,
@@ -110,7 +110,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel alterar a senha.",
+        message: "Não foi possível alterar a senha.",
       },
       {
         status: 500,

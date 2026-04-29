@@ -8,30 +8,23 @@
 }
 
 .loginLink {
-  color: var(--brand);
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1.25rem;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
 }
 
 .loginLink:hover {
-  color: var(--brand-hover);
+  color: var(--text-primary);
 }
 
 .heading {
   margin-top: 0;
 }
 
-.brand {
-  color: var(--brand);
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-}
-
 .title {
-  margin-top: 0.5rem;
   color: var(--text-primary);
   font-size: 1.875rem;
   font-weight: 600;
@@ -64,26 +57,74 @@
 
 .profileBox {
   display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 8%);
+}
+
+.profileHero {
+  display: flex;
+  align-items: center;
   gap: 1rem;
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.25rem;
 }
 
 .avatar {
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  color: var(--primary-foreground);
-  background: var(--primary);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  background: var(--panel-background);
   font-size: 1.25rem;
   font-weight: 700;
 }
 
+.avatarIcon {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.profileSummary {
+  min-width: 0;
+}
+
+.profileName {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
+
+.profileEmail {
+  margin-top: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.35rem;
+  word-break: break-word;
+}
+
 .profileInfo {
   display: grid;
-  gap: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--panel-background);
+}
+
+.profileItem {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.95rem 1rem;
+}
+
+.profileItem + .profileItem {
+  border-top: 1px solid var(--border);
 }
 
 .label {
@@ -99,6 +140,11 @@
   color: var(--text-primary);
   font-size: 0.95rem;
   line-height: 1.5rem;
+  word-break: break-word;
+}
+
+.emptyValue {
+  color: var(--text-muted);
 }
 
 .actionsBox {
@@ -125,21 +171,26 @@
 .input {
   width: 100%;
   min-height: 2.75rem;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  padding: 0.625rem 0.75rem;
+  padding: 0.625rem 0.875rem;
   color: var(--text-primary);
   background: var(--panel-background);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   outline: none;
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
 }
 
+.input::placeholder {
+  color: var(--text-placeholder);
+}
+
 .input:focus {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px var(--brand-focus-ring);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .input:disabled {
@@ -233,7 +284,7 @@
 }
 
 .deleteAlert {
-  border: 1px solid var(--warning-border);
+  border: 1px solid var(--border-strong);
 }
 
 .passwordAlertTitle,
@@ -254,6 +305,29 @@
   .passwordAlertActions,
   .deleteAlertActions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 560px) {
+  .profileItem {
+    position: relative;
+    grid-template-columns: minmax(5.75rem, 6.25rem) minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: center;
+  }
+
+  .profileItem::after {
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    left: calc(1rem + 6.25rem + 0.75rem);
+    width: 1px;
+    background: var(--border-soft);
+  }
+
+  .value {
+    margin-top: 0;
   }
 }
 

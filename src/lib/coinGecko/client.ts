@@ -304,7 +304,7 @@ export async function getHistoricalCoinPrice(coinId: string, date: Date) {
   const currentTimestamp = Math.floor(Date.now() / 1000);
 
   if (!Number.isFinite(timestamp) || timestamp > currentTimestamp) {
-    throw new CoinGeckoError('Informe uma data de compra valida.', 400);
+    throw new CoinGeckoError('Informe uma data de compra válida.', 400);
   }
 
   const marketChart = await requestCoinGecko<CoinGeckoMarketChartRangeResponse>(
@@ -339,7 +339,7 @@ export async function getHistoricalCoinPrice(coinId: string, date: Date) {
 
   if (!closestPrice) {
     throw new CoinGeckoError(
-      'Nao foi possivel encontrar o preco historico desta moeda.',
+      'Não foi possível encontrar o preço histórico desta moeda.',
       404,
     );
   }

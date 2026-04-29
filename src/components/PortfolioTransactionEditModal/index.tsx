@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import type { PortfolioCoin } from "@/components/PortfolioTable";
-import styles from "./style.module.css";
+import { useState } from 'react';
+import type { PortfolioCoin } from '@/components/PortfolioTable';
+import styles from './style.module.css';
 
-type TransactionType = "buy" | "sell";
+type TransactionType = 'buy' | 'sell';
 
 type PortfolioTransaction = {
   id: string;
@@ -22,11 +22,11 @@ type EditTransactionPayload = {
 } & (
   | {
       totalAmountUsd: number;
-      type: "buy";
+      type: 'buy';
     }
   | {
       quantity: number;
-      type: "sell";
+      type: 'sell';
     }
 );
 
@@ -41,24 +41,24 @@ type PortfolioTransactionEditModalProps = {
 };
 
 const hourOptions = Array.from({ length: 24 }, (_, hour) =>
-  String(hour).padStart(2, "0"),
+  String(hour).padStart(2, '0'),
 );
 const minuteOptions = Array.from({ length: 60 }, (_, minute) =>
-  String(minute).padStart(2, "0"),
+  String(minute).padStart(2, '0'),
 );
 
-const currencyIntegerFormatter = new Intl.NumberFormat("pt-BR", {
+const currencyIntegerFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
 });
 
-const quantityFormatter = new Intl.NumberFormat("pt-BR", {
+const quantityFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 8,
 });
 
 const TRANSACTION_HISTORY_LIMIT_DAYS = 365;
 
 function padTimePart(value: number) {
-  return String(value).padStart(2, "0");
+  return String(value).padStart(2, '0');
 }
 
 function getDateInputValue(date: Date) {
@@ -95,25 +95,25 @@ function getTimeValue(value: string) {
   const date = new Date(value);
 
   if (Number.isNaN(date.getTime())) {
-    return "00:00";
+    return '00:00';
   }
 
   return `${padTimePart(date.getHours())}:${padTimePart(date.getMinutes())}`;
 }
 
 function formatMoneyInput(value: string) {
-  const sanitizedValue = value.replace(/[^\d,]/g, "");
+  const sanitizedValue = value.replace(/[^\d,]/g, '');
 
   if (!sanitizedValue) {
-    return "";
+    return '';
   }
 
-  const [integerPart = "", ...decimalParts] = sanitizedValue.split(",");
-  const hasDecimalSeparator = sanitizedValue.includes(",");
-  const decimalPart = decimalParts.join("").slice(0, 2);
-  const normalizedIntegerPart = integerPart.replace(/^0+(?=\d)/, "");
+  const [integerPart = '', ...decimalParts] = sanitizedValue.split(',');
+  const hasDecimalSeparator = sanitizedValue.includes(',');
+  const decimalPart = decimalParts.join('').slice(0, 2);
+  const normalizedIntegerPart = integerPart.replace(/^0+(?=\d)/, '');
   const formattedIntegerPart = currencyIntegerFormatter.format(
-    Number(normalizedIntegerPart || "0"),
+    Number(normalizedIntegerPart || '0'),
   );
 
   if (hasDecimalSeparator) {
@@ -124,14 +124,14 @@ function formatMoneyInput(value: string) {
 }
 
 function formatMoneyValue(value: number) {
-  const [integerPart = "0", decimalPart = "00"] = value.toFixed(2).split(".");
+  const [integerPart = '0', decimalPart = '00'] = value.toFixed(2).split('.');
 
   return `${currencyIntegerFormatter.format(Number(integerPart))},${decimalPart}`;
 }
 
 function parseDecimalInput(value: string) {
-  const normalizedValue = value.includes(",")
-    ? value.replace(/\./g, "").replace(",", ".")
+  const normalizedValue = value.includes(',')
+    ? value.replace(/\./g, '').replace(',', '.')
     : value;
 
   return Number(normalizedValue);
@@ -144,14 +144,14 @@ export function PortfolioTransactionEditModal({
   transaction,
 }: PortfolioTransactionEditModalProps) {
   const [totalAmountUsd, setTotalAmountUsd] = useState(
-    transaction.type === "buy"
+    transaction.type === 'buy'
       ? formatMoneyValue(transaction.totalAmountUsd)
-      : "",
+      : '',
   );
   const [sellQuantity, setSellQuantity] = useState(
-    transaction.type === "sell"
+    transaction.type === 'sell'
       ? quantityFormatter.format(transaction.quantity)
-      : "",
+      : '',
   );
   const [transactionDate, setTransactionDate] = useState(
     getDateValue(transaction.executedAt),
@@ -161,11 +161,11 @@ export function PortfolioTransactionEditModal({
   );
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [isEditingTransaction, setIsEditingTransaction] = useState(false);
-  const [transactionHour = "00", transactionMinute = "00"] =
-    transactionTime.split(":");
+  const [transactionHour = '00', transactionMinute = '00'] =
+    transactionTime.split(':');
   const availableSellQuantity =
     (coin.holdings ?? 0) +
-    (transaction.type === "sell" ? transaction.quantity : 0);
+    (transaction.type === 'sell' ? transaction.quantity : 0);
   const maximumTransactionDate = getTodayDateValue();
   const minimumTransactionDate = getMinimumTransactionDateValue();
 
@@ -182,7 +182,7 @@ export function PortfolioTransactionEditModal({
   }
 
   function handleSellQuantityChange(nextQuantity: string) {
-    setSellQuantity(nextQuantity.replace(/[^\d,.]/g, ""));
+    setSellQuantity(nextQuantity.replace(/[^\d,.]/g, ''));
   }
 
   function handleTransactionHourChange(nextHour: string) {
@@ -200,45 +200,47 @@ export function PortfolioTransactionEditModal({
     setFeedbackMessage(null);
 
     if (
-      transaction.type === "buy" &&
+      transaction.type === 'buy' &&
       (!Number.isFinite(parsedTotalAmountUsd) || parsedTotalAmountUsd <= 0)
     ) {
-      setFeedbackMessage("Informe um total gasto maior que zero.");
+      setFeedbackMessage('Informe um total gasto maior que zero.');
       return;
     }
 
     if (
-      transaction.type === "sell" &&
+      transaction.type === 'sell' &&
       (!Number.isFinite(parsedSellQuantity) || parsedSellQuantity <= 0)
     ) {
-      setFeedbackMessage("Informe uma quantidade vendida maior que zero.");
+      setFeedbackMessage('Informe uma quantidade vendida maior que zero.');
       return;
     }
 
     if (
-      transaction.type === "sell" &&
+      transaction.type === 'sell' &&
       parsedSellQuantity > availableSellQuantity
     ) {
-      setFeedbackMessage("A quantidade vendida nao pode ser maior que seu saldo.");
+      setFeedbackMessage(
+        'A quantidade vendida não pode ser maior que seu saldo.',
+      );
       return;
     }
 
     const executedAt = new Date(`${transactionDate}T${transactionTime}`);
 
     if (Number.isNaN(executedAt.getTime())) {
-      setFeedbackMessage("Informe data e horario validos.");
+      setFeedbackMessage('Informe data e horário válidos.');
       return;
     }
 
     if (executedAt < new Date(`${minimumTransactionDate}T00:00`)) {
       setFeedbackMessage(
-        "A data da transacao deve estar dentro dos ultimos 365 dias.",
+        'A data da transação deve estar dentro dos últimos 365 dias.',
       );
       return;
     }
 
     if (executedAt.getTime() > Date.now()) {
-      setFeedbackMessage("A data da transacao nao pode ser futura.");
+      setFeedbackMessage('A data da transação não pode ser futura.');
       return;
     }
 
@@ -248,7 +250,7 @@ export function PortfolioTransactionEditModal({
 
     try {
       const result = await onEditTransaction(
-        transaction.type === "buy"
+        transaction.type === 'buy'
           ? {
               coinId: coin.id,
               executedAt: executedAt.toISOString(),
@@ -267,7 +269,7 @@ export function PortfolioTransactionEditModal({
 
       if (!result.ok) {
         setFeedbackMessage(
-          result.message ?? "Nao foi possivel editar a transacao.",
+          result.message ?? 'Não foi possível editar a transação.',
         );
         return;
       }
@@ -290,14 +292,14 @@ export function PortfolioTransactionEditModal({
         role="dialog"
       >
         <h2 className={styles.title} id="portfolio-edit-transaction-title">
-          Editar Transa&ccedil;&atilde;o
+          Editar Transação
         </h2>
 
         <div className={styles.tabs}>
           <button
-            aria-pressed={transaction.type === "buy"}
+            aria-pressed={transaction.type === 'buy'}
             className={`${styles.tabButton} ${
-              transaction.type === "buy"
+              transaction.type === 'buy'
                 ? styles.tabButtonActive
                 : styles.tabButtonInactive
             }`}
@@ -308,9 +310,9 @@ export function PortfolioTransactionEditModal({
           </button>
 
           <button
-            aria-pressed={transaction.type === "sell"}
+            aria-pressed={transaction.type === 'sell'}
             className={`${styles.tabButton} ${
-              transaction.type === "sell"
+              transaction.type === 'sell'
                 ? styles.tabButtonActive
                 : styles.tabButtonInactive
             }`}
@@ -331,14 +333,16 @@ export function PortfolioTransactionEditModal({
             </select>
           </label>
 
-          {transaction.type === "buy" ? (
+          {transaction.type === 'buy' ? (
             <label className={styles.field}>
               <span>Total Gasto</span>
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) => handleTotalAmountChange(event.target.value)}
-                placeholder="Ex: 1.234,56"
+                onChange={(event) =>
+                  handleTotalAmountChange(event.target.value)
+                }
+                placeholder="Ex: US$ 1.234,56"
                 type="text"
                 value={totalAmountUsd}
               />
@@ -346,17 +350,19 @@ export function PortfolioTransactionEditModal({
           ) : (
             <label className={styles.field}>
               <span className={styles.fieldHeader}>
-                <span>Quantidade vendida</span>
+                <span>Quantidade Vendida</span>
                 <span className={styles.fieldHint}>
-                  {quantityFormatter.format(availableSellQuantity)}{" "}
-                  {coin.symbol} disponivel
+                  {quantityFormatter.format(availableSellQuantity)}{' '}
+                  {coin.symbol} disponível
                 </span>
               </span>
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) => handleSellQuantityChange(event.target.value)}
-                placeholder="Ex: 0,5"
+                onChange={(event) =>
+                  handleSellQuantityChange(event.target.value)
+                }
+                placeholder="Ex: 10.50"
                 type="text"
                 value={sellQuantity}
               />
@@ -377,7 +383,7 @@ export function PortfolioTransactionEditModal({
             </label>
 
             <div className={styles.field}>
-              <span id="edit-transaction-time-label">Horario</span>
+              <span id="edit-transaction-time-label">Horário</span>
               <div
                 aria-labelledby="edit-transaction-time-label"
                 className={styles.timeSelectGrid}
@@ -431,11 +437,7 @@ export function PortfolioTransactionEditModal({
             onClick={handleEditTransaction}
             type="button"
           >
-            {isEditingTransaction ? (
-              "Salvando..."
-            ) : (
-              <>Salvar altera&ccedil;&otilde;es</>
-            )}
+            {isEditingTransaction ? 'Salvando' : <>Salvar alterações</>}
           </button>
 
           <button

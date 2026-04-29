@@ -2,6 +2,27 @@
   position: relative;
   width: 100%;
   overflow-x: auto;
+  scrollbar-color: var(--border-strong) var(--panel-muted);
+  scrollbar-width: thin;
+}
+
+.tableContainer::-webkit-scrollbar {
+  height: 0.75rem;
+}
+
+.tableContainer::-webkit-scrollbar-track {
+  border-top: 1px solid var(--border);
+  background: var(--panel-muted);
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+  border: 0.2rem solid var(--panel-muted);
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 .table {

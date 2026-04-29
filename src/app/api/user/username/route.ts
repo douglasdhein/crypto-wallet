@@ -39,7 +39,7 @@ function validateUsernameBody(
     return {
       isValid: false,
       message:
-        "Informe um username de 3 a 30 caracteres usando letras, numeros ou underline.",
+        "Informe um username de três à trinta caracteres usando letras, números ou caracteres especiais.",
     };
   }
 
@@ -65,7 +65,7 @@ export async function PATCH(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para alterar o username.",
+        message: "Você precisa estar logado para alterar o username.",
       },
       {
         status: 401,
@@ -80,7 +80,7 @@ export async function PATCH(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -114,7 +114,7 @@ export async function PATCH(request: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         {
-          message: "Ja existe um usuario cadastrado com este username.",
+          message: "Já existe um usuário cadastrado com este username.",
         },
         {
           status: 409,
@@ -136,7 +136,7 @@ export async function PATCH(request: NextRequest) {
     if (!user) {
       return NextResponse.json(
         {
-          message: "Usuario nao encontrado.",
+          message: "Usuário não encontrado.",
         },
         {
           status: 404,
@@ -157,7 +157,7 @@ export async function PATCH(request: NextRequest) {
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
         {
-          message: "Ja existe um usuario cadastrado com este username.",
+          message: "Já existe um usuário cadastrado com este username.",
         },
         {
           status: 409,
@@ -169,7 +169,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel alterar o username.",
+        message: "Não foi possível alterar o username.",
       },
       {
         status: 500,

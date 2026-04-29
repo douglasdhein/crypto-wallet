@@ -75,14 +75,14 @@ function validateTransactionBody(
   if (!coinId) {
     return {
       isValid: false,
-      message: "Selecione uma moeda para adicionar a transacao.",
+      message: "Selecione uma moeda para adicionar a transação.",
     };
   }
 
   if (!type) {
     return {
       isValid: false,
-      message: "Informe se a transacao e de compra ou venda.",
+      message: "Informe se a transação é de compra ou venda.",
     };
   }
 
@@ -103,21 +103,21 @@ function validateTransactionBody(
   if (!executedAt || Number.isNaN(executedAt.getTime())) {
     return {
       isValid: false,
-      message: "Informe uma data e horario validos.",
+      message: "Informe uma data e horário válidos.",
     };
   }
 
   if (executedAt.getTime() > Date.now()) {
     return {
       isValid: false,
-      message: "A data da transacao nao pode ser futura.",
+      message: "A data da transação não pode ser futura.",
     };
   }
 
   if (executedAt.getTime() < getMinimumTransactionDate().getTime()) {
     return {
       isValid: false,
-      message: "A data da transacao deve estar dentro dos ultimos 365 dias.",
+      message: "A data da transação deve estar dentro dos últimos 365 dias.",
     };
   }
 
@@ -193,7 +193,7 @@ export async function GET(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para acessar transacoes.",
+        message: "Você precisa estar logado para acessar transações.",
       },
       {
         status: 401,
@@ -225,7 +225,7 @@ export async function GET(request: NextRequest) {
     if (!portfolioCoin) {
       return NextResponse.json(
         {
-          message: "Moeda nao encontrada no seu portfolio.",
+          message: "Moeda não encontrada no seu portfolio.",
         },
         {
           status: 404,
@@ -253,11 +253,11 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error("Erro ao carregar transacoes do portfolio:", error);
+    console.error("Erro ao carregar transações do portfolio:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel carregar as transacoes do portfolio.",
+        message: "Não foi possível carregar as transações do portfolio.",
       },
       {
         status: 500,
@@ -273,7 +273,7 @@ export async function PATCH(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para editar transacoes.",
+        message: "Você precisa estar logado para editar transações.",
       },
       {
         status: 401,
@@ -288,7 +288,7 @@ export async function PATCH(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -302,7 +302,7 @@ export async function PATCH(request: NextRequest) {
   if (!transactionId) {
     return NextResponse.json(
       {
-        message: "Informe a transacao que deseja editar.",
+        message: "Informe a transação que deseja editar.",
       },
       {
         status: 400,
@@ -332,7 +332,7 @@ export async function PATCH(request: NextRequest) {
     if (!existingTransaction) {
       return NextResponse.json(
         {
-          message: "Transacao nao encontrada.",
+          message: "Transação não encontrada.",
         },
         {
           status: 404,
@@ -343,7 +343,7 @@ export async function PATCH(request: NextRequest) {
     if (existingTransaction.coinId !== validation.transaction.coinId) {
       return NextResponse.json(
         {
-          message: "Nao e possivel alterar a moeda da transacao.",
+          message: "Não é possível alterar a moeda da transação.",
         },
         {
           status: 400,
@@ -354,7 +354,7 @@ export async function PATCH(request: NextRequest) {
     if (existingTransaction.type !== validation.transaction.type) {
       return NextResponse.json(
         {
-          message: "Nao e possivel alterar o tipo da transacao.",
+          message: "Não é possível alterar o tipo da transação.",
         },
         {
           status: 400,
@@ -392,7 +392,7 @@ export async function PATCH(request: NextRequest) {
     if (projectedHoldings < 0) {
       return NextResponse.json(
         {
-          message: "Esta alteracao deixaria seu saldo negativo.",
+          message: "Esta alteração deixaria seu saldo negativo.",
         },
         {
           status: 400,
@@ -411,7 +411,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({
       coinId: validation.transaction.coinId,
       holdings: projectedHoldings,
-      message: "Transacao editada com sucesso.",
+      message: "Transação editada com sucesso.",
       transaction: formatPortfolioTransaction(existingTransaction),
     });
   } catch (error) {
@@ -426,11 +426,11 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    console.error("Erro ao editar transacao do portfolio:", error);
+    console.error("Erro ao editar transação do portfolio:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel editar a transacao.",
+        message: "Não foi possível editar a transação.",
       },
       {
         status: 500,
@@ -446,7 +446,7 @@ export async function DELETE(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para excluir transacoes.",
+        message: "Você precisa estar logado para excluir transações.",
       },
       {
         status: 401,
@@ -461,7 +461,7 @@ export async function DELETE(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -474,7 +474,7 @@ export async function DELETE(request: NextRequest) {
   if (!transactionId) {
     return NextResponse.json(
       {
-        message: "Informe a transacao que deseja excluir.",
+        message: "Informe a transação que deseja excluir.",
       },
       {
         status: 400,
@@ -493,7 +493,7 @@ export async function DELETE(request: NextRequest) {
     if (!transaction) {
       return NextResponse.json(
         {
-          message: "Transacao nao encontrada.",
+          message: "Transação não encontrada.",
         },
         {
           status: 404,
@@ -511,7 +511,7 @@ export async function DELETE(request: NextRequest) {
     if (projectedHoldings < 0) {
       return NextResponse.json(
         {
-          message: "Esta exclusao deixaria seu saldo negativo.",
+          message: "Esta exclusão deixaria seu saldo negativo.",
         },
         {
           status: 400,
@@ -524,14 +524,14 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({
       coinId: transaction.coinId,
       holdings: projectedHoldings,
-      message: "Transacao excluida com sucesso.",
+      message: "Transação excluída com sucesso.",
     });
   } catch (error) {
-    console.error("Erro ao excluir transacao do portfolio:", error);
+    console.error("Erro ao excluir transação do portfolio:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel excluir a transacao.",
+        message: "Não foi possível excluir a transação.",
       },
       {
         status: 500,
@@ -547,7 +547,7 @@ export async function POST(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Voce precisa estar logado para adicionar transacoes.",
+        message: "Você precisa estar logado para adicionar transações.",
       },
       {
         status: 401,
@@ -562,7 +562,7 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json(
       {
-        message: "Envie um corpo JSON valido.",
+        message: "Envie um corpo JSON válido.",
       },
       {
         status: 400,
@@ -594,7 +594,7 @@ export async function POST(request: NextRequest) {
     if (!portfolioCoin) {
       return NextResponse.json(
         {
-          message: "Moeda nao encontrada no seu portfolio.",
+          message: "Moeda não encontrada no seu portfolio.",
         },
         {
           status: 404,
@@ -613,7 +613,7 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         {
-          message: "A quantidade vendida nao pode ser maior que seu saldo.",
+          message: "A quantidade vendida não pode ser maior que seu saldo.",
         },
         {
           status: 400,
@@ -655,7 +655,7 @@ export async function POST(request: NextRequest) {
       {
         coinId: validation.transaction.coinId,
         holdings,
-        message: "Transacao adicionada ao portfolio.",
+        message: "Transação adicionada ao portfolio.",
         transaction: {
           id: transaction._id.toString(),
           coinId: transaction.coinId,
@@ -682,11 +682,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.error("Erro ao adicionar transacao ao portfolio:", error);
+    console.error("Erro ao adicionar transação ao portfolio:", error);
 
     return NextResponse.json(
       {
-        message: "Nao foi possivel adicionar a transacao ao portfolio.",
+        message: "Não foi possível adicionar a transação ao portfolio.",
       },
       {
         status: 500,

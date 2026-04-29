@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Nao foi possivel carregar os dados de criptomoedas.',
+        message: 'Não foi possível carregar os dados de criptomoedas.',
       },
       {
         status: 500,

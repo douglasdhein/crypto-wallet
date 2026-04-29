@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { EllipsisVertical, Plus } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { buttonVariants } from "@/components/Button";
+import { EllipsisVertical, Plus } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { buttonVariants } from '@/components/Button';
 import {
   Table,
   TableBody,
@@ -11,11 +11,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/Table";
-import styles from "./style.module.css";
+} from '@/components/Table';
+import styles from './style.module.css';
 
-type PortfolioTabKey = "coins" | "analytics";
-type RowTone = "positive" | "negative";
+type PortfolioTabKey = 'coins' | 'analytics';
+type RowTone = 'positive' | 'negative';
 
 type PortfolioTab = {
   key: PortfolioTabKey;
@@ -60,56 +60,56 @@ type OptionsMenuPosition = {
 
 const portfolioTabs: PortfolioTab[] = [
   {
-    key: "coins",
-    label: "Coins",
+    key: 'coins',
+    label: 'Moedas',
   },
   {
-    key: "analytics",
-    label: "Analytics",
+    key: 'analytics',
+    label: 'Dados Analíticos',
   },
 ];
 
 const chartColors = [
-  "#34d399",
-  "#60a5fa",
-  "#f59e0b",
-  "#f472b6",
-  "#a78bfa",
-  "#22d3ee",
-  "#fb7185",
-  "#84cc16",
+  '#34d399',
+  '#60a5fa',
+  '#f59e0b',
+  '#f472b6',
+  '#a78bfa',
+  '#22d3ee',
+  '#fb7185',
+  '#84cc16',
 ];
 const chartRadius = 62;
 const chartCircumference = 2 * Math.PI * chartRadius;
 
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  currency: "USD",
+const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+  currency: 'USD',
   maximumFractionDigits: 2,
-  style: "currency",
+  style: 'currency',
 });
 
-const percentFormatter = new Intl.NumberFormat("pt-BR", {
+const percentFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 2,
   minimumFractionDigits: 2,
-  signDisplay: "exceptZero",
-  style: "percent",
+  signDisplay: 'exceptZero',
+  style: 'percent',
 });
 
-const holdingsFormatter = new Intl.NumberFormat("pt-BR", {
+const holdingsFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 8,
 });
 
-const allocationFormatter = new Intl.NumberFormat("pt-BR", {
+const allocationFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 1,
   minimumFractionDigits: 1,
 });
 
 function formatPrice(value: number) {
   if (value > 0 && value < 1) {
-    return new Intl.NumberFormat("pt-BR", {
-      currency: "USD",
+    return new Intl.NumberFormat('pt-BR', {
+      currency: 'USD',
       maximumFractionDigits: 6,
-      style: "currency",
+      style: 'currency',
     }).format(value);
   }
 
@@ -121,7 +121,7 @@ function formatPercent(value: number) {
 }
 
 function getTone(value: number): RowTone {
-  return value >= 0 ? "positive" : "negative";
+  return value >= 0 ? 'positive' : 'negative';
 }
 
 function getFallbackTrendPath(value: number) {
@@ -150,11 +150,11 @@ function getSparklinePath(prices: number[], fallbackValue: number) {
     .map((price, index) => {
       const x = 4 + index * stepX;
       const y = 34 - ((price - minPrice) / priceRange) * 28;
-      const command = index === 0 ? "M" : "L";
+      const command = index === 0 ? 'M' : 'L';
 
       return `${command}${x.toFixed(2)} ${y.toFixed(2)}`;
     })
-    .join(" ");
+    .join(' ');
 }
 
 function getPortfolioAllocations(coins: PortfolioCoin[]) {
@@ -210,8 +210,8 @@ export function PortfolioTable({
   onDeleteCoinClick,
   onViewTransactionsClick,
 }: PortfolioTableProps) {
-  const [activeTabKey, setActiveTabKey] = useState<PortfolioTabKey>("coins");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTabKey, setActiveTabKey] = useState<PortfolioTabKey>('coins');
+  const [searchTerm, setSearchTerm] = useState('');
   const [openOptionsCoinId, setOpenOptionsCoinId] = useState<string | null>(
     null,
   );
@@ -230,7 +230,7 @@ export function PortfolioTable({
         );
       })
     : coins;
-  const visibleCoins = activeTabKey === "coins" ? filteredCoins : [];
+  const visibleCoins = activeTabKey === 'coins' ? filteredCoins : [];
   const openOptionsCoin =
     coins.find((coin) => coin.id === openOptionsCoinId) ?? null;
   const portfolioAllocations = getPortfolioAllocations(coins);
@@ -240,10 +240,9 @@ export function PortfolioTable({
   );
   const hasPortfolioAllocations = portfolioAllocations.length > 0;
 
-  const emptyMessage =
-    normalizedSearchTerm
-      ? "Nenhuma moeda encontrada no seu portfolio."
-      : "Nenhuma moeda adicionada ao portfolio.";
+  const emptyMessage = normalizedSearchTerm
+    ? 'Nenhuma moeda encontrada no seu portfólio.'
+    : 'Nenhuma moeda adicionada ao portfólio.';
 
   useEffect(() => {
     if (!openOptionsCoinId) {
@@ -265,10 +264,10 @@ export function PortfolioTable({
       setOptionsMenuPosition(null);
     }
 
-    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener('pointerdown', handlePointerDown);
 
     return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener('pointerdown', handlePointerDown);
     };
   }, [openOptionsCoinId]);
 
@@ -341,10 +340,10 @@ export function PortfolioTable({
             role="search"
           >
             <input
-              aria-label="Buscar moeda no portfolio"
+              aria-label="Buscar moeda no portfólio"
               className={styles.searchInput}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Buscar por Bitcoin ou BTC"
+              placeholder="Pesquisar"
               type="search"
               value={searchTerm}
             />
@@ -355,142 +354,145 @@ export function PortfolioTable({
             onClick={onAddCoinsClick}
             type="button"
           >
-            Add Coins
+            Adicionar Moeda
           </button>
         </div>
       </div>
 
-      {activeTabKey === "coins" ? (
+      {activeTabKey === 'coins' ? (
         <Table className={styles.table}>
-        <TableHeader className={styles.tableHead}>
-          <TableRow className={styles.headerRow}>
-            <TableHead className={styles.coinHeader}>Nome da moeda</TableHead>
-            <TableHead>Valor atual do ativo</TableHead>
-            <TableHead>Valorizacao 24h</TableHead>
-            <TableHead>Grafico de 7 dias</TableHead>
-            <TableHead>Holdings</TableHead>
-            <TableHead className={styles.actionsHeader}>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isLoading ? (
-            <TableRow className={styles.tableRow}>
-              <TableCell className={styles.emptyCell} colSpan={6}>
-                Carregando moedas do portfolio...
-              </TableCell>
+          <TableHeader className={styles.tableHead}>
+            <TableRow className={styles.headerRow}>
+              <TableHead className={styles.coinHeader}>Nome</TableHead>
+              <TableHead>Preço</TableHead>
+              <TableHead>24h</TableHead>
+              <TableHead>Últimos 7 dias</TableHead>
+              <TableHead>Ativos</TableHead>
+              <TableHead className={styles.actionsHeader}>Ações</TableHead>
             </TableRow>
-          ) : visibleCoins.length > 0 ? (
-            visibleCoins.map((coin) => {
-              const change24hTone = getTone(coin.percentChange24h);
-              const change7dTone = getTone(coin.percentChange7d);
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow className={styles.tableRow}>
+                <TableCell className={styles.emptyCell} colSpan={6}>
+                  Carregando moedas do portfólio
+                </TableCell>
+              </TableRow>
+            ) : visibleCoins.length > 0 ? (
+              visibleCoins.map((coin) => {
+                const change24hTone = getTone(coin.percentChange24h);
+                const change7dTone = getTone(coin.percentChange7d);
 
-              return (
-                <TableRow className={styles.tableRow} key={coin.id}>
-                  <TableCell className={styles.coinTableCell}>
-                    <div className={styles.coinCell}>
-                      {coin.logoUrl ? (
-                        <Image
-                          alt=""
-                          className={styles.coinLogo}
-                          height={36}
-                          src={coin.logoUrl}
-                          width={36}
-                        />
-                      ) : (
-                        <div className={styles.coinFallback}>
-                          {coin.symbol.charAt(0)}
+                return (
+                  <TableRow className={styles.tableRow} key={coin.id}>
+                    <TableCell className={styles.coinTableCell}>
+                      <div className={styles.coinCell}>
+                        {coin.logoUrl ? (
+                          <Image
+                            alt=""
+                            className={styles.coinLogo}
+                            height={36}
+                            src={coin.logoUrl}
+                            width={36}
+                          />
+                        ) : (
+                          <div className={styles.coinFallback}>
+                            {coin.symbol.charAt(0)}
+                          </div>
+                        )}
+                        <div className={styles.coinText}>
+                          <p className={styles.coinName}>{coin.name}</p>
+                          <p className={styles.coinSymbol}>{coin.symbol}</p>
                         </div>
-                      )}
-                      <div className={styles.coinText}>
-                        <p className={styles.coinName}>{coin.name}</p>
-                        <p className={styles.coinSymbol}>{coin.symbol}</p>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className={styles.valueCell}>
-                    {formatPrice(coin.priceUsd)}
-                  </TableCell>
-                  <TableCell>
-                    <span
-                      className={`${styles.percentBadge} ${
-                        change24hTone === "positive"
-                          ? styles.positiveText
-                          : styles.negativeText
-                      }`}
-                    >
-                      {formatPercent(coin.percentChange24h)}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <div className={styles.trendCell}>
-                      <svg
-                        aria-hidden="true"
-                        className={`${styles.sparkline} ${
-                          change7dTone === "positive"
-                            ? styles.positiveStroke
-                            : styles.negativeStroke
+                    </TableCell>
+                    <TableCell className={styles.valueCell}>
+                      {formatPrice(coin.priceUsd)}
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`${styles.percentBadge} ${
+                          change24hTone === 'positive'
+                            ? styles.positiveText
+                            : styles.negativeText
                         }`}
-                        viewBox="0 0 80 40"
                       >
-                        <path
-                          d={getSparklinePath(
-                            coin.sparklinePrices,
-                            coin.percentChange7d,
-                          )}
-                        />
-                      </svg>
-                    </div>
-                  </TableCell>
-                  <TableCell className={styles.valueCell}>
-                    {coin.holdings && coin.holdings > 0
-                      ? `${holdingsFormatter.format(coin.holdings)} ${
-                          coin.symbol
-                        }`
-                      : "-"}
-                  </TableCell>
-                  <TableCell className={styles.actionsCell}>
-                    <div
-                      className={styles.actionButtons}
-                      ref={
-                        openOptionsCoinId === coin.id ? optionsMenuRef : null
-                      }
-                    >
-                      <button
-                        aria-label={`Adicionar transacao de ${coin.name}`}
-                        className={styles.iconButton}
-                        onClick={() => onAddTransactionClick(coin)}
-                        title={`Adicionar transacao de ${coin.name}`}
-                        type="button"
-                      >
-                        <Plus aria-hidden="true" className={styles.actionIcon} />
-                      </button>
-
-                      <button
-                        aria-label={`Abrir opcoes de ${coin.name}`}
-                        aria-expanded={openOptionsCoinId === coin.id}
-                        className={styles.iconButton}
-                        onClick={(event) => handleOpenOptions(event, coin.id)}
-                        title={`Abrir opcoes de ${coin.name}`}
-                        type="button"
-                      >
-                        <EllipsisVertical
+                        {formatPercent(coin.percentChange24h)}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <div className={styles.trendCell}>
+                        <svg
                           aria-hidden="true"
-                          className={styles.actionIcon}
-                        />
-                      </button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })
-          ) : (
-            <TableRow className={styles.tableRow}>
-              <TableCell className={styles.emptyCell} colSpan={6}>
-                {emptyMessage}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
+                          className={`${styles.sparkline} ${
+                            change7dTone === 'positive'
+                              ? styles.positiveStroke
+                              : styles.negativeStroke
+                          }`}
+                          viewBox="0 0 80 40"
+                        >
+                          <path
+                            d={getSparklinePath(
+                              coin.sparklinePrices,
+                              coin.percentChange7d,
+                            )}
+                          />
+                        </svg>
+                      </div>
+                    </TableCell>
+                    <TableCell className={styles.valueCell}>
+                      {coin.holdings && coin.holdings > 0
+                        ? `${holdingsFormatter.format(coin.holdings)} ${
+                            coin.symbol
+                          }`
+                        : '-'}
+                    </TableCell>
+                    <TableCell className={styles.actionsCell}>
+                      <div
+                        className={styles.actionButtons}
+                        ref={
+                          openOptionsCoinId === coin.id ? optionsMenuRef : null
+                        }
+                      >
+                        <button
+                          aria-label={`Adicionar transação de ${coin.name}`}
+                          className={styles.iconButton}
+                          onClick={() => onAddTransactionClick(coin)}
+                          title={`Adicionar Transação`}
+                          type="button"
+                        >
+                          <Plus
+                            aria-hidden="true"
+                            className={styles.actionIcon}
+                          />
+                        </button>
+
+                        <button
+                          aria-label={`Abrir opções de ${coin.name}`}
+                          aria-expanded={openOptionsCoinId === coin.id}
+                          className={styles.iconButton}
+                          onClick={(event) => handleOpenOptions(event, coin.id)}
+                          title={`Opções`}
+                          type="button"
+                        >
+                          <EllipsisVertical
+                            aria-hidden="true"
+                            className={styles.actionIcon}
+                          />
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow className={styles.tableRow}>
+                <TableCell className={styles.emptyCell} colSpan={6}>
+                  {emptyMessage}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       ) : (
         <div className={styles.analyticsPanel}>
@@ -503,7 +505,7 @@ export function PortfolioTable({
               <div className={styles.chartArea}>
                 <div className={styles.chartWrap}>
                   <svg
-                    aria-label="Distribuicao do portfolio"
+                    aria-label="Distribuição do portfólio"
                     className={styles.pieChart}
                     role="img"
                     viewBox="0 0 180 180"
@@ -540,7 +542,7 @@ export function PortfolioTable({
 
               <div className={styles.allocationContent}>
                 <div className={styles.analyticsHeading}>
-                  <h3>Distribui&ccedil;&atilde;o do portf&oacute;lio</h3>
+                  <h3>Distribuição do portfólio</h3>
                   <p>Moedas com saldo positivo na carteira.</p>
                 </div>
 
@@ -578,7 +580,7 @@ export function PortfolioTable({
                           <p className={styles.allocationSymbol}>
                             {holdingsFormatter.format(
                               allocation.coin.holdings ?? 0,
-                            )}{" "}
+                            )}{' '}
                             {allocation.coin.symbol}
                           </p>
                         </div>
@@ -588,7 +590,9 @@ export function PortfolioTable({
                         <strong>
                           {allocationFormatter.format(allocation.percent)}%
                         </strong>
-                        <span>{currencyFormatter.format(allocation.valueUsd)}</span>
+                        <span>
+                          {currencyFormatter.format(allocation.valueUsd)}
+                        </span>
                       </div>
                     </li>
                   ))}
@@ -597,10 +601,9 @@ export function PortfolioTable({
             </div>
           ) : (
             <div className={styles.analyticsEmpty}>
-              <p>Nenhuma moeda com holdings para exibir.</p>
+              <p>Nenhuma moeda para exibir.</p>
               <span>
-                Adicione uma compra para gerar a distribui&ccedil;&atilde;o do
-                portf&oacute;lio.
+                Adicione uma transação para gerar a distribuição do portfólio.
               </span>
             </div>
           )}
@@ -621,7 +624,7 @@ export function PortfolioTable({
             onClick={() => handleViewTransactionsOptionClick(openOptionsCoin)}
             type="button"
           >
-            Ver transa&ccedil;&otilde;es
+            Ver transações
           </button>
 
           <button
