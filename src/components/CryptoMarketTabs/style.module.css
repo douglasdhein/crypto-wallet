@@ -16,6 +16,7 @@
 }
 
 .tabs {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -27,12 +28,14 @@
 }
 
 .tabButton {
+  flex: 1 1 0;
   border: 0;
   border-radius: 0.375rem;
   padding: 0.4375rem 0.875rem;
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
+  text-align: center;
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -76,6 +79,48 @@
 
 .searchInput::placeholder {
   color: var(--text-placeholder);
+}
+
+.searchInput::-webkit-search-cancel-button {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-left: 0.5rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      45deg,
+      transparent 43%,
+      var(--text-muted) 44%,
+      var(--text-muted) 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 43%,
+      var(--text-muted) 44%,
+      var(--text-muted) 56%,
+      transparent 57%
+    );
+  cursor: pointer;
+  appearance: none;
+}
+
+.searchInput::-webkit-search-cancel-button:hover {
+  background:
+    linear-gradient(
+      45deg,
+      transparent 43%,
+      var(--text-primary) 44%,
+      var(--text-primary) 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 43%,
+      var(--text-primary) 44%,
+      var(--text-primary) 56%,
+      transparent 57%
+    );
 }
 
 .searchInput:focus {
@@ -274,5 +319,13 @@
 
   .searchForm {
     max-width: 18rem;
+  }
+
+  .tabs {
+    width: auto;
+  }
+
+  .tabButton {
+    flex: 0 0 auto;
   }
 }

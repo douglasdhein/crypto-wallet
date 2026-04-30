@@ -334,20 +334,22 @@ export function PortfolioTable({
         </div>
 
         <div className={styles.tableActions}>
-          <form
-            className={styles.searchForm}
-            onSubmit={(event) => event.preventDefault()}
-            role="search"
-          >
-            <input
-              aria-label="Buscar moeda no portfólio"
-              className={styles.searchInput}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Pesquisar"
-              type="search"
-              value={searchTerm}
-            />
-          </form>
+          {activeTabKey === 'coins' ? (
+            <form
+              className={styles.searchForm}
+              onSubmit={(event) => event.preventDefault()}
+              role="search"
+            >
+              <input
+                aria-label="Buscar moeda no portfólio"
+                className={styles.searchInput}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Pesquisar"
+                type="search"
+                value={searchTerm}
+              />
+            </form>
+          ) : null}
 
           <button
             className={buttonVariants({ className: styles.addButton })}

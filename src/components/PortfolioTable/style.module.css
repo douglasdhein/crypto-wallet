@@ -93,6 +93,48 @@
   color: var(--text-placeholder);
 }
 
+.searchInput::-webkit-search-cancel-button {
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-left: 0.5rem;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      45deg,
+      transparent 43%,
+      var(--text-muted) 44%,
+      var(--text-muted) 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 43%,
+      var(--text-muted) 44%,
+      var(--text-muted) 56%,
+      transparent 57%
+    );
+  cursor: pointer;
+  appearance: none;
+}
+
+.searchInput::-webkit-search-cancel-button:hover {
+  background:
+    linear-gradient(
+      45deg,
+      transparent 43%,
+      var(--text-primary) 44%,
+      var(--text-primary) 56%,
+      transparent 57%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 43%,
+      var(--text-primary) 44%,
+      var(--text-primary) 56%,
+      transparent 57%
+    );
+}
+
 .searchInput:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--focus-ring);

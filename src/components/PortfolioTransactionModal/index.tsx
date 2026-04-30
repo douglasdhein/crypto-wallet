@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { PortfolioCoin } from '@/components/PortfolioTable';
+import { TimePartSelect } from '@/components/TimePartSelect';
 import styles from './style.module.css';
 
 type TransactionType = 'buy' | 'sell';
@@ -15,7 +16,7 @@ type AddTransactionPayload = {
       type: 'buy';
     }
   | {
-      quantity: number;
+      totalAmountUsd: number;
       type: 'sell';
     }
 );
@@ -42,8 +43,10 @@ const currencyIntegerFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
 });
 
-const quantityFormatter = new Intl.NumberFormat('pt-BR', {
-  maximumFractionDigits: 8,
+const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+  currency: 'USD',
+  maximumFractionDigits: 2,
+  style: 'currency',
 });
 
 const TRANSACTION_HISTORY_LIMIT_DAYS = 365;
@@ -104,10 +107,6 @@ function parseMoneyInput(value: string) {
   return Number(normalizedValue);
 }
 
-function parseQuantityInput(value: string) {
-  return Number(value.replace(',', '.'));
-}
-
 export function PortfolioTransactionModal({
   coins,
   initialCoinId,
@@ -120,7 +119,7 @@ export function PortfolioTransactionModal({
     initialCoinId ?? coins[0]?.id ?? '',
   );
   const [totalAmountUsd, setTotalAmountUsd] = useState('');
-  const [sellQuantity, setSellQuantity] = useState('');
+  const [sellAmountUsd, setSellAmountUsd] = useState('');
   const [transactionDate, setTransactionDate] = useState(getTodayDateValue);
   const [transactionTime, setTransactionTime] = useState(getCurrentTimeValue);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
@@ -132,6 +131,8 @@ export function PortfolioTransactionModal({
     [coins, selectedCoinId],
   );
   const selectedCoinHoldings = selectedCoin?.holdings ?? 0;
+  const selectedCoinAvailableValue =
+    selectedCoinHoldings * (selectedCoin?.priceUsd ?? 0);
   const maximumTransactionDate = getTodayDateValue();
   const minimumTransactionDate = getMinimumTransactionDateValue();
 
@@ -160,13 +161,13 @@ export function PortfolioTransactionModal({
     setTotalAmountUsd(formatMoneyInput(nextTotalAmount));
   }
 
-  function handleSellQuantityChange(nextQuantity: string) {
-    setSellQuantity(nextQuantity.replace(/[^\d,.]/g, ''));
+  function handleSellAmountChange(nextSellAmount: string) {
+    setSellAmountUsd(formatMoneyInput(nextSellAmount));
   }
 
   async function handleAddTransaction() {
     const parsedTotalAmountUsd = parseMoneyInput(totalAmountUsd);
-    const parsedSellQuantity = parseQuantityInput(sellQuantity);
+    const parsedSellAmountUsd = parseMoneyInput(sellAmountUsd);
 
     setFeedbackMessage(null);
 
@@ -185,16 +186,17 @@ export function PortfolioTransactionModal({
 
     if (
       activeTab === 'sell' &&
-      (!Number.isFinite(parsedSellQuantity) || parsedSellQuantity <= 0)
+      (!Number.isFinite(parsedSellAmountUsd) || parsedSellAmountUsd <= 0)
     ) {
-      setFeedbackMessage('Informe uma quantidade vendida maior que zero.');
+      setFeedbackMessage('Informe um valor vendido maior que zero.');
       return;
     }
 
-    if (activeTab === 'sell' && parsedSellQuantity > selectedCoinHoldings) {
-      setFeedbackMessage(
-        'A quantidade vendida não pode ser maior que seu saldo.',
-      );
+    if (
+      activeTab === 'sell' &&
+      parsedSellAmountUsd > selectedCoinAvailableValue
+    ) {
+      setFeedbackMessage('O valor vendido não pode ser maior que seu saldo.');
       return;
     }
 
@@ -238,7 +240,7 @@ export function PortfolioTransactionModal({
           : {
               coinId: selectedCoin.id,
               executedAt: executedAt.toISOString(),
-              quantity: parsedSellQuantity,
+              totalAmountUsd: parsedSellAmountUsd,
               type: activeTab,
             };
       const result = await onAddTransaction(transactionPayload);
@@ -335,21 +337,21 @@ export function PortfolioTransactionModal({
           ) : (
             <label className={styles.field}>
               <span className={styles.fieldHeader}>
-                <span>Quantidade Vendida</span>
+                <span>Valor Vendido</span>
                 <span className={styles.fieldHint}>
-                  {quantityFormatter.format(selectedCoinHoldings)}{' '}
-                  {selectedCoin?.symbol ?? ''} disponível
+                  {currencyFormatter.format(selectedCoinAvailableValue)}{' '}
+                  disponível
                 </span>
               </span>
               <input
                 className={styles.input}
                 inputMode="decimal"
                 onChange={(event) =>
-                  handleSellQuantityChange(event.target.value)
+                  handleSellAmountChange(event.target.value)
                 }
-                placeholder="Ex: 10.50"
+                placeholder="Ex: US$ 1.234,56"
                 type="text"
-                value={sellQuantity}
+                value={sellAmountUsd}
               />
             </label>
           )}
@@ -368,44 +370,24 @@ export function PortfolioTransactionModal({
             </label>
 
             <div className={styles.field}>
-              <span id="transaction-time-label">Horário</span>
+              <span id="transaction-time-label">Horário (Hora/Minuto)</span>
               <div
                 aria-labelledby="transaction-time-label"
                 className={styles.timeSelectGrid}
               >
-                <label className={styles.timeField}>
-                  <span>Hora</span>
-                  <select
-                    className={styles.input}
-                    onChange={(event) =>
-                      handleTransactionHourChange(event.target.value)
-                    }
-                    value={transactionHour}
-                  >
-                    {hourOptions.map((hour) => (
-                      <option key={hour} value={hour}>
-                        {hour}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <TimePartSelect
+                  ariaLabel="Hora"
+                  onChange={handleTransactionHourChange}
+                  options={hourOptions}
+                  value={transactionHour}
+                />
 
-                <label className={styles.timeField}>
-                  <span>Minuto</span>
-                  <select
-                    className={styles.input}
-                    onChange={(event) =>
-                      handleTransactionMinuteChange(event.target.value)
-                    }
-                    value={transactionMinute}
-                  >
-                    {minuteOptions.map((minute) => (
-                      <option key={minute} value={minute}>
-                        {minute}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <TimePartSelect
+                  ariaLabel="Minuto"
+                  onChange={handleTransactionMinuteChange}
+                  options={minuteOptions}
+                  value={transactionMinute}
+                />
               </div>
             </div>
           </div>

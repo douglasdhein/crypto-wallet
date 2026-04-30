@@ -35,7 +35,7 @@ type PortfolioTransactionPayload = {
       type: 'buy';
     }
   | {
-      quantity: number;
+      totalAmountUsd: number;
       type: 'sell';
     }
 );
@@ -404,7 +404,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
               className={buttonVariants({ className: styles.ctaButton })}
               href="/register"
             >
-              Criar seu portfólio
+              Criar Portfólio
             </Link>
           </div>
         </section>
@@ -432,7 +432,7 @@ export function PortfolioPanel({ isAuthenticated }: PortfolioPanelProps) {
               onClick={handleOpenCoinModal}
               type="button"
             >
-              Criar seu portfólio
+              Criar Portfólio
             </button>
           </div>
         </section>

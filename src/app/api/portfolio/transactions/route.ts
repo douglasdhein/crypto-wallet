@@ -21,16 +21,9 @@ type DeletePortfolioTransactionRequestBody = {
 type ValidatedTransaction = {
   coinId: string;
   executedAt: Date;
-} & (
-  | {
-      totalAmountUsd: number;
-      type: "buy";
-    }
-  | {
-      quantity: number;
-      type: "sell";
-    }
-);
+  totalAmountUsd: number;
+  type: "buy" | "sell";
+};
 
 type TransactionValidationResult =
   | {
@@ -64,10 +57,6 @@ function validateTransactionBody(
     typeof body.totalAmountUsd === "number" && Number.isFinite(body.totalAmountUsd)
       ? body.totalAmountUsd
       : 0;
-  const quantity =
-    typeof body.quantity === "number" && Number.isFinite(body.quantity)
-      ? body.quantity
-      : 0;
   const executedAt =
     typeof body.executedAt === "string" ? new Date(body.executedAt) : null;
   const type = body.type === "buy" || body.type === "sell" ? body.type : null;
@@ -93,10 +82,10 @@ function validateTransactionBody(
     };
   }
 
-  if (type === "sell" && quantity <= 0) {
+  if (type === "sell" && totalAmountUsd <= 0) {
     return {
       isValid: false,
-      message: "Informe uma quantidade vendida maior que zero.",
+      message: "Informe um valor vendido maior que zero.",
     };
   }
 
@@ -121,24 +110,12 @@ function validateTransactionBody(
     };
   }
 
-  if (type === "buy") {
-    return {
-      isValid: true,
-      transaction: {
-        coinId,
-        executedAt,
-        totalAmountUsd,
-        type,
-      },
-    };
-  }
-
   return {
     isValid: true,
     transaction: {
       coinId,
       executedAt,
-      quantity,
+      totalAmountUsd,
       type,
     },
   };
@@ -362,21 +339,12 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const historicalPriceUsd =
-      validation.transaction.type === "buy"
-        ? await getHistoricalCoinPrice(
-            validation.transaction.coinId,
-            validation.transaction.executedAt,
-          )
-        : 0;
-    const quantity =
-      validation.transaction.type === "buy"
-        ? validation.transaction.totalAmountUsd / historicalPriceUsd
-        : validation.transaction.quantity;
-    const totalAmountUsd =
-      validation.transaction.type === "buy"
-        ? validation.transaction.totalAmountUsd
-        : 0;
+    const historicalPriceUsd = await getHistoricalCoinPrice(
+      validation.transaction.coinId,
+      validation.transaction.executedAt,
+    );
+    const quantity = validation.transaction.totalAmountUsd / historicalPriceUsd;
+    const totalAmountUsd = validation.transaction.totalAmountUsd;
     const currentHoldings = await calculateCoinHoldings(
       sessionUser.id,
       validation.transaction.coinId,
@@ -607,35 +575,23 @@ export async function POST(request: NextRequest) {
       validation.transaction.coinId,
     );
 
-    if (
-      validation.transaction.type === "sell" &&
-      validation.transaction.quantity > currentHoldings
-    ) {
+    const historicalPriceUsd = await getHistoricalCoinPrice(
+      validation.transaction.coinId,
+      validation.transaction.executedAt,
+    );
+    const quantity = validation.transaction.totalAmountUsd / historicalPriceUsd;
+    const totalAmountUsd = validation.transaction.totalAmountUsd;
+
+    if (validation.transaction.type === "sell" && quantity > currentHoldings) {
       return NextResponse.json(
         {
-          message: "A quantidade vendida não pode ser maior que seu saldo.",
+          message: "O valor vendido não pode ser maior que seu saldo.",
         },
         {
           status: 400,
         },
       );
     }
-
-    const historicalPriceUsd =
-      validation.transaction.type === "buy"
-        ? await getHistoricalCoinPrice(
-            validation.transaction.coinId,
-            validation.transaction.executedAt,
-          )
-        : 0;
-    const quantity =
-      validation.transaction.type === "buy"
-        ? validation.transaction.totalAmountUsd / historicalPriceUsd
-        : validation.transaction.quantity;
-    const totalAmountUsd =
-      validation.transaction.type === "buy"
-        ? validation.transaction.totalAmountUsd
-        : 0;
 
     const transaction = await PortfolioTransactionModel.create({
       coinId: validation.transaction.coinId,

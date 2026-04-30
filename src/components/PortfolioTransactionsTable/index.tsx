@@ -43,7 +43,7 @@ type PortfolioTransactionPayload = {
       type: 'buy';
     }
   | {
-      quantity: number;
+      totalAmountUsd: number;
       type: 'sell';
     }
 );
@@ -89,11 +89,8 @@ function formatDateTime(value: string) {
   return dateTimeFormatter.format(date);
 }
 
-function formatTransactionCurrency(
-  value: number,
-  type: PortfolioTransactionType,
-) {
-  if (type === 'sell') {
+function formatTransactionCurrency(value: number) {
+  if (value <= 0) {
     return '-';
   }
 
@@ -330,10 +327,7 @@ export function PortfolioTransactionsTable({
                   </span>
                 </TableCell>
                 <TableCell className={styles.valueCell}>
-                  {formatTransactionCurrency(
-                    transaction.historicalPriceUsd,
-                    transaction.type,
-                  )}
+                  {formatTransactionCurrency(transaction.historicalPriceUsd)}
                 </TableCell>
                 <TableCell className={styles.valueCell}>
                   {quantityFormatter.format(transaction.quantity)} {coin.symbol}
@@ -342,10 +336,7 @@ export function PortfolioTransactionsTable({
                   {formatDateTime(transaction.executedAt)}
                 </TableCell>
                 <TableCell className={styles.valueCell}>
-                  {formatTransactionCurrency(
-                    transaction.totalAmountUsd,
-                    transaction.type,
-                  )}
+                  {formatTransactionCurrency(transaction.totalAmountUsd)}
                 </TableCell>
                 <TableCell className={styles.actionsCell}>
                   <div className={styles.actionButtons}>
