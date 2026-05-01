@@ -92,7 +92,7 @@ function validatePortfolioCoinBody(
   if (!coinId || !name || !symbol) {
     return {
       isValid: false,
-      message: "Selecione uma moeda válida para adicionar ao portfolio.",
+      message: "Selecione uma moeda válida para adicionar ao portfólio.",
     };
   }
 
@@ -180,7 +180,7 @@ export async function GET(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Você precisa estar logado para acessar o portfolio.",
+        message: "Você precisa estar logado para acessar o portfólio.",
       },
       {
         status: 401,
@@ -218,11 +218,11 @@ export async function GET(request: NextRequest) {
       ),
     });
   } catch (error) {
-    console.error("Erro ao carregar moedas do portfolio:", error);
+    console.error("Erro ao carregar moedas do portfólio:", error);
 
     return NextResponse.json(
       {
-        message: "Não foi possível carregar as moedas do portfolio.",
+        message: "Não foi possível carregar as moedas do portfólio.",
       },
       {
         status: 500,
@@ -238,7 +238,7 @@ export async function POST(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Você precisa estar logado para adicionar moedas ao portfolio.",
+        message: "Você precisa estar logado para adicionar moedas ao portfólio.",
       },
       {
         status: 401,
@@ -285,7 +285,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         coin: formatPortfolioCoin(coin),
-        message: "Moeda adicionada ao portfolio.",
+        message: "Moeda adicionada ao portfólio.",
       },
       {
         status: 201,
@@ -300,15 +300,15 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         coin: existingCoin ? formatPortfolioCoin(existingCoin) : null,
-        message: "Esta moeda já está no seu portfolio.",
+        message: "Esta moeda já está no seu portfólio.",
       });
     }
 
-    console.error("Erro ao adicionar moeda ao portfolio:", error);
+    console.error("Erro ao adicionar moeda ao portfólio:", error);
 
     return NextResponse.json(
       {
-        message: "Não foi possível adicionar a moeda ao portfolio.",
+        message: "Não foi possível adicionar a moeda ao portfólio.",
       },
       {
         status: 500,
@@ -324,7 +324,7 @@ export async function DELETE(request: NextRequest) {
   if (!sessionUser) {
     return NextResponse.json(
       {
-        message: "Você precisa estar logado para excluir moedas do portfolio.",
+        message: "Você precisa estar logado para excluir moedas do portfólio.",
       },
       {
         status: 401,
@@ -371,7 +371,7 @@ export async function DELETE(request: NextRequest) {
     if (!deletedCoin) {
       return NextResponse.json(
         {
-          message: "Moeda não encontrada no portfolio.",
+          message: "Moeda não encontrada no portfólio.",
         },
         {
           status: 404,
@@ -385,14 +385,14 @@ export async function DELETE(request: NextRequest) {
     });
 
     return NextResponse.json({
-      message: "Moeda excluída do portfolio.",
+      message: "Moeda excluída do portfólio.",
     });
   } catch (error) {
-    console.error("Erro ao excluir moeda do portfolio:", error);
+    console.error("Erro ao excluir moeda do portfólio:", error);
 
     return NextResponse.json(
       {
-        message: "Não foi possível excluir a moeda do portfolio.",
+        message: "Não foi possível excluir a moeda do portfólio.",
       },
       {
         status: 500,

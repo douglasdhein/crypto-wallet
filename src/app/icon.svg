@@ -1,0 +1,15 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crypto Wallet">
+  <circle cx="120" cy="120" r="112" fill="#0B0B0B" />
+  <text
+    x="120"
+    y="120"
+    fill="#FFFFFF"
+    font-family="Geist, Arial, sans-serif"
+    font-size="132"
+    font-weight="400"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >
+    C
+  </text>
+</svg>

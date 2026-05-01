@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { AppHeader } from "@/components/AppHeader";
 import { CryptoMarketTabs } from "@/components/CryptoMarketTabs";
+import { GlobalMarketSummary } from "@/components/GlobalMarketSummary";
 import { normalizeTheme, THEME_COOKIE_NAME } from "@/lib/theme";
 import styles from "./page.module.css";
 
@@ -12,6 +13,7 @@ export default async function Home() {
     <main className={styles.page}>
       <div className={styles.container}>
         <AppHeader initialTheme={initialTheme} />
+        <GlobalMarketSummary />
         <CryptoMarketTabs />
       </div>
     </main>

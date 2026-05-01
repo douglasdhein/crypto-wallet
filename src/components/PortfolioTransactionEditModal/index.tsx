@@ -362,9 +362,7 @@ export function PortfolioTransactionEditModal({
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) =>
-                  handleSellAmountChange(event.target.value)
-                }
+                onChange={(event) => handleSellAmountChange(event.target.value)}
                 placeholder="Ex: US$ 1.234,56"
                 type="text"
                 value={sellAmountUsd}
@@ -386,7 +384,9 @@ export function PortfolioTransactionEditModal({
             </label>
 
             <div className={styles.field}>
-              <span id="edit-transaction-time-label">Horário (Hora/Minuto)</span>
+              <span id="edit-transaction-time-label">
+                Horário (Hora/Minuto)
+              </span>
               <div
                 aria-labelledby="edit-transaction-time-label"
                 className={styles.timeSelectGrid}
@@ -420,7 +420,7 @@ export function PortfolioTransactionEditModal({
             onClick={handleEditTransaction}
             type="button"
           >
-            {isEditingTransaction ? 'Salvando' : <>Salvar alterações</>}
+            {isEditingTransaction ? 'Salvando' : <>Salvar Alterações</>}
           </button>
 
           <button

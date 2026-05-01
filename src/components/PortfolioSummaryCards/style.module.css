@@ -1,6 +1,19 @@
-.summaryGrid {
+.overviewCard {
   display: grid;
   gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
+}
+
+.overviewTitle {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .primaryValue {
@@ -76,13 +89,21 @@
 }
 
 @media (min-width: 640px) {
-  .summaryGrid {
+  .overviewCard {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overviewTitle {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 }
 
 @media (min-width: 1180px) {
-  .summaryGrid {
+  .overviewCard {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

@@ -14,6 +14,20 @@ export type CryptoMarketItem = {
   lastUpdated: string | null;
 };
 
+export type CryptoGlobalMarketData = {
+  marketCapChangePercentage24hUsd: number;
+  totalMarketCapUsd: number;
+};
+
+type CoinGeckoGlobalResponse = {
+  data?: {
+    market_cap_change_percentage_24h_usd?: number;
+    total_market_cap?: {
+      usd?: number;
+    };
+  };
+};
+
 type CoinGeckoMarketCoin = {
   id: string;
   symbol: string;
@@ -297,6 +311,18 @@ export async function searchCryptoMarket(searchTerm: string) {
   const markets = await getMarketsByIds(ids);
 
   return sortMarketsByIdOrder(markets, ids).map(normalizeMarketItem);
+}
+
+export async function getCryptoGlobalMarketData(): Promise<CryptoGlobalMarketData> {
+  const globalMarket = await requestCoinGecko<CoinGeckoGlobalResponse>(
+    '/global',
+  );
+
+  return {
+    marketCapChangePercentage24hUsd:
+      globalMarket.data?.market_cap_change_percentage_24h_usd ?? 0,
+    totalMarketCapUsd: globalMarket.data?.total_market_cap?.usd ?? 0,
+  };
 }
 
 export async function getHistoricalCoinPrice(coinId: string, date: Date) {

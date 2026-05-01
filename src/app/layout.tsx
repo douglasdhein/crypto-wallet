@@ -13,6 +13,15 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   title: "Crypto Wallet",
   description: "Dashboard simples para acompanhar criptomoedas.",
+  icons: {
+    icon: [
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        url: "/icon.svg",
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({

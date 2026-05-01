@@ -88,7 +88,9 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
   const topPerformanceTone = getTone(topPerformance?.percentChange24h ?? 0);
 
   return (
-    <section aria-label="Resumo do portfólio" className={styles.summaryGrid}>
+    <section aria-label="Resumo do portfólio" className={styles.overviewCard}>
+      <h2 className={styles.overviewTitle}>Visão Geral</h2>
+
       <Card>
         <CardHeader>
           <CardTitle>Saldo Atual</CardTitle>

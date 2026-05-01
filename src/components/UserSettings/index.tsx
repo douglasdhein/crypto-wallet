@@ -292,7 +292,7 @@ export function UserSettings() {
                     }
                     type="submit"
                   >
-                    {isUpdatingUsername ? 'Salvando' : 'Salvar username'}
+                    {isUpdatingUsername ? 'Salvando' : 'Salvar Username'}
                   </button>
                 </form>
               ) : null}

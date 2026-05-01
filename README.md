@@ -1,6 +1,6 @@
 # Crypto Wallet
 
-Crypto Wallet é uma aplicação web desenvolvida para acompanhar o mercado de criptomoedas por meio de uma interface simples, moderna e focada na visualização de dados.
+[Crypto Wallet](https://crypto-wallet-rho.vercel.app/) é uma aplicação web desenvolvida para acompanhar o mercado de criptomoedas por meio de uma interface simples, moderna e focada na visualização de dados.
 
 A proposta do projeto é exibir informações relevantes do mercado cripto, como principais criptomoedas, ativos em tendência, preços atualizados, variação nas últimas 24 horas, market cap e gráficos resumidos, oferecendo uma experiência clara e objetiva para análise rápida dos ativos digitais.
 
@@ -42,3 +42,17 @@ Acesse a aplicação no navegador:
 ```txt
 http://localhost:3000
 ```
+
+Para ter uma experiência completa com o projeto, crie um arquivo .env e preencha as seguintes variáveis:
+
+```txt
+MONGODB_URI=
+MONGODB_DB_NAME=
+NEXTAUTH_SECRET=
+COINGECKO_API_KEY=
+COINGECKO_API_BASE_URL=
+```
+
+Ou acesse pelo link abaixo:
+
+[Clique aqui para acessar a Crypto Wallet](https://crypto-wallet-rho.vercel.app/)

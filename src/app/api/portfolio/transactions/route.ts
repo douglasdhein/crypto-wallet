@@ -202,7 +202,7 @@ export async function GET(request: NextRequest) {
     if (!portfolioCoin) {
       return NextResponse.json(
         {
-          message: "Moeda não encontrada no seu portfolio.",
+          message: "Moeda não encontrada no seu portfólio.",
         },
         {
           status: 404,
@@ -230,11 +230,11 @@ export async function GET(request: NextRequest) {
       })),
     });
   } catch (error) {
-    console.error("Erro ao carregar transações do portfolio:", error);
+    console.error("Erro ao carregar transações do portfólio:", error);
 
     return NextResponse.json(
       {
-        message: "Não foi possível carregar as transações do portfolio.",
+        message: "Não foi possível carregar as transações do portfólio.",
       },
       {
         status: 500,
@@ -394,7 +394,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    console.error("Erro ao editar transação do portfolio:", error);
+    console.error("Erro ao editar transação do portfólio:", error);
 
     return NextResponse.json(
       {
@@ -495,7 +495,7 @@ export async function DELETE(request: NextRequest) {
       message: "Transação excluída com sucesso.",
     });
   } catch (error) {
-    console.error("Erro ao excluir transação do portfolio:", error);
+    console.error("Erro ao excluir transação do portfólio:", error);
 
     return NextResponse.json(
       {
@@ -562,7 +562,7 @@ export async function POST(request: NextRequest) {
     if (!portfolioCoin) {
       return NextResponse.json(
         {
-          message: "Moeda não encontrada no seu portfolio.",
+          message: "Moeda não encontrada no seu portfólio.",
         },
         {
           status: 404,
@@ -611,7 +611,7 @@ export async function POST(request: NextRequest) {
       {
         coinId: validation.transaction.coinId,
         holdings,
-        message: "Transação adicionada ao portfolio.",
+        message: "Transação adicionada ao portfólio.",
         transaction: {
           id: transaction._id.toString(),
           coinId: transaction.coinId,
@@ -638,11 +638,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.error("Erro ao adicionar transação ao portfolio:", error);
+    console.error("Erro ao adicionar transação ao portfólio:", error);
 
     return NextResponse.json(
       {
-        message: "Não foi possível adicionar a transação ao portfolio.",
+        message: "Não foi possível adicionar a transação ao portfólio.",
       },
       {
         status: 500,

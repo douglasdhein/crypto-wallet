@@ -500,7 +500,7 @@ export function PortfolioTable({
         <div className={styles.analyticsPanel}>
           {isLoading ? (
             <div className={styles.analyticsEmpty}>
-              Carregando dados do portfolio...
+              Carregando dados do portfolio
             </div>
           ) : hasPortfolioAllocations ? (
             <div className={styles.analyticsGrid}>

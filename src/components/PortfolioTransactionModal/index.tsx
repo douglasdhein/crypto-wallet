@@ -340,15 +340,13 @@ export function PortfolioTransactionModal({
                 <span>Valor Vendido</span>
                 <span className={styles.fieldHint}>
                   {currencyFormatter.format(selectedCoinAvailableValue)}{' '}
-                  disponível
+                  Disponível
                 </span>
               </span>
               <input
                 className={styles.input}
                 inputMode="decimal"
-                onChange={(event) =>
-                  handleSellAmountChange(event.target.value)
-                }
+                onChange={(event) => handleSellAmountChange(event.target.value)}
                 placeholder="Ex: US$ 1.234,56"
                 type="text"
                 value={sellAmountUsd}

@@ -94,13 +94,13 @@ export function AppHeader({ initialTheme = 'dark' }: AppHeaderProps) {
         ) : null}
 
         <Link
-          aria-label="Portfolio"
+          aria-label="Portfólio"
           className={buttonVariants({
             className: styles.portfolioButton,
             size: 'icon',
           })}
           href="/portfolio"
-          title="Portfolio"
+          title="Portfólio"
         >
           <ChartNoAxesCombined
             aria-hidden="true"

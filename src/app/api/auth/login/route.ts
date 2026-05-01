@@ -43,9 +43,9 @@ function validateLoginBody(body: LoginRequestBody): LoginValidationResult {
   const errors: Record<string, string> = {};
 
   if (!identifier) {
-    errors.identifier = "Informe seu email ou username.";
+    errors.identifier = "Informe seu e-mail ou username.";
   } else if (!isEmailLogin && !USERNAME_REGEX.test(identifier)) {
-    errors.identifier = "Informe um email ou username válido.";
+    errors.identifier = "Informe um e-mail ou username válido.";
   }
 
   if (!password) {

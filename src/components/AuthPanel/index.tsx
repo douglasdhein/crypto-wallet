@@ -33,7 +33,7 @@ type AuthApiResponse = RegisterApiResponse & {
 
 const authContent = {
   login: {
-    title: 'Iniciar sessão',
+    title: 'Iniciar Sessão',
     description:
       'Fique atualizado sobre suas moedas e monitore o desempenho do seu portfólio.',
     buttonLabel: 'Entrar',
@@ -42,7 +42,7 @@ const authContent = {
     footerHref: '/register',
   },
   register: {
-    title: 'Crie seu cadastro',
+    title: 'Criar Cadastro',
     description:
       'Fique atualizado sobre suas moedas e monitore o desempenho do seu portfólio.',
     buttonLabel: 'Cadastrar',
@@ -241,7 +241,7 @@ export function AuthPanel({ mode }: AuthPanelProps) {
             disabled={isSubmitting}
             type="submit"
           >
-            {isSubmitting ? 'Enviando...' : content.buttonLabel}
+            {isSubmitting ? 'Enviando' : content.buttonLabel}
           </button>
         </form>
 

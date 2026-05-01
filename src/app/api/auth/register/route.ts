@@ -50,7 +50,7 @@ function validateRegisterBody(
   }
 
   if (!EMAIL_REGEX.test(email)) {
-    errors.email = "Informe um email válido.";
+    errors.email = "Informe um e-mail válido.";
   }
 
   if (
@@ -156,7 +156,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           message: isEmailInUse
-            ? "Já existe um usuário cadastrado com este email."
+            ? "Já existe um usuário cadastrado com este e-mail."
             : "Já existe um usuário cadastrado com este username.",
         },
         {
@@ -192,7 +192,7 @@ export async function POST(request: Request) {
     if (isDuplicateKeyError(error)) {
       return NextResponse.json(
         {
-          message: "Já existe um usuário cadastrado com este email ou username.",
+          message: "Já existe um usuário cadastrado com este e-mail ou username.",
         },
         {
           status: 409,

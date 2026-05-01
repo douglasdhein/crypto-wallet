@@ -1,0 +1,41 @@
+.summary {
+  width: 100%;
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  background: var(--panel-background);
+  box-shadow: var(--shadow-soft);
+}
+
+.title {
+  max-width: 100%;
+  color: var(--text-primary);
+  font-size: clamp(1.25rem, 6vw, 1.5rem);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.description {
+  max-width: 58rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+@media (min-width: 640px) {
+  .summary {
+    padding: 1.75rem;
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+}
