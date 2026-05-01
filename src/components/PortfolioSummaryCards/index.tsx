@@ -104,7 +104,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Mudança do Portfólio em 24h</CardTitle>
+          <CardTitle>Mudança do Portfólio (24h)</CardTitle>
         </CardHeader>
         <CardContent>
           <p className={`${styles.primaryValue} ${styles[profitLoss24hTone]}`}>
@@ -138,7 +138,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Melhor Desempenho</CardTitle>
+          <CardTitle>Melhor Desempenho (24h)</CardTitle>
         </CardHeader>
         <CardContent>
           {topPerformance ? (
@@ -167,7 +167,7 @@ export function PortfolioSummaryCards({ coins }: PortfolioSummaryCardsProps) {
               </div>
             </div>
           ) : (
-            <p className={styles.emptyValue}>Sem holdings</p>
+            <p className={styles.emptyValue}>Sem Holdings</p>
           )}
         </CardContent>
       </Card>
